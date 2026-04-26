@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Trophy, ArrowRight, User } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Sparkles, Trophy, User } from 'lucide-react';
 import { submitTriviaScore, getTriviaLeaderboard } from '@/app/_actions/trivia';
 
 const questions = [

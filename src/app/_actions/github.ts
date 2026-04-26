@@ -9,6 +9,9 @@ export interface GitHubRepo {
   stargazers_count: number;
   language: string | null;
   topics: string[];
+  fork: boolean;
+  updated_at: string;
+  pushed_at: string;
 }
 
 export async function getGitHubStats(username: string) {

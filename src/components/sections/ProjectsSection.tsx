@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Github, ExternalLink, Star, ArrowRight } from 'lucide-react';
-import { getGitHubProjects, GitHubRepo } from '@/app/_actions/github';
+import type { GitHubRepo } from '@/app/_actions/github';
+import { getGitHubProjects } from '@/app/_actions/github';
 
 export function ProjectsSection() {
   const [githubProjects, setGithubProjects] = useState<GitHubRepo[]>([]);
