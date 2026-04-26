@@ -1,0 +1,61 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+.yarn/
+
+# Build outputs
+.next/
+out/
+build/
+dist/
+
+# Testing
+coverage/
+.nyc_output/
+
+# Environment variables
+.env
+.env*.local
+!.env.example
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-debug.log*
+
+# IDE & Editors
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# TypeScript
+*.tsbuildinfo
+
+# Vercel
+.vercel
+
+# Turbo
+.turbo/
+
+# ESLint
+.eslintcache
+
+# Prettier
+.prettiercache
+
+# Misc
+*.log
+.cache
+*.local
+
