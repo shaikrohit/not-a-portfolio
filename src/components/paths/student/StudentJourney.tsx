@@ -4,21 +4,14 @@
  * ============================================================================
  * STUDENT PATH - JOURNEY STEP
  * ============================================================================
- * 
+ *
  * Timeline of personal learning journey with milestones,
  * struggles, and breakthroughs.
  */
 
 import React, { useState, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ArrowRight, 
-  Rocket,
-  AlertTriangle,
-  CheckCircle,
-  Star,
-  ChevronDown
-} from 'lucide-react';
+import { ArrowRight, Rocket, AlertTriangle, CheckCircle, Star, ChevronDown } from 'lucide-react';
 
 // ============================================================================
 // TYPES
@@ -48,7 +41,7 @@ const milestones: Milestone[] = [
     details: `I started with a simple "Hello World" in Python, following a YouTube tutorial. 
 I remember thinking, "This is it? This is what programmers do?" 
 I had no idea what variables were or why semicolons mattered.`,
-    lesson: 'Everyone starts somewhere. Your first code will be terrible—and that\'s perfect.',
+    lesson: "Everyone starts somewhere. Your first code will be terrible—and that's perfect.",
   },
   {
     id: '2',
@@ -59,7 +52,8 @@ I had no idea what variables were or why semicolons mattered.`,
     details: `For 6 months, I watched tutorial after tutorial. I could follow along perfectly, 
 but the moment I tried to build something on my own, I froze. 
 I knew syntax but couldn't think programmatically.`,
-    lesson: 'Stop watching, start building. Learning happens when you struggle, not when you follow.',
+    lesson:
+      'Stop watching, start building. Learning happens when you struggle, not when you follow.',
   },
   {
     id: '3',
@@ -70,18 +64,19 @@ I knew syntax but couldn't think programmatically.`,
     details: `I forced myself to build without tutorials. It took 2 weeks for a simple todo app. 
 The code was horrible—global variables everywhere, no functions. 
 But it WORKED, and I built it myself.`,
-    lesson: 'Ugly code that works > beautiful code that doesn\'t exist.',
+    lesson: "Ugly code that works > beautiful code that doesn't exist.",
   },
   {
     id: '4',
     year: '2019',
     title: 'Imposter Syndrome',
     type: 'struggle',
-    summary: 'Felt like I wasn\'t cut out for this',
+    summary: "Felt like I wasn't cut out for this",
     details: `I looked at other developers' code and felt like a fraud. 
 Everyone seemed smarter, faster, better. I almost quit three times.
 The doubt was overwhelming.`,
-    lesson: 'Everyone feels like an imposter. The ones who succeed are the ones who keep going anyway.',
+    lesson:
+      'Everyone feels like an imposter. The ones who succeed are the ones who keep going anyway.',
   },
   {
     id: '5',
@@ -92,7 +87,8 @@ The doubt was overwhelming.`,
     details: `A local business paid me $200 to build their website. 
 It wasn't much, but it validated everything. 
 Someone trusted me with their business. I was a "real" developer.`,
-    lesson: 'You don\'t need permission to be a developer. If you solve problems with code, you\'re a developer.',
+    lesson:
+      "You don't need permission to be a developer. If you solve problems with code, you're a developer.",
   },
   {
     id: '6',
@@ -103,7 +99,7 @@ Someone trusted me with their business. I was a "real" developer.`,
     details: `I applied to everything. Junior, entry-level, intern—all of it. 
 Most rejections didn't even come with feedback. 
 "We've decided to move forward with other candidates" became my nightmare phrase.`,
-    lesson: 'Rejection isn\'t about you. Keep improving, keep applying. It\'s a numbers game.',
+    lesson: "Rejection isn't about you. Keep improving, keep applying. It's a numbers game.",
   },
   {
     id: '7',
@@ -114,7 +110,8 @@ Most rejections didn't even come with feedback.
     details: `After 150+ applications, one company took a chance on me. 
 The interview was tough, but I was honest about what I knew and didn't know.
 They valued my potential over my current skills.`,
-    lesson: 'Show enthusiasm and willingness to learn. Companies hire potential, not just experience.',
+    lesson:
+      'Show enthusiasm and willingness to learn. Companies hire potential, not just experience.',
   },
   {
     id: '8',
@@ -169,29 +166,30 @@ const MilestoneCard = memo(function MilestoneCard({
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: index * 0.08, duration: 0.3 }}
       onClick={onClick}
-      className={`
-        w-full text-left p-4 rounded-xl
-        transition-all duration-300 border
-        ${isActive
-          ? 'bg-blue-500/10 border-blue-500/30'
-          : 'bg-white/[0.02] border-white/5 hover:bg-white/[0.04]'
-        }
-      `}
+      className={`w-full rounded-xl border p-4 text-left transition-all duration-300 ${
+        isActive
+          ? 'border-blue-500/30 bg-blue-500/10'
+          : 'border-white/5 bg-white/[0.02] hover:bg-white/[0.04]'
+      } `}
     >
       <div className="flex items-center gap-3">
-        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${colorClasses[config.color]}`}>
-          <Icon className="w-5 h-5" />
+        <div
+          className={`flex h-10 w-10 items-center justify-center rounded-lg ${colorClasses[config.color]}`}
+        >
+          <Icon className="h-5 w-5" />
         </div>
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
             <span className="text-xs text-white/30">{milestone.year}</span>
-            <span className={`text-xs px-1.5 py-0.5 rounded ${colorClasses[config.color]}`}>
+            <span className={`rounded px-1.5 py-0.5 text-xs ${colorClasses[config.color]}`}>
               {config.label}
             </span>
           </div>
-          <h3 className="font-medium text-white truncate">{milestone.title}</h3>
+          <h3 className="truncate font-medium text-white">{milestone.title}</h3>
         </div>
-        <ChevronDown className={`w-4 h-4 text-white/20 transition-transform ${isActive ? 'rotate-180' : ''}`} />
+        <ChevronDown
+          className={`h-4 w-4 text-white/20 transition-transform ${isActive ? 'rotate-180' : ''}`}
+        />
       </div>
     </motion.button>
   );
@@ -214,35 +212,33 @@ const MilestoneDetail = memo(function MilestoneDetail({ milestone }: MilestoneDe
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
-      className="h-full flex flex-col"
+      className="flex h-full flex-col"
     >
       {/* Header */}
       <div className="mb-6">
-        <div className="flex items-center gap-3 mb-3">
+        <div className="mb-3 flex items-center gap-3">
           <span className="text-sm text-white/30">{milestone.year}</span>
-          <span className="text-sm px-2 py-0.5 rounded bg-white/5 text-white/50">
+          <span className="rounded bg-white/5 px-2 py-0.5 text-sm text-white/50">
             {config.label}
           </span>
         </div>
-        <h2 className="text-2xl font-bold text-white mb-2">{milestone.title}</h2>
+        <h2 className="mb-2 text-2xl font-bold text-white">{milestone.title}</h2>
         <p className="text-blue-400">{milestone.summary}</p>
       </div>
 
       {/* Story */}
       <div className="mb-6">
-        <h4 className="text-sm font-medium text-white/80 mb-3">The Story</h4>
-        <p className="text-white/50 leading-relaxed whitespace-pre-line">
-          {milestone.details}
-        </p>
+        <h4 className="mb-3 text-sm font-medium text-white/80">The Story</h4>
+        <p className="whitespace-pre-line leading-relaxed text-white/50">{milestone.details}</p>
       </div>
 
       {/* Lesson */}
-      <div className="mt-auto p-4 rounded-xl bg-gradient-to-r from-blue-500/10 to-blue-600/10 border border-blue-500/20">
+      <div className="mt-auto rounded-xl border border-blue-500/20 bg-gradient-to-r from-blue-500/10 to-blue-600/10 p-4">
         <div className="flex items-start gap-3">
-          <Star className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+          <Star className="mt-0.5 h-5 w-5 flex-shrink-0 text-blue-400" />
           <div>
-            <h4 className="text-sm font-medium text-white mb-1">Key Lesson</h4>
-            <p className="text-white/60 text-sm">{milestone.lesson}</p>
+            <h4 className="mb-1 text-sm font-medium text-white">Key Lesson</h4>
+            <p className="text-sm text-white/60">{milestone.lesson}</p>
           </div>
         </div>
       </div>
@@ -260,7 +256,9 @@ interface StudentJourneyProps {
 
 export function StudentJourney({ onComplete }: StudentJourneyProps) {
   const [activeMilestone, setActiveMilestone] = useState(milestones[0]!);
-  const [viewedMilestones, setViewedMilestones] = useState<Set<string>>(new Set([milestones[0]?.id ?? '']));
+  const [viewedMilestones, setViewedMilestones] = useState<Set<string>>(
+    new Set([milestones[0]?.id ?? ''])
+  );
 
   const handleSelect = (milestone: Milestone) => {
     setActiveMilestone(milestone);
@@ -270,21 +268,19 @@ export function StudentJourney({ onComplete }: StudentJourneyProps) {
   const allViewed = viewedMilestones.size >= Math.min(5, milestones.length);
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="flex-1 py-8 px-4">
-        <div className="max-w-6xl mx-auto">
+    <div className="flex min-h-screen flex-col">
+      <div className="flex-1 px-4 py-8">
+        <div className="mx-auto max-w-6xl">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
-              My Learning Journey
-            </h1>
-            <p className="text-white/50 max-w-2xl">
-              The real story of how I became a developer—including the failures,
-              frustrations, and breakthroughs. Click each milestone to learn more.
+            <h1 className="mb-3 text-3xl font-bold text-white md:text-4xl">My Learning Journey</h1>
+            <p className="max-w-2xl text-white/50">
+              The real story of how I became a developer—including the failures, frustrations, and
+              breakthroughs. Click each milestone to learn more.
             </p>
 
             {/* Progress */}
@@ -293,7 +289,7 @@ export function StudentJourney({ onComplete }: StudentJourneyProps) {
                 {milestones.map((m) => (
                   <div
                     key={m.id}
-                    className={`w-2 h-2 rounded-full transition-colors ${
+                    className={`h-2 w-2 rounded-full transition-colors ${
                       viewedMilestones.has(m.id) ? 'bg-blue-500' : 'bg-white/10'
                     }`}
                   />
@@ -306,9 +302,9 @@ export function StudentJourney({ onComplete }: StudentJourneyProps) {
           </motion.div>
 
           {/* Content Grid */}
-          <div className="grid lg:grid-cols-5 gap-6">
+          <div className="grid gap-6 lg:grid-cols-5">
             {/* Timeline */}
-            <div className="lg:col-span-2 space-y-2 max-h-[600px] overflow-y-auto pr-2">
+            <div className="max-h-[600px] space-y-2 overflow-y-auto pr-2 lg:col-span-2">
               {milestones.map((milestone, index) => (
                 <MilestoneCard
                   key={milestone.id}
@@ -322,7 +318,7 @@ export function StudentJourney({ onComplete }: StudentJourneyProps) {
 
             {/* Detail Panel */}
             <div className="lg:col-span-3">
-              <div className="sticky top-24 p-6 rounded-2xl bg-white/[0.02] border border-white/5 min-h-[500px]">
+              <div className="sticky top-24 min-h-[500px] rounded-2xl border border-white/5 bg-white/[0.02] p-6">
                 <AnimatePresence mode="wait">
                   <MilestoneDetail key={activeMilestone.id} milestone={activeMilestone} />
                 </AnimatePresence>
@@ -333,28 +329,25 @@ export function StudentJourney({ onComplete }: StudentJourneyProps) {
       </div>
 
       {/* Bottom Action */}
-      <div className="sticky bottom-0 glass-strong border-t border-white/5">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div className="glass-strong sticky bottom-0 border-t border-white/5">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
           <p className="text-sm text-white/30">
-            {allViewed ? 'Thanks for exploring my journey!' : 'Explore at least 5 milestones to continue.'}
+            {allViewed
+              ? 'Thanks for exploring my journey!'
+              : 'Explore at least 5 milestones to continue.'}
           </p>
 
           <button
             onClick={onComplete}
             disabled={!allViewed}
-            className={`
-              group inline-flex items-center gap-2
-              px-6 py-3 rounded-lg
-              font-medium text-white
-              transition-all duration-300
-              ${allViewed
-                ? 'bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 shadow-lg shadow-blue-500/30'
-                : 'bg-white/10 text-white/30 cursor-not-allowed'
-              }
-            `}
+            className={`group inline-flex items-center gap-2 rounded-lg px-6 py-3 font-medium text-white transition-all duration-300 ${
+              allViewed
+                ? 'bg-gradient-to-r from-blue-600 to-blue-500 shadow-lg shadow-blue-500/30 hover:from-blue-500 hover:to-blue-400'
+                : 'cursor-not-allowed bg-white/10 text-white/30'
+            } `}
           >
             <span>See Learning Resources</span>
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </button>
         </div>
       </div>

@@ -6,7 +6,7 @@ import { motion, useMotionValue, useSpring } from 'framer-motion';
 export function CursorGlow() {
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
-  
+
   const springConfig = { damping: 25, stiffness: 200 };
   const x = useSpring(cursorX, springConfig);
   const y = useSpring(cursorY, springConfig);
@@ -23,7 +23,7 @@ export function CursorGlow() {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 w-[600px] h-[600px] pointer-events-none z-[-1] hidden md:block"
+      className="pointer-events-none fixed left-0 top-0 z-[-1] hidden h-[600px] w-[600px] md:block"
       style={{
         x,
         y,

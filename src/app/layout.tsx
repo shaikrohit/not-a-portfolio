@@ -5,7 +5,7 @@ import { ThemeProvider } from '@/components/layout';
 
 /**
  * FONTS
- * 
+ *
  * Inter: Clean, readable sans-serif for body text
  * Playfair Display: Elegant serif for headings
  * JetBrains Mono: Excellent monospace for code
@@ -30,7 +30,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 /**
  * METADATA
- * 
+ *
  * SEO and social sharing configuration.
  */
 export const metadata: Metadata = {
@@ -97,29 +97,23 @@ export const metadata: Metadata = {
   manifest: '/site.webmanifest',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${playfair.variable} ${jetbrainsMono.variable} relative bg-surface-base`}
+      className={`${inter.variable} ${playfair.variable} ${jetbrainsMono.variable} bg-surface-base relative`}
       suppressHydrationWarning
     >
       <head>
         {/* Preconnect to important origins */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        
+
         {/* Theme color for browser chrome */}
         <meta name="theme-color" content="#ffffff" />
       </head>
-      <body className="font-sans bg-[var(--surface-base)] text-[var(--text-primary)] antialiased transition-colors duration-300">
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+      <body className="bg-[var(--surface-base)] font-sans text-[var(--text-primary)] antialiased transition-colors duration-300">
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

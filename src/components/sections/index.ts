@@ -2,10 +2,10 @@
  * ============================================================================
  * SECTIONS - MAIN INDEX
  * ============================================================================
- * 
+ *
  * @description Central export point for all section components.
  *              Organized by visitor path for easy imports.
- * 
+ *
  * FOLDER STRUCTURE:
  * sections/
  * ├── developer/       # Developer path sections
@@ -32,7 +32,7 @@
  * │   └── index.ts
  * │
  * └── index.ts         # This file (main exports)
- * 
+ *
  * @usage
  * ```tsx
  * // Import by path
@@ -40,7 +40,7 @@
  * import { SummarySection, ExperienceSection } from '@/components/sections/recruiter';
  * import { JourneySection, QASection } from '@/components/sections/student';
  * import { AboutSection, ContactSection } from '@/components/sections/shared';
- * 
+ *
  * // Or import from main index
  * import { DeveloperSections, RecruiterSections, StudentSections, SharedSections } from '@/components/sections';
  * ```
@@ -92,17 +92,17 @@ export const sectionComponents = {
   philosophy: PhilosophySection,
   techStack: TechStackSection,
   projects: ProjectsSection,
-  
+
   // Recruiter
   summary: SummarySection,
   skills: SkillsSection,
   experience: ExperienceSection,
-  
+
   // Student
   journey: JourneySection,
   learnings: LearningsSection,
   qa: QASection,
-  
+
   // Shared
   about: AboutSection,
   contact: ContactSection,

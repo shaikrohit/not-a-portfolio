@@ -2,7 +2,7 @@
 
 /**
  * THEME PROVIDER
- * 
+ *
  * Initializes and manages theme state.
  * Must wrap the application to enable dark mode.
  */
@@ -26,7 +26,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
 /**
  * THEME TOGGLE
- * 
+ *
  * Button to switch between light and dark modes.
  */
 
@@ -41,7 +41,7 @@ export function ThemeToggle({ className }: { className?: string }) {
     <button
       onClick={toggleMode}
       className={cn(
-        'relative p-2 rounded-lg',
+        'relative rounded-lg p-2',
         'text-neutral-600 dark:text-neutral-400',
         'hover:bg-neutral-100 dark:hover:bg-neutral-800',
         'transition-colors duration-200',
@@ -58,11 +58,7 @@ export function ThemeToggle({ className }: { className?: string }) {
           exit={{ y: 10, opacity: 0 }}
           transition={{ duration: 0.2 }}
         >
-          {resolvedMode === 'light' ? (
-            <Moon className="w-5 h-5" />
-          ) : (
-            <Sun className="w-5 h-5" />
-          )}
+          {resolvedMode === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
         </motion.div>
       </AnimatePresence>
     </button>

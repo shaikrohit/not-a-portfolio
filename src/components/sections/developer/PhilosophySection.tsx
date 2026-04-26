@@ -4,17 +4,17 @@
  * ============================================================================
  * PHILOSOPHY SECTION
  * ============================================================================
- * 
+ *
  * @description Displays the engineering philosophy and principles.
  *              Part of the Developer path.
- * 
+ *
  * @usage
  * ```tsx
  * import { PhilosophySection } from '@/components/sections/developer';
- * 
+ *
  * <PhilosophySection />
  * ```
- * 
+ *
  * @dependencies
  * - Content from `@/content` (philosophy)
  * - UI components (Text, Card, Button, FadeIn)
@@ -51,7 +51,7 @@ interface PrincipleCardProps {
 
 /**
  * PrincipleCard
- * 
+ *
  * An expandable card showing a single engineering principle.
  */
 function PrincipleCard({ principle, isExpanded, onToggle }: PrincipleCardProps) {
@@ -68,20 +68,20 @@ function PrincipleCard({ principle, isExpanded, onToggle }: PrincipleCardProps) 
               {principle.description}
             </Text>
           </div>
-          
+
           {/* Expand/Collapse Icon */}
           <motion.div
             animate={{ rotate: isExpanded ? 180 : 0 }}
             transition={{ duration: 0.2 }}
             className="flex-shrink-0 text-neutral-400"
           >
-            <ChevronDown className="w-5 h-5" />
+            <ChevronDown className="h-5 w-5" />
           </motion.div>
         </div>
 
         {/* Expandable Content */}
         <Reveal show={isExpanded}>
-          <div className="mt-6 pt-6 border-t border-neutral-200 dark:border-neutral-800">
+          <div className="mt-6 border-t border-neutral-200 pt-6 dark:border-neutral-800">
             <Text variant="caption" className="mb-2 uppercase tracking-wider">
               Example
             </Text>
@@ -101,7 +101,7 @@ function PrincipleCard({ principle, isExpanded, onToggle }: PrincipleCardProps) 
 
 /**
  * PhilosophySection
- * 
+ *
  * Displays engineering principles with expandable examples.
  * Designed for developers who want to understand your thinking.
  */
@@ -111,9 +111,7 @@ export function PhilosophySection() {
 
   // Toggle a principle's expanded state
   const handleToggle = (principleId: string) => {
-    setExpandedPrinciple(
-      expandedPrinciple === principleId ? null : principleId
-    );
+    setExpandedPrinciple(expandedPrinciple === principleId ? null : principleId);
   };
 
   return (

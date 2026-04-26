@@ -1,6 +1,6 @@
 /**
  * CUSTOM HOOKS
- * 
+ *
  * Reusable hooks for common functionality.
  */
 
@@ -11,7 +11,7 @@ import { debounce } from '@/lib/utils';
 
 /**
  * useTimeTracking
- * 
+ *
  * Tracks time spent on the site.
  * Updates every 30 seconds while the tab is active.
  */
@@ -66,7 +66,7 @@ export function useTimeTracking() {
 
 /**
  * usePageTracking
- * 
+ *
  * Tracks which pages/sections the visitor has viewed.
  */
 export function usePageTracking(currentPage: string) {
@@ -94,7 +94,7 @@ export function usePageTracking(currentPage: string) {
 
 /**
  * useKeyboardNavigation
- * 
+ *
  * Enables keyboard shortcuts for navigation.
  */
 export function useKeyboardNavigation(
@@ -109,10 +109,7 @@ export function useKeyboardNavigation(
 
     const handleKeyDown = (e: KeyboardEvent) => {
       // Ignore if user is typing in an input
-      if (
-        e.target instanceof HTMLInputElement ||
-        e.target instanceof HTMLTextAreaElement
-      ) {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
         return;
       }
 
@@ -130,7 +127,7 @@ export function useKeyboardNavigation(
 
 /**
  * useMediaQuery
- * 
+ *
  * React hook for media queries.
  */
 export function useMediaQuery(query: string): boolean {
@@ -153,7 +150,7 @@ import React from 'react';
 
 /**
  * useIntersectionObserver
- * 
+ *
  * Detects when an element enters the viewport.
  */
 export function useIntersectionObserver(
@@ -185,7 +182,7 @@ export function useIntersectionObserver(
 
 /**
  * useLocalStorage
- * 
+ *
  * Syncs state with localStorage.
  */
 export function useLocalStorage<T>(
@@ -207,8 +204,7 @@ export function useLocalStorage<T>(
   const setValue = useCallback(
     (value: T | ((prev: T) => T)) => {
       try {
-        const valueToStore =
-          value instanceof Function ? value(storedValue) : value;
+        const valueToStore = value instanceof Function ? value(storedValue) : value;
         setStoredValue(valueToStore);
         if (typeof window !== 'undefined') {
           window.localStorage.setItem(key, JSON.stringify(valueToStore));
@@ -225,7 +221,7 @@ export function useLocalStorage<T>(
 
 /**
  * useDebouncedCallback
- * 
+ *
  * Returns a debounced version of a callback.
  */
 export function useDebouncedCallback<T extends (...args: any[]) => void>(

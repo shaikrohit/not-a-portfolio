@@ -14,7 +14,7 @@ This document outlines potential enhancements, organized by priority and complex
 ✅ Anonymous analytics with public dashboard  
 ✅ Contact form with Supabase integration  
 ✅ Fully responsive design  
-✅ Accessibility (keyboard navigation, focus states, screen reader support)  
+✅ Accessibility (keyboard navigation, focus states, screen reader support)
 
 ---
 
@@ -133,7 +133,7 @@ if (visitorSkipped('business-outcomes')) {
 
 ```typescript
 // Cache on first visit
-caches.open('not-a-portfolio-v1').then(cache => {
+caches.open('not-a-portfolio-v1').then((cache) => {
   cache.addAll(['/static/...']);
 });
 ```
@@ -147,6 +147,7 @@ caches.open('not-a-portfolio-v1').then(cache => {
 **Improvement:** Multiple languages
 
 Priority languages:
+
 1. English (default)
 2. Spanish
 3. Mandarin
@@ -167,9 +168,9 @@ Priority languages:
 ```
 User: "What's your experience with microservices?"
 
-AI: "I've built microservices architectures at [Company], 
-handling 10K+ RPS. The key lesson was that monoliths 
-aren't bad—premature microservices are. Here's a project 
+AI: "I've built microservices architectures at [Company],
+handling 10K+ RPS. The key lesson was that monoliths
+aren't bad—premature microservices are. Here's a project
 where I made that mistake and learned from it..."
 ```
 
@@ -277,9 +278,9 @@ Good ideas will be added to this roadmap.
 
 ## Version History
 
-| Version | Date | Highlights |
-|---------|------|------------|
-| 1.0.0 | TBD | Initial release |
+| Version | Date | Highlights      |
+| ------- | ---- | --------------- |
+| 1.0.0   | TBD  | Initial release |
 
 ---
 

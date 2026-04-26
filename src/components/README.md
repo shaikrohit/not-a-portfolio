@@ -53,17 +53,20 @@ components/
 ## How to Use
 
 ### Import from UI
+
 ```tsx
 import { Button, Card, Text } from '@/components/ui';
 ```
 
 ### Import Sections
+
 ```tsx
 import { PhilosophySection } from '@/components/sections/developer';
 import { AboutSection } from '@/components/sections/shared';
 ```
 
 ### Import Features
+
 ```tsx
 import { EntryExperience } from '@/components/features/entry';
 ```

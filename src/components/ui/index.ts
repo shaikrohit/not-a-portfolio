@@ -1,6 +1,6 @@
 /**
  * UI COMPONENTS INDEX
- * 
+ *
  * Central export for all UI components.
  * Import from '@/components/ui' for clean imports.
  */

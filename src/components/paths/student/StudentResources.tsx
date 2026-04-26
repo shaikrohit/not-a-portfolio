@@ -4,15 +4,15 @@
  * ============================================================================
  * STUDENT PATH - RESOURCES STEP
  * ============================================================================
- * 
+ *
  * Curated learning resources with personal recommendations,
  * categorized by skill level and type.
  */
 
 import React, { useState, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ArrowRight, 
+import {
+  ArrowRight,
   ExternalLink,
   Star,
   BookOpen,
@@ -20,7 +20,7 @@ import {
   Code,
   Globe,
   CheckCircle,
-  Bookmark
+  Bookmark,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
@@ -76,7 +76,7 @@ const categories: Category[] = [
         description: 'Project-based curriculum that teaches full-stack development.',
         level: 'beginner',
         free: true,
-        personalNote: 'Best free resource for building real projects. Don\'t skip the exercises.',
+        personalNote: "Best free resource for building real projects. Don't skip the exercises.",
         rating: 5,
       },
       {
@@ -113,7 +113,7 @@ const categories: Category[] = [
         name: 'Full Stack Open',
         type: 'course',
         url: 'https://fullstackopen.com',
-        description: 'University of Helsinki\'s full-stack course covering React, Node, and more.',
+        description: "University of Helsinki's full-stack course covering React, Node, and more.",
         level: 'intermediate',
         free: true,
         personalNote: 'Rigorous but thorough. This bridged my knowledge gaps.',
@@ -179,7 +179,7 @@ const categories: Category[] = [
       },
       {
         id: '10',
-        name: 'You Don\'t Know JS',
+        name: "You Don't Know JS",
         type: 'book',
         url: 'https://github.com/getify/You-Dont-Know-JS',
         description: 'Deep dive into JavaScript mechanics and concepts.',
@@ -226,48 +226,46 @@ const ResourceCard = memo(function ResourceCard({ resource, index }: ResourceCar
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05, duration: 0.3 }}
-      className="group block p-5 rounded-xl bg-white/[0.02] border border-white/5 hover:border-white/10 hover:bg-white/[0.04] transition-all duration-300"
+      className="group block rounded-xl border border-white/5 bg-white/[0.02] p-5 transition-all duration-300 hover:border-white/10 hover:bg-white/[0.04]"
     >
-      <div className="flex items-start justify-between mb-3">
+      <div className="mb-3 flex items-start justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
-            <TypeIcon className="w-5 h-5 text-blue-400" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/10">
+            <TypeIcon className="h-5 w-5 text-blue-400" />
           </div>
           <div>
-            <h4 className="font-medium text-white group-hover:text-blue-400 transition-colors">
+            <h4 className="font-medium text-white transition-colors group-hover:text-blue-400">
               {resource.name}
             </h4>
-            <div className="flex items-center gap-2 mt-0.5">
-              <span className={`text-xs px-1.5 py-0.5 rounded ${level.color}`}>
-                {level.label}
-              </span>
+            <div className="mt-0.5 flex items-center gap-2">
+              <span className={`rounded px-1.5 py-0.5 text-xs ${level.color}`}>{level.label}</span>
               {resource.free && (
-                <span className="text-xs px-1.5 py-0.5 rounded bg-green-500/20 text-green-400">
+                <span className="rounded bg-green-500/20 px-1.5 py-0.5 text-xs text-green-400">
                   Free
                 </span>
               )}
             </div>
           </div>
         </div>
-        <ExternalLink className="w-4 h-4 text-white/20 group-hover:text-white/40 transition-colors" />
+        <ExternalLink className="h-4 w-4 text-white/20 transition-colors group-hover:text-white/40" />
       </div>
 
-      <p className="text-sm text-white/40 mb-3">{resource.description}</p>
+      <p className="mb-3 text-sm text-white/40">{resource.description}</p>
 
       {/* Rating */}
-      <div className="flex items-center gap-1 mb-3">
+      <div className="mb-3 flex items-center gap-1">
         {[1, 2, 3, 4, 5].map((star) => (
           <Star
             key={star}
-            className={`w-3.5 h-3.5 ${
-              star <= resource.rating ? 'text-yellow-400 fill-yellow-400' : 'text-white/10'
+            className={`h-3.5 w-3.5 ${
+              star <= resource.rating ? 'fill-yellow-400 text-yellow-400' : 'text-white/10'
             }`}
           />
         ))}
       </div>
 
       {/* Personal Note */}
-      <div className="p-3 rounded-lg bg-blue-500/5 border border-blue-500/10">
+      <div className="rounded-lg border border-blue-500/10 bg-blue-500/5 p-3">
         <p className="text-xs text-blue-300/70">
           <span className="font-medium text-blue-400">My take: </span>
           {resource.personalNote}
@@ -291,42 +289,37 @@ export function StudentResources({ onComplete }: StudentResourcesProps) {
   const totalResources = categories.reduce((acc, cat) => acc + cat.resources.length, 0);
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="flex-1 py-8 px-4">
-        <div className="max-w-6xl mx-auto">
+    <div className="flex min-h-screen flex-col">
+      <div className="flex-1 px-4 py-8">
+        <div className="mx-auto max-w-6xl">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
-              Learning Resources
-            </h1>
-            <p className="text-white/50 max-w-2xl">
-              My personally curated list of {totalResources}+ resources that actually helped me learn.
-              Every recommendation comes with my honest take.
+            <h1 className="mb-3 text-3xl font-bold text-white md:text-4xl">Learning Resources</h1>
+            <p className="max-w-2xl text-white/50">
+              My personally curated list of {totalResources}+ resources that actually helped me
+              learn. Every recommendation comes with my honest take.
             </p>
           </motion.div>
 
           {/* Category Tabs */}
-          <div className="flex flex-wrap gap-2 mb-8">
+          <div className="mb-8 flex flex-wrap gap-2">
             {categories.map((category) => {
               const Icon = category.icon;
               return (
                 <button
                   key={category.id}
                   onClick={() => setActiveCategory(category)}
-                  className={`
-                    inline-flex items-center gap-2 px-4 py-2.5 rounded-lg
-                    text-sm font-medium transition-all duration-300
-                    ${activeCategory.id === category.id
-                      ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
-                      : 'bg-white/[0.02] text-white/50 border border-white/5 hover:bg-white/[0.04]'
-                    }
-                  `}
+                  className={`inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all duration-300 ${
+                    activeCategory.id === category.id
+                      ? 'border border-blue-500/30 bg-blue-500/20 text-blue-400'
+                      : 'border border-white/5 bg-white/[0.02] text-white/50 hover:bg-white/[0.04]'
+                  } `}
                 >
-                  <Icon className="w-4 h-4" />
+                  <Icon className="h-4 w-4" />
                   {category.name}
                   <span className="text-xs text-white/30">{category.resources.length}</span>
                 </button>
@@ -341,7 +334,7 @@ export function StudentResources({ onComplete }: StudentResourcesProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-4"
+              className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
             >
               {activeCategory.resources.map((resource, index) => (
                 <ResourceCard key={resource.id} resource={resource} index={index} />
@@ -354,16 +347,16 @@ export function StudentResources({ onComplete }: StudentResourcesProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="mt-10 p-6 rounded-2xl bg-gradient-to-r from-blue-500/10 to-blue-600/10 border border-blue-500/20"
+            className="mt-10 rounded-2xl border border-blue-500/20 bg-gradient-to-r from-blue-500/10 to-blue-600/10 p-6"
           >
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                <CheckCircle className="w-5 h-5 text-blue-400" />
+              <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-blue-500/20">
+                <CheckCircle className="h-5 w-5 text-blue-400" />
               </div>
               <div>
-                <h3 className="font-medium text-white mb-2">Pro Tip</h3>
+                <h3 className="mb-2 font-medium text-white">Pro Tip</h3>
                 <p className="text-white/50">
-                  Don't try to learn everything at once. Pick ONE resource and complete it fully 
+                  Don't try to learn everything at once. Pick ONE resource and complete it fully
                   before moving to the next. Depth beats breadth when you're starting out.
                 </p>
               </div>
@@ -373,19 +366,19 @@ export function StudentResources({ onComplete }: StudentResourcesProps) {
       </div>
 
       {/* Bottom Action */}
-      <div className="sticky bottom-0 glass-strong border-t border-white/5">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div className="glass-strong sticky bottom-0 border-t border-white/5">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
           <div className="flex items-center gap-2 text-sm text-white/30">
-            <Bookmark className="w-4 h-4" />
+            <Bookmark className="h-4 w-4" />
             Bookmark this page for future reference
           </div>
 
           <button
             onClick={onComplete}
-            className="group inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 transition-all duration-300 shadow-lg shadow-blue-500/30"
+            className="group inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-3 font-medium text-white shadow-lg shadow-blue-500/30 transition-all duration-300 hover:from-blue-500 hover:to-blue-400"
           >
             <span>Get Advice</span>
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </button>
         </div>
       </div>

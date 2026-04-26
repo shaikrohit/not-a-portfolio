@@ -1,11 +1,11 @@
 /**
  * SUPABASE CLIENT
- * 
+ *
  * Supabase is used for:
  * - Anonymous visitor analytics
  * - Storing contact messages
  * - Live visitor statistics
- * 
+ *
  * All data is anonymized and privacy-respecting.
  */
 
@@ -16,13 +16,12 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
 // Create client (will be null if env vars not set)
-export const supabase = supabaseUrl && supabaseAnonKey 
-  ? createClient(supabaseUrl, supabaseAnonKey)
-  : null;
+export const supabase =
+  supabaseUrl && supabaseAnonKey ? createClient(supabaseUrl, supabaseAnonKey) : null;
 
 /**
  * Database Types
- * 
+ *
  * These match our Supabase schema.
  */
 export interface DBVisitorSession {
@@ -86,10 +85,7 @@ export async function trackVisitorSession(session: {
 }
 
 // Update session with page visit
-export async function updateSessionPages(
-  sessionId: string,
-  pagesVisited: string[]
-): Promise<void> {
+export async function updateSessionPages(sessionId: string, pagesVisited: string[]): Promise<void> {
   if (!supabase) return;
 
   try {
@@ -190,26 +186,33 @@ export async function getAnalyticsSummary(): Promise<DBAnalyticsSummary | null> 
     if (error) throw error;
 
     // Process data
-    const visitorsByType = sessions.reduce((acc, session) => {
-      const type = session.visitor_type || 'explorer';
-      acc[type] = (acc[type] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const visitorsByType = sessions.reduce(
+      (acc, session) => {
+        const type = session.visitor_type || 'explorer';
+        acc[type] = (acc[type] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
 
-    const countryCount = sessions.reduce((acc, session) => {
-      const country = session.country || 'Unknown';
-      acc[country] = (acc[country] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const countryCount = sessions.reduce(
+      (acc, session) => {
+        const country = session.country || 'Unknown';
+        acc[country] = (acc[country] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
 
     const topCountries = Object.entries(countryCount)
       .map(([country, count]) => ({ country, count: count as number }))
       .sort((a, b) => (b.count as number) - (a.count as number))
       .slice(0, 5);
 
-    const avgTime = sessions.length > 0
-      ? sessions.reduce((acc, s) => acc + s.time_spent_seconds, 0) / sessions.length
-      : 0;
+    const avgTime =
+      sessions.length > 0
+        ? sessions.reduce((acc, s) => acc + s.time_spent_seconds, 0) / sessions.length
+        : 0;
 
     return {
       total_visitors: sessions.length,

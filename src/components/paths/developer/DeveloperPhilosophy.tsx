@@ -4,21 +4,14 @@
  * ============================================================================
  * DEVELOPER PATH - PHILOSOPHY STEP
  * ============================================================================
- * 
+ *
  * Engineering principles and philosophy section.
  * Features interactive principle cards with deep explanations.
  */
 
 import React, { useState, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Lightbulb, 
-  Sparkles, 
-  Target, 
-  Layers, 
-  ChevronRight,
-  ArrowRight 
-} from 'lucide-react';
+import { Lightbulb, Sparkles, Target, Layers, ChevronRight, ArrowRight } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 // ============================================================================
@@ -138,36 +131,31 @@ const PrincipleCard = memo(function PrincipleCard({
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: index * 0.1, duration: 0.4 }}
       onClick={onClick}
-      className={`
-        w-full text-left p-5 rounded-xl
-        transition-all duration-300
-        border
-        ${isActive
-          ? 'bg-blue-500/10 border-blue-500/30 shadow-lg shadow-blue-500/10'
-          : 'bg-white/[0.02] border-white/5 hover:bg-white/[0.04] hover:border-white/10'
-        }
-      `}
+      className={`w-full rounded-xl border p-5 text-left transition-all duration-300 ${
+        isActive
+          ? 'border-blue-500/30 bg-blue-500/10 shadow-lg shadow-blue-500/10'
+          : 'border-white/5 bg-white/[0.02] hover:border-white/10 hover:bg-white/[0.04]'
+      } `}
     >
       <div className="flex items-start gap-4">
-        <div className={`
-          w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0
-          transition-colors duration-300
-          ${isActive ? 'bg-blue-500/20' : 'bg-white/5'}
-        `}>
-          <Icon className={`w-5 h-5 ${isActive ? 'text-blue-400' : 'text-white/50'}`} />
+        <div
+          className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg transition-colors duration-300 ${isActive ? 'bg-blue-500/20' : 'bg-white/5'} `}
+        >
+          <Icon className={`h-5 w-5 ${isActive ? 'text-blue-400' : 'text-white/50'}`} />
         </div>
 
-        <div className="flex-1 min-w-0">
-          <h3 className={`font-medium mb-1 transition-colors ${isActive ? 'text-white' : 'text-white/80'}`}>
+        <div className="min-w-0 flex-1">
+          <h3
+            className={`mb-1 font-medium transition-colors ${isActive ? 'text-white' : 'text-white/80'}`}
+          >
             {principle.title}
           </h3>
           <p className="text-sm text-white/40">{principle.tagline}</p>
         </div>
 
-        <ChevronRight className={`
-          w-5 h-5 flex-shrink-0 transition-all duration-300
-          ${isActive ? 'text-blue-400 rotate-90' : 'text-white/20'}
-        `} />
+        <ChevronRight
+          className={`h-5 w-5 flex-shrink-0 transition-all duration-300 ${isActive ? 'rotate-90 text-blue-400' : 'text-white/20'} `}
+        />
       </div>
     </motion.button>
   );
@@ -191,12 +179,12 @@ const PrincipleDetail = memo(function PrincipleDetail({ principle }: PrincipleDe
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
-      className="h-full flex flex-col"
+      className="flex h-full flex-col"
     >
       {/* Header */}
-      <div className="flex items-center gap-4 mb-6">
-        <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
-          <Icon className="w-7 h-7 text-white" />
+      <div className="mb-6 flex items-center gap-4">
+        <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg shadow-blue-500/30">
+          <Icon className="h-7 w-7 text-white" />
         </div>
         <div>
           <h2 className="text-2xl font-bold text-white">{principle.title}</h2>
@@ -206,18 +194,16 @@ const PrincipleDetail = memo(function PrincipleDetail({ principle }: PrincipleDe
 
       {/* Description */}
       <div className="mb-6">
-        <p className="text-white/60 whitespace-pre-line leading-relaxed">
-          {principle.description}
-        </p>
+        <p className="whitespace-pre-line leading-relaxed text-white/60">{principle.description}</p>
       </div>
 
       {/* Code Example */}
-      <div className="flex-1 rounded-xl overflow-hidden border border-white/5">
-        <div className="px-4 py-2 bg-white/[0.02] border-b border-white/5">
-          <span className="text-xs text-white/40 font-mono">example.ts</span>
+      <div className="flex-1 overflow-hidden rounded-xl border border-white/5">
+        <div className="border-b border-white/5 bg-white/[0.02] px-4 py-2">
+          <span className="font-mono text-xs text-white/40">example.ts</span>
         </div>
-        <pre className="p-4 bg-[#0d1117] overflow-x-auto">
-          <code className="text-sm font-mono text-white/70 leading-relaxed">
+        <pre className="overflow-x-auto bg-[#0d1117] p-4">
+          <code className="font-mono text-sm leading-relaxed text-white/70">
             {principle.example}
           </code>
         </pre>
@@ -236,7 +222,9 @@ interface DeveloperPhilosophyProps {
 
 export function DeveloperPhilosophy({ onComplete }: DeveloperPhilosophyProps) {
   const [activePrinciple, setActivePrinciple] = useState<string>(principles[0]?.id ?? 'clarity');
-  const [viewedPrinciples, setViewedPrinciples] = useState<Set<string>>(new Set([principles[0]?.id ?? 'clarity']));
+  const [viewedPrinciples, setViewedPrinciples] = useState<Set<string>>(
+    new Set([principles[0]?.id ?? 'clarity'])
+  );
 
   const handleSelect = (id: string) => {
     setActivePrinciple(id);
@@ -247,30 +235,30 @@ export function DeveloperPhilosophy({ onComplete }: DeveloperPhilosophyProps) {
   const allViewed = viewedPrinciples.size === principles.length;
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="flex-1 py-8 px-4">
-        <div className="max-w-6xl mx-auto">
+    <div className="flex min-h-screen flex-col">
+      <div className="flex-1 px-4 py-8">
+        <div className="mx-auto max-w-6xl">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
+            <h1 className="mb-3 text-3xl font-bold text-white md:text-4xl">
               Engineering Philosophy
             </h1>
-            <p className="text-white/50 max-w-2xl">
-              These principles guide how I approach software development.
-              Click each to explore in detail.
+            <p className="max-w-2xl text-white/50">
+              These principles guide how I approach software development. Click each to explore in
+              detail.
             </p>
-            
+
             {/* Progress */}
             <div className="mt-4 flex items-center gap-3">
               <div className="flex gap-1">
                 {principles.map((p) => (
                   <div
                     key={p.id}
-                    className={`w-2 h-2 rounded-full transition-colors duration-300 ${
+                    className={`h-2 w-2 rounded-full transition-colors duration-300 ${
                       viewedPrinciples.has(p.id) ? 'bg-blue-500' : 'bg-white/10'
                     }`}
                   />
@@ -283,9 +271,9 @@ export function DeveloperPhilosophy({ onComplete }: DeveloperPhilosophyProps) {
           </motion.div>
 
           {/* Content Grid */}
-          <div className="grid lg:grid-cols-5 gap-6">
+          <div className="grid gap-6 lg:grid-cols-5">
             {/* Left: Principle List */}
-            <div className="lg:col-span-2 space-y-3">
+            <div className="space-y-3 lg:col-span-2">
               {principles.map((principle, index) => (
                 <PrincipleCard
                   key={principle.id}
@@ -299,11 +287,9 @@ export function DeveloperPhilosophy({ onComplete }: DeveloperPhilosophyProps) {
 
             {/* Right: Detail View */}
             <div className="lg:col-span-3">
-              <div className="sticky top-24 p-6 rounded-2xl bg-white/[0.02] border border-white/5 min-h-[500px]">
+              <div className="sticky top-24 min-h-[500px] rounded-2xl border border-white/5 bg-white/[0.02] p-6">
                 <AnimatePresence mode="wait">
-                  {currentPrinciple && (
-                    <PrincipleDetail principle={currentPrinciple} />
-                  )}
+                  {currentPrinciple && <PrincipleDetail principle={currentPrinciple} />}
                 </AnimatePresence>
               </div>
             </div>
@@ -312,28 +298,25 @@ export function DeveloperPhilosophy({ onComplete }: DeveloperPhilosophyProps) {
       </div>
 
       {/* Bottom Action */}
-      <div className="sticky bottom-0 glass-strong border-t border-white/5">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div className="glass-strong sticky bottom-0 border-t border-white/5">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
           <p className="text-sm text-white/30">
-            {allViewed ? 'Great! You\'ve explored all principles.' : 'Explore all principles to continue.'}
+            {allViewed
+              ? "Great! You've explored all principles."
+              : 'Explore all principles to continue.'}
           </p>
 
           <button
             onClick={onComplete}
             disabled={!allViewed}
-            className={`
-              group inline-flex items-center gap-2
-              px-6 py-3 rounded-lg
-              font-medium text-white
-              transition-all duration-300
-              ${allViewed
-                ? 'bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 shadow-lg shadow-blue-500/30'
-                : 'bg-white/10 text-white/30 cursor-not-allowed'
-              }
-            `}
+            className={`group inline-flex items-center gap-2 rounded-lg px-6 py-3 font-medium text-white transition-all duration-300 ${
+              allViewed
+                ? 'bg-gradient-to-r from-blue-600 to-blue-500 shadow-lg shadow-blue-500/30 hover:from-blue-500 hover:to-blue-400'
+                : 'cursor-not-allowed bg-white/10 text-white/30'
+            } `}
           >
             <span>Continue to Tech Stack</span>
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </button>
         </div>
       </div>

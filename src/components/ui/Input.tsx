@@ -2,7 +2,7 @@
 
 /**
  * INPUT COMPONENT
- * 
+ *
  * Clean, accessible form inputs.
  */
 
@@ -25,7 +25,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           <label
             htmlFor={inputId}
             className={cn(
-              'block text-sm font-medium mb-2',
+              'mb-2 block text-sm font-medium',
               'text-neutral-700 dark:text-neutral-300'
             )}
           >
@@ -38,14 +38,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           className={cn(
             'w-full px-4 py-3',
             'bg-white dark:bg-neutral-900',
-            'border rounded-lg',
+            'rounded-lg border',
             'text-neutral-900 dark:text-neutral-100',
             'placeholder:text-neutral-500',
             'transition-colors duration-200',
             'focus:outline-none focus:ring-2 focus:ring-offset-2',
             error
               ? 'border-red-500 focus:ring-red-500'
-              : 'border-neutral-300 dark:border-neutral-700 focus:ring-neutral-500',
+              : 'border-neutral-300 focus:ring-neutral-500 dark:border-neutral-700',
             className
           )}
           aria-invalid={error ? 'true' : 'false'}
@@ -88,7 +88,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           <label
             htmlFor={textareaId}
             className={cn(
-              'block text-sm font-medium mb-2',
+              'mb-2 block text-sm font-medium',
               'text-neutral-700 dark:text-neutral-300'
             )}
           >
@@ -101,7 +101,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           className={cn(
             'w-full px-4 py-3',
             'bg-white dark:bg-neutral-900',
-            'border rounded-lg',
+            'rounded-lg border',
             'text-neutral-900 dark:text-neutral-100',
             'placeholder:text-neutral-500',
             'transition-colors duration-200',
@@ -110,7 +110,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             'min-h-[120px]',
             error
               ? 'border-red-500 focus:ring-red-500'
-              : 'border-neutral-300 dark:border-neutral-700 focus:ring-neutral-500',
+              : 'border-neutral-300 focus:ring-neutral-500 dark:border-neutral-700',
             className
           )}
           aria-invalid={error ? 'true' : 'false'}

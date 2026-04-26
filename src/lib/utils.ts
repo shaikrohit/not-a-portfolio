@@ -123,7 +123,7 @@ export function getCountryFromTimezone(): string {
       'Pacific/Auckland': 'New Zealand',
       // Add more as needed
     };
-    
+
     return countryMap[timezone] || 'Unknown';
   } catch {
     return 'Unknown';

@@ -4,14 +4,14 @@
  * ============================================================================
  * EXPERIENCE SECTION (Recruiter)
  * ============================================================================
- * 
+ *
  * @description Work experience with achievements.
  *              Part of the Recruiter path.
- * 
+ *
  * @usage
  * ```tsx
  * import { ExperienceSection } from '@/components/sections/recruiter';
- * 
+ *
  * <ExperienceSection />
  * ```
  * ============================================================================
@@ -29,18 +29,14 @@ import { experience } from '@/content';
 
 /**
  * ExperienceCard
- * 
+ *
  * Shows a single job with expandable achievements.
  */
-function ExperienceCard({ job }: { job: typeof experience[0] }) {
+function ExperienceCard({ job }: { job: (typeof experience)[0] }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <Card 
-      variant="interactive" 
-      padding="none" 
-      onClick={() => setIsExpanded(!isExpanded)}
-    >
+    <Card variant="interactive" padding="none" onClick={() => setIsExpanded(!isExpanded)}>
       <div className="p-6">
         {/* Header */}
         <div className="flex items-start justify-between gap-4">
@@ -49,26 +45,26 @@ function ExperienceCard({ job }: { job: typeof experience[0] }) {
             <Text variant="h4" className="mb-1">
               {job.role}
             </Text>
-            
+
             {/* Company + Duration */}
             <div className="flex flex-wrap items-center gap-4 text-sm text-neutral-500">
               <span className="flex items-center gap-1">
-                <Building2 className="w-4 h-4" />
+                <Building2 className="h-4 w-4" />
                 {job.company}
               </span>
               <span className="flex items-center gap-1">
-                <Calendar className="w-4 h-4" />
+                <Calendar className="h-4 w-4" />
                 {job.period}
               </span>
             </div>
           </div>
-          
+
           {/* Expand Icon */}
           <motion.div
             animate={{ rotate: isExpanded ? 180 : 0 }}
-            className="text-neutral-400 flex-shrink-0"
+            className="flex-shrink-0 text-neutral-400"
           >
-            <ChevronDown className="w-5 h-5" />
+            <ChevronDown className="h-5 w-5" />
           </motion.div>
         </div>
 
@@ -79,14 +75,14 @@ function ExperienceCard({ job }: { job: typeof experience[0] }) {
 
         {/* Expandable: Achievements */}
         <Reveal show={isExpanded}>
-          <div className="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-800">
-            <Text variant="caption" className="uppercase tracking-wider mb-3">
+          <div className="mt-4 border-t border-neutral-200 pt-4 dark:border-neutral-800">
+            <Text variant="caption" className="mb-3 uppercase tracking-wider">
               Key Achievements
             </Text>
             <ul className="space-y-2">
               {job.achievements.map((achievement, index) => (
                 <li key={index} className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent mt-2 flex-shrink-0" />
+                  <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent" />
                   <Text variant="body-small">{achievement}</Text>
                 </li>
               ))}
@@ -104,7 +100,7 @@ function ExperienceCard({ job }: { job: typeof experience[0] }) {
 
 /**
  * ExperienceSection
- * 
+ *
  * Displays work experience with quantified achievements.
  * Designed for recruiters to quickly assess experience.
  */

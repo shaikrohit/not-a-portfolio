@@ -4,7 +4,8 @@ import { createClient } from '@supabase/supabase-js';
 
 function getSupabaseClient() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const supabaseServiceKey =
+    process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (!supabaseUrl || !supabaseServiceKey) {
     return null;
@@ -23,14 +24,14 @@ const memoryScores = [
 export async function submitTriviaScore(username: string, score: number) {
   // Sanitize username
   const cleanUsername = username.trim().slice(0, 25) || 'Anonymous';
-  
+
   const supabase = getSupabaseClient();
   if (!supabase) {
-    memoryScores.push({ 
-      id: Math.random().toString(), 
-      username: cleanUsername, 
-      score, 
-      created_at: new Date().toISOString() 
+    memoryScores.push({
+      id: Math.random().toString(),
+      username: cleanUsername,
+      score,
+      created_at: new Date().toISOString(),
     });
     return { success: true };
   }
@@ -60,7 +61,7 @@ export async function getTriviaLeaderboard() {
       .select('id, username, score, created_at')
       .order('score', { ascending: false })
       .limit(10);
-      
+
     if (error) throw error;
     return data || [];
   } catch (error) {

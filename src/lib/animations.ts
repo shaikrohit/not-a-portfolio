@@ -1,8 +1,8 @@
 /**
  * ANIMATION VARIANTS
- * 
+ *
  * Centralized animation definitions for Framer Motion.
- * 
+ *
  * Design Philosophy:
  * - Animations should feel like breathing: natural, calm, inevitable
  * - Never jarring or attention-seeking

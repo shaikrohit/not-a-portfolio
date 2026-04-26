@@ -2,7 +2,7 @@
 
 /**
  * TEXT COMPONENT
- * 
+ *
  * Semantic text elements with consistent styling.
  * Uses our typography scale and respects the design system.
  */
@@ -10,15 +10,15 @@
 import React, { type ElementType } from 'react';
 import { cn } from '@/lib/utils';
 
-type TextVariant = 
-  | 'h1' 
-  | 'h2' 
-  | 'h3' 
-  | 'h4' 
-  | 'body' 
-  | 'body-large' 
-  | 'body-small' 
-  | 'caption' 
+type TextVariant =
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'body'
+  | 'body-large'
+  | 'body-small'
+  | 'caption'
   | 'overline';
 
 interface TextProps<T extends ElementType = 'p'> {
@@ -58,18 +58,14 @@ const variantStyles: Record<TextVariant, { element: string; styles: string }> = 
   h4: {
     element: 'h4',
     styles: cn(
-      'font-sans text-xl md:text-2xl font-medium',
+      'font-sans text-xl font-medium md:text-2xl',
       'tracking-tight',
       'text-neutral-900 dark:text-neutral-50'
     ),
   },
   body: {
     element: 'p',
-    styles: cn(
-      'font-sans text-base',
-      'leading-relaxed',
-      'text-neutral-700 dark:text-neutral-300'
-    ),
+    styles: cn('font-sans text-base', 'leading-relaxed', 'text-neutral-700 dark:text-neutral-300'),
   },
   'body-large': {
     element: 'p',
@@ -81,23 +77,16 @@ const variantStyles: Record<TextVariant, { element: string; styles: string }> = 
   },
   'body-small': {
     element: 'p',
-    styles: cn(
-      'font-sans text-sm',
-      'leading-relaxed',
-      'text-neutral-600 dark:text-neutral-400'
-    ),
+    styles: cn('font-sans text-sm', 'leading-relaxed', 'text-neutral-600 dark:text-neutral-400'),
   },
   caption: {
     element: 'span',
-    styles: cn(
-      'font-sans text-xs',
-      'text-neutral-500 dark:text-neutral-500'
-    ),
+    styles: cn('font-sans text-xs', 'text-neutral-500 dark:text-neutral-500'),
   },
   overline: {
     element: 'span',
     styles: cn(
-      'font-sans text-xs uppercase tracking-wider font-medium',
+      'font-sans text-xs font-medium uppercase tracking-wider',
       'text-neutral-500 dark:text-neutral-500'
     ),
   },
@@ -168,7 +157,7 @@ export function HighlightedText({
     <span
       className={cn(
         'bg-accent/10 text-accent-dark dark:text-accent-light',
-        'px-1 py-0.5 rounded',
+        'rounded px-1 py-0.5',
         className
       )}
     >

@@ -2,7 +2,7 @@
 
 /**
  * CARD COMPONENT
- * 
+ *
  * Clean, minimal card with optional interactivity.
  * Used for projects, skills, and content blocks.
  */
@@ -20,24 +20,15 @@ interface CardProps extends HTMLMotionProps<'div'> {
 }
 
 const variantStyles = {
-  default: cn(
-    'bg-white dark:bg-neutral-900',
-    'border border-neutral-200 dark:border-neutral-800'
-  ),
+  default: cn('bg-white dark:bg-neutral-900', 'border border-neutral-200 dark:border-neutral-800'),
   interactive: cn(
     'bg-white dark:bg-neutral-900',
     'border border-neutral-200 dark:border-neutral-800',
     'hover:border-neutral-300 dark:hover:border-neutral-700',
     'cursor-pointer'
   ),
-  bordered: cn(
-    'bg-transparent',
-    'border border-neutral-300 dark:border-neutral-700'
-  ),
-  ghost: cn(
-    'bg-neutral-50 dark:bg-neutral-900/50',
-    'border border-transparent'
-  ),
+  bordered: cn('bg-transparent', 'border border-neutral-300 dark:border-neutral-700'),
+  ghost: cn('bg-neutral-50 dark:bg-neutral-900/50', 'border border-transparent'),
 };
 
 const paddingStyles = {
@@ -82,11 +73,7 @@ export function CardHeader({
   className?: string;
   children: React.ReactNode;
 }) {
-  return (
-    <div className={cn('mb-4', className)}>
-      {children}
-    </div>
-  );
+  return <div className={cn('mb-4', className)}>{children}</div>;
 }
 
 /**
@@ -113,7 +100,7 @@ export function CardFooter({
   children: React.ReactNode;
 }) {
   return (
-    <div className={cn('mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-800', className)}>
+    <div className={cn('mt-4 border-t border-neutral-200 pt-4 dark:border-neutral-800', className)}>
       {children}
     </div>
   );

@@ -4,14 +4,14 @@
  * ============================================================================
  * LEARNINGS SECTION (Student)
  * ============================================================================
- * 
+ *
  * @description Key resources and learning recommendations.
  *              Part of the Student path.
- * 
+ *
  * @usage
  * ```tsx
  * import { LearningsSection } from '@/components/sections/student';
- * 
+ *
  * <LearningsSection />
  * ```
  * ============================================================================
@@ -91,7 +91,7 @@ const resourceCategories: CategoryData[] = [
         type: 'book',
       },
       {
-        name: 'You Don\'t Know JS',
+        name: "You Don't Know JS",
         url: 'https://github.com/getify/You-Dont-Know-JS',
         description: 'Deep dive into JavaScript mechanics.',
         type: 'book',
@@ -106,28 +106,23 @@ const resourceCategories: CategoryData[] = [
 
 /**
  * ResourceCard
- * 
+ *
  * Shows a single learning resource.
  */
 function ResourceCard({ resource }: { resource: Resource }) {
   return (
-    <a
-      href={resource.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="block group"
-    >
+    <a href={resource.url} target="_blank" rel="noopener noreferrer" className="group block">
       <Card variant="interactive" padding="md">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <Text variant="h4" as="h3" className="mb-1 group-hover:text-accent transition-colors">
+            <Text variant="h4" as="h3" className="mb-1 transition-colors group-hover:text-accent">
               {resource.name}
             </Text>
             <Text variant="body-small" muted>
               {resource.description}
             </Text>
           </div>
-          <ExternalLink className="w-4 h-4 text-neutral-400 group-hover:text-accent transition-colors flex-shrink-0" />
+          <ExternalLink className="h-4 w-4 flex-shrink-0 text-neutral-400 transition-colors group-hover:text-accent" />
         </div>
       </Card>
     </a>
@@ -136,7 +131,7 @@ function ResourceCard({ resource }: { resource: Resource }) {
 
 /**
  * ResourceCategory
- * 
+ *
  * A category of learning resources.
  */
 function ResourceCategory({ category }: { category: CategoryData }) {
@@ -145,13 +140,13 @@ function ResourceCategory({ category }: { category: CategoryData }) {
   return (
     <div>
       {/* Category Header */}
-      <div className="flex items-center gap-2 mb-4">
-        <Icon className="w-5 h-5 text-accent" />
+      <div className="mb-4 flex items-center gap-2">
+        <Icon className="h-5 w-5 text-accent" />
         <Text variant="h3" className="text-lg">
           {category.category}
         </Text>
       </div>
-      
+
       {/* Resources */}
       <div className="space-y-3">
         {category.items.map((resource) => (
@@ -168,7 +163,7 @@ function ResourceCategory({ category }: { category: CategoryData }) {
 
 /**
  * LearningsSection
- * 
+ *
  * Curated learning resources for students.
  * Organized by category with direct links.
  */
@@ -177,20 +172,20 @@ export function LearningsSection() {
     <section className="section bg-neutral-50 dark:bg-neutral-900/50">
       <div className="container-narrow">
         {/* Header */}
-        <FadeIn className="text-center mb-12">
+        <FadeIn className="mb-12 text-center">
           <Text variant="overline" className="mb-4">
             Recommendations
           </Text>
           <Text variant="h2" className="mb-4" balance>
             Learning Resources
           </Text>
-          <Text variant="body-large" muted className="max-w-xl mx-auto">
+          <Text variant="body-large" muted className="mx-auto max-w-xl">
             The resources I wish I knew about when I started.
           </Text>
         </FadeIn>
 
         {/* Categories Grid */}
-        <StaggerChildren className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <StaggerChildren className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {resourceCategories.map((category) => (
             <StaggerItem key={category.category}>
               <ResourceCategory category={category} />
@@ -200,16 +195,16 @@ export function LearningsSection() {
 
         {/* Pro Tips */}
         <FadeIn className="mt-12">
-          <Card padding="lg" className="bg-accent/5 border-accent/20">
+          <Card padding="lg" className="border-accent/20 bg-accent/5">
             <div className="flex items-start gap-4">
-              <Lightbulb className="w-6 h-6 text-accent flex-shrink-0" />
+              <Lightbulb className="h-6 w-6 flex-shrink-0 text-accent" />
               <div>
                 <Text variant="h4" className="mb-2">
                   Pro Tip: Learn by Building
                 </Text>
                 <Text variant="body" muted>
-                  Don't just watch tutorials—build projects. Start with something 
-                  simple and gradually add features. That's how real learning happens.
+                  Don't just watch tutorials—build projects. Start with something simple and
+                  gradually add features. That's how real learning happens.
                 </Text>
               </div>
             </div>

@@ -2,16 +2,16 @@
  * ============================================================================
  * DEVELOPER SECTIONS - INDEX
  * ============================================================================
- * 
+ *
  * @description Exports all Developer path sections.
  *              These are shown when visitor selects "Developer" type.
- * 
+ *
  * @usage
  * ```tsx
- * import { 
- *   PhilosophySection, 
- *   TechStackSection, 
- *   ProjectsSection 
+ * import {
+ *   PhilosophySection,
+ *   TechStackSection,
+ *   ProjectsSection
  * } from '@/components/sections/developer';
  * ```
  * ============================================================================

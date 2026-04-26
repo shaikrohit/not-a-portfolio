@@ -4,7 +4,7 @@
  * ============================================================================
  * SHAIK ROHIT - PROFESSIONAL PORTFOLIO
  * ============================================================================
- * 
+ *
  * Modular, Accessible, and High-Performance Portfolio Orchestrator.
  * Designed with a focus on Cybersecurity and Full Stack Development.
  */
@@ -35,28 +35,28 @@ export default function HomePage() {
       <MorphingBackground />
       <CursorGlow />
       <ScrollProgress />
-      
+
       {/* Navigation */}
       <Navigation />
-      
+
       {/* Hero Experience */}
       <HeroSection />
-      
+
       {/* Tailored Journeys */}
       <PathSelectionSection />
-      
+
       {/* Core Content */}
       <AboutSection />
       <ExperienceSection />
       <ProjectsSection />
       <SkillsSection />
-      
+
       {/* Engagement */}
       <TriviaGame />
-      
+
       {/* Call to Action */}
       <ContactSection />
-      
+
       {/* Footer */}
       <Footer />
     </main>

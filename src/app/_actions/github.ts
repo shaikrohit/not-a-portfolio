@@ -39,13 +39,16 @@ export async function getGitHubProjects(username: string): Promise<GitHubRepo[]>
   }
 
   try {
-    const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`, {
-      next: { revalidate: 3600 }, // Cache for 1 hour for efficiency
-      headers: {
-        'Accept': 'application/vnd.github.v3+json',
-        // Optional: process.env.GITHUB_TOKEN ? { 'Authorization': `token ${process.env.GITHUB_TOKEN}` } : {}
+    const response = await fetch(
+      `https://api.github.com/users/${username}/repos?sort=updated&per_page=100`,
+      {
+        next: { revalidate: 3600 }, // Cache for 1 hour for efficiency
+        headers: {
+          Accept: 'application/vnd.github.v3+json',
+          // Optional: process.env.GITHUB_TOKEN ? { 'Authorization': `token ${process.env.GITHUB_TOKEN}` } : {}
+        },
       }
-    });
+    );
 
     if (!response.ok) {
       if (response.status === 404) return [];
@@ -61,7 +64,10 @@ export async function getGitHubProjects(username: string): Promise<GitHubRepo[]>
         if (b.stargazers_count !== a.stargazers_count) {
           return b.stargazers_count - a.stargazers_count;
         }
-        return new Date(b.updated_at || b.pushed_at || '').getTime() - new Date(a.updated_at || a.pushed_at || '').getTime();
+        return (
+          new Date(b.updated_at || b.pushed_at || '').getTime() -
+          new Date(a.updated_at || a.pushed_at || '').getTime()
+        );
       })
       .slice(0, 6);
   } catch (error) {

@@ -4,22 +4,22 @@
  * ============================================================================
  * STUDENT PATH - Q&A STEP (FINAL)
  * ============================================================================
- * 
+ *
  * Frequently asked questions with detailed answers,
  * and connection options for further help.
  */
 
 import React, { useState, memo } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  MessageCircle, 
+import {
+  MessageCircle,
   ChevronDown,
   Mail,
   Twitter,
   ArrowRight,
   Check,
   Sparkles,
-  Heart
+  Heart,
 } from 'lucide-react';
 
 // ============================================================================
@@ -85,7 +85,7 @@ Your portfolio doesn't need 50 projects. 3-4 solid projects with clean code and 
   },
   {
     id: '6',
-    question: 'Is it too late to start? (I\'m [age] years old)',
+    question: "Is it too late to start? (I'm [age] years old)",
     answer: `It's never too late. I've mentored career changers in their 30s, 40s, and 50s who are now working as developers. Age is an advantage—you bring life experience, work ethic, and perspective that 22-year-olds don't have.
 
 The tech industry needs diverse perspectives. Start today.`,
@@ -125,7 +125,7 @@ const FAQItem = memo(function FAQItem({ faq, isOpen, onToggle, index }: FAQItemP
     >
       <button
         onClick={onToggle}
-        className="w-full py-5 flex items-center justify-between gap-4 text-left hover:bg-white/[0.01] transition-colors"
+        className="flex w-full items-center justify-between gap-4 py-5 text-left transition-colors hover:bg-white/[0.01]"
       >
         <span className="font-medium text-white">{faq.question}</span>
         <motion.div
@@ -133,7 +133,7 @@ const FAQItem = memo(function FAQItem({ faq, isOpen, onToggle, index }: FAQItemP
           transition={{ duration: 0.2 }}
           className="flex-shrink-0"
         >
-          <ChevronDown className="w-5 h-5 text-white/30" />
+          <ChevronDown className="h-5 w-5 text-white/30" />
         </motion.div>
       </button>
 
@@ -146,9 +146,7 @@ const FAQItem = memo(function FAQItem({ faq, isOpen, onToggle, index }: FAQItemP
         transition={{ duration: 0.3 }}
         className="overflow-hidden"
       >
-        <p className="pb-5 text-white/50 whitespace-pre-line leading-relaxed">
-          {faq.answer}
-        </p>
+        <p className="whitespace-pre-line pb-5 leading-relaxed text-white/50">{faq.answer}</p>
       </motion.div>
     </motion.div>
   );
@@ -178,30 +176,30 @@ export function StudentQA({ onComplete }: StudentQAProps) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="flex-1 py-8 px-4">
-        <div className="max-w-4xl mx-auto">
+    <div className="flex min-h-screen flex-col">
+      <div className="flex-1 px-4 py-8">
+        <div className="mx-auto max-w-4xl">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-10"
+            className="mb-10 text-center"
           >
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: 'spring' }}
-              className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-xl shadow-blue-500/30 mb-6"
+              className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-xl shadow-blue-500/30"
             >
-              <MessageCircle className="w-8 h-8 text-white" />
+              <MessageCircle className="h-8 w-8 text-white" />
             </motion.div>
 
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <h1 className="mb-4 text-3xl font-bold text-white md:text-4xl">
               Frequently Asked Questions
             </h1>
-            <p className="text-white/50 max-w-2xl mx-auto">
-              Questions I hear from aspiring developers all the time.
-              Click any question to see my honest answer.
+            <p className="mx-auto max-w-2xl text-white/50">
+              Questions I hear from aspiring developers all the time. Click any question to see my
+              honest answer.
             </p>
           </motion.div>
 
@@ -210,7 +208,7 @@ export function StudentQA({ onComplete }: StudentQAProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="rounded-2xl bg-white/[0.02] border border-white/5 px-6"
+            className="rounded-2xl border border-white/5 bg-white/[0.02] px-6"
           >
             {faqs.map((faq, index) => (
               <FAQItem
@@ -228,33 +226,29 @@ export function StudentQA({ onComplete }: StudentQAProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="mt-10 p-6 rounded-2xl bg-gradient-to-r from-blue-500/10 to-blue-600/10 border border-blue-500/20"
+            className="mt-10 rounded-2xl border border-blue-500/20 bg-gradient-to-r from-blue-500/10 to-blue-600/10 p-6"
           >
-            <div className="text-center mb-6">
-              <Sparkles className="w-8 h-8 text-blue-400 mx-auto mb-3" />
-              <h3 className="text-xl font-semibold text-white mb-2">
-                Have More Questions?
-              </h3>
-              <p className="text-white/50">
-                I'm always happy to help fellow learners. Reach out!
-              </p>
+            <div className="mb-6 text-center">
+              <Sparkles className="mx-auto mb-3 h-8 w-8 text-blue-400" />
+              <h3 className="mb-2 text-xl font-semibold text-white">Have More Questions?</h3>
+              <p className="text-white/50">I'm always happy to help fellow learners. Reach out!</p>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
               <a
                 href="mailto:hello@example.com?subject=Question from a Student"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white transition-colors"
+                className="inline-flex items-center gap-2 rounded-xl bg-white/5 px-5 py-3 text-white transition-colors hover:bg-white/10"
               >
-                <Mail className="w-5 h-5" />
+                <Mail className="h-5 w-5" />
                 Send an Email
               </a>
               <a
                 href="https://twitter.com/username"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white transition-colors"
+                className="inline-flex items-center gap-2 rounded-xl bg-white/5 px-5 py-3 text-white transition-colors hover:bg-white/10"
               >
-                <Twitter className="w-5 h-5" />
+                <Twitter className="h-5 w-5" />
                 DM on Twitter
               </a>
             </div>
@@ -267,8 +261,8 @@ export function StudentQA({ onComplete }: StudentQAProps) {
             transition={{ delay: 0.5 }}
             className="mt-8 text-center"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20">
-              <Heart className="w-4 h-4 text-blue-400" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-4 py-2">
+              <Heart className="h-4 w-4 text-blue-400" />
               <span className="text-sm text-blue-300">You've got this. Believe in yourself.</span>
             </div>
           </motion.div>
@@ -276,24 +270,24 @@ export function StudentQA({ onComplete }: StudentQAProps) {
       </div>
 
       {/* Bottom Action */}
-      <div className="sticky bottom-0 glass-strong border-t border-white/5">
-        <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-center">
+      <div className="glass-strong sticky bottom-0 border-t border-white/5">
+        <div className="mx-auto flex max-w-4xl items-center justify-center px-4 py-4">
           {showSuccess ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               className="flex items-center gap-3 text-green-400"
             >
-              <Check className="w-5 h-5" />
+              <Check className="h-5 w-5" />
               <span className="font-medium">Journey Complete! Good luck! 🎉</span>
             </motion.div>
           ) : (
             <button
               onClick={handleComplete}
-              className="group inline-flex items-center gap-3 px-8 py-4 rounded-xl font-medium text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 transition-all duration-300 shadow-xl shadow-blue-500/30"
+              className="group inline-flex items-center gap-3 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-4 font-medium text-white shadow-xl shadow-blue-500/30 transition-all duration-300 hover:from-blue-500 hover:to-blue-400"
             >
               <span className="text-lg">Complete Student Journey</span>
-              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </button>
           )}
         </div>

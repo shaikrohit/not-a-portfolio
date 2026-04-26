@@ -21,7 +21,7 @@ Most portfolios are museums: static displays meant to be observed. This project 
 - A **student** is looking for genuine guidance
 - An **explorer** is just curious
 
-Instead of making everyone wade through the same content, this site asks one question at the start: *"Who are you?"*
+Instead of making everyone wade through the same content, this site asks one question at the start: _"Who are you?"_
 
 Then it adapts.
 
@@ -43,12 +43,12 @@ This single interaction shapes the entire journey.
 
 ### Adaptive Paths
 
-| Path | Focus | Content |
-|------|-------|---------|
-| **Developer** | How you think | Engineering philosophy, architecture decisions, tech reasoning |
-| **Recruiter** | What you've done | Clear metrics, skills → outcomes mapping, one-click resume |
-| **Student** | How you learned | Honest mistakes, hard-won lessons, genuine encouragement |
-| **Explorer** | Who you are | Curiosity-driven exploration, serendipitous discovery |
+| Path          | Focus            | Content                                                        |
+| ------------- | ---------------- | -------------------------------------------------------------- |
+| **Developer** | How you think    | Engineering philosophy, architecture decisions, tech reasoning |
+| **Recruiter** | What you've done | Clear metrics, skills → outcomes mapping, one-click resume     |
+| **Student**   | How you learned  | Honest mistakes, hard-won lessons, genuine encouragement       |
+| **Explorer**  | Who you are      | Curiosity-driven exploration, serendipitous discovery          |
 
 ### Interaction Over Consumption
 
@@ -67,23 +67,23 @@ This project follows strict modern practices. No legacy debt. No deprecated depe
 
 ### Core Technologies
 
-| Layer | Technology | Version | Reasoning |
-|-------|------------|---------|-----------|
-| Framework | Next.js | 14.2+ | App Router, Server Components, Edge-ready |
-| Runtime | React | 18.3+ | Concurrent features, Server Components |
-| Language | TypeScript | 5.7+ | Strict mode, latest type features |
-| Styling | Tailwind CSS | 3.4+ | JIT compilation, design tokens |
-| Animation | Framer Motion | 11+ | Layout animations, gesture support |
-| State | Zustand | 5+ | Minimal, TypeScript-native |
-| Database | Supabase | 2.45+ | Postgres, RLS, Edge Functions |
+| Layer     | Technology    | Version | Reasoning                                 |
+| --------- | ------------- | ------- | ----------------------------------------- |
+| Framework | Next.js       | 14.2+   | App Router, Server Components, Edge-ready |
+| Runtime   | React         | 18.3+   | Concurrent features, Server Components    |
+| Language  | TypeScript    | 5.7+    | Strict mode, latest type features         |
+| Styling   | Tailwind CSS  | 3.4+    | JIT compilation, design tokens            |
+| Animation | Framer Motion | 11+     | Layout animations, gesture support        |
+| State     | Zustand       | 5+      | Minimal, TypeScript-native                |
+| Database  | Supabase      | 2.45+   | Postgres, RLS, Edge Functions             |
 
 ### Quality Tooling
 
-| Tool | Version | Purpose |
-|------|---------|---------|
-| ESLint | 9+ | **Flat config**, type-aware linting |
-| Prettier | 3.4+ | Consistent formatting |
-| TypeScript ESLint | 8+ | Modern parser, strict checks |
+| Tool              | Version | Purpose                             |
+| ----------------- | ------- | ----------------------------------- |
+| ESLint            | 9+      | **Flat config**, type-aware linting |
+| Prettier          | 3.4+    | Consistent formatting               |
+| TypeScript ESLint | 8+      | Modern parser, strict checks        |
 
 ### Why These Specific Versions?
 
@@ -267,6 +267,7 @@ vercel
 ### Environment Setup
 
 In Vercel dashboard:
+
 1. Add environment variables from `.env.example`
 2. Enable Edge runtime for API routes
 3. Configure custom domain
@@ -277,17 +278,17 @@ In Vercel dashboard:
 
 This project explicitly avoids:
 
-| ❌ Legacy | ✅ Modern |
-|-----------|-----------|
-| `.eslintrc.json` | `eslint.config.mjs` (flat config) |
-| ESLint 8 | ESLint 9 |
-| Pages Router | App Router |
-| `getServerSideProps` | Server Components |
-| Class components | Function components |
-| `useEffect` for data | Server Actions |
-| Moment.js | date-fns |
-| Lodash | Native methods |
-| Node 18 | Node 20+ |
+| ❌ Legacy            | ✅ Modern                         |
+| -------------------- | --------------------------------- |
+| `.eslintrc.json`     | `eslint.config.mjs` (flat config) |
+| ESLint 8             | ESLint 9                          |
+| Pages Router         | App Router                        |
+| `getServerSideProps` | Server Components                 |
+| Class components     | Function components               |
+| `useEffect` for data | Server Actions                    |
+| Moment.js            | date-fns                          |
+| Lodash               | Native methods                    |
+| Node 18              | Node 20+                          |
 
 ---
 
@@ -302,6 +303,7 @@ This project explicitly avoids:
 ### Migration Path
 
 When Next.js 15 releases:
+
 - Review breaking changes
 - Update in feature branch
 - Run full test suite

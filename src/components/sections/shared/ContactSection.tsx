@@ -4,14 +4,14 @@
  * ============================================================================
  * CONTACT SECTION (Shared)
  * ============================================================================
- * 
+ *
  * @description Contact form and social links.
  *              Shared between Developer, Recruiter, Student, and Explorer.
- * 
+ *
  * @usage
  * ```tsx
  * import { ContactSection } from '@/components/sections/shared';
- * 
+ *
  * <ContactSection />
  * ```
  * ============================================================================
@@ -49,7 +49,7 @@ const socialLinks: SocialLink[] = [
 
 /**
  * SocialCard
- * 
+ *
  * A social media link card.
  */
 function SocialCard({ link }: { link: SocialLink }) {
@@ -63,8 +63,8 @@ function SocialCard({ link }: { link: SocialLink }) {
       className="group"
     >
       <Card variant="interactive" padding="md" className="flex items-center gap-3">
-        <Icon className="w-5 h-5 text-neutral-500 group-hover:text-accent transition-colors" />
-        <Text variant="body" className="group-hover:text-accent transition-colors">
+        <Icon className="h-5 w-5 text-neutral-500 transition-colors group-hover:text-accent" />
+        <Text variant="body" className="transition-colors group-hover:text-accent">
           {link.name}
         </Text>
       </Card>
@@ -74,7 +74,7 @@ function SocialCard({ link }: { link: SocialLink }) {
 
 /**
  * ContactForm
- * 
+ *
  * Simple contact form with validation.
  */
 function ContactForm() {
@@ -89,10 +89,10 @@ function ContactForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
+
     // Simulate form submission
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    
+
     setIsLoading(false);
     setIsSubmitted(true);
   };
@@ -100,7 +100,7 @@ function ContactForm() {
   if (isSubmitted) {
     return (
       <Card padding="lg" className="text-center">
-        <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
+        <CheckCircle className="mx-auto mb-4 h-12 w-12 text-green-500" />
         <Text variant="h3" className="mb-2">
           Message Sent!
         </Text>
@@ -130,9 +130,9 @@ function ContactForm() {
           required
         />
         <div>
-          <label className="block text-sm font-medium mb-2">Message</label>
+          <label className="mb-2 block text-sm font-medium">Message</label>
           <textarea
-            className="w-full px-4 py-3 bg-neutral-100 dark:bg-neutral-900 border border-transparent rounded-lg focus:border-accent focus:outline-none resize-none"
+            className="w-full resize-none rounded-lg border border-transparent bg-neutral-100 px-4 py-3 focus:border-accent focus:outline-none dark:bg-neutral-900"
             rows={4}
             placeholder="Your message..."
             value={formState.message}
@@ -145,7 +145,7 @@ function ContactForm() {
           variant="primary"
           fullWidth
           disabled={isLoading}
-          leftIcon={<Send className="w-4 h-4" />}
+          leftIcon={<Send className="h-4 w-4" />}
         >
           {isLoading ? 'Sending...' : 'Send Message'}
         </Button>
@@ -160,7 +160,7 @@ function ContactForm() {
 
 /**
  * ContactSection
- * 
+ *
  * Contact form and social links.
  * Shown on all visitor paths at the bottom.
  */
@@ -169,20 +169,19 @@ export function ContactSection() {
     <section className="section bg-neutral-50 dark:bg-neutral-900/50">
       <div className="container-narrow">
         {/* Header */}
-        <FadeIn className="text-center mb-12">
+        <FadeIn className="mb-12 text-center">
           <Text variant="overline" className="mb-4">
             Get in Touch
           </Text>
           <Text variant="h2" className="mb-4" balance>
             Let's Connect
           </Text>
-          <Text variant="body-large" muted className="max-w-xl mx-auto">
-            Have a question, project idea, or just want to say hi?
-            I'd love to hear from you.
+          <Text variant="body-large" muted className="mx-auto max-w-xl">
+            Have a question, project idea, or just want to say hi? I'd love to hear from you.
           </Text>
         </FadeIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
           {/* Left: Contact Form */}
           <FadeIn>
             <ContactForm />

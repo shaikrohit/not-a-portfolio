@@ -4,7 +4,7 @@
  * ============================================================================
  * DEVELOPER PATH - PREMIUM TERMINAL AESTHETIC
  * ============================================================================
- * 
+ *
  * Inspired by GitHub, Linear, and VS Code.
  * Features animated terminal, syntax highlighting, and code aesthetics.
  */
@@ -65,46 +65,44 @@ function AnimatedTerminal() {
   }, []);
 
   return (
-    <div className="relative group">
+    <div className="group relative">
       {/* Glow effect */}
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 rounded-2xl opacity-20 blur-xl group-hover:opacity-30 transition duration-500" />
-      
+      <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 opacity-20 blur-xl transition duration-500 group-hover:opacity-30" />
+
       {/* Terminal Window */}
-      <div className="relative rounded-2xl overflow-hidden border border-white/10">
+      <div className="relative overflow-hidden rounded-2xl border border-white/10">
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 bg-[#0d1117] border-b border-white/5">
+        <div className="flex items-center justify-between border-b border-white/5 bg-[#0d1117] px-4 py-3">
           <div className="flex items-center gap-2">
             <div className="flex gap-1.5">
-              <div className="w-3 h-3 rounded-full bg-[#ff5f56] shadow-[0_0_8px_rgba(255,95,86,0.4)]" />
-              <div className="w-3 h-3 rounded-full bg-[#ffbd2e] shadow-[0_0_8px_rgba(255,189,46,0.4)]" />
-              <div className="w-3 h-3 rounded-full bg-[#27c93f] shadow-[0_0_8px_rgba(39,201,63,0.4)]" />
+              <div className="h-3 w-3 rounded-full bg-[#ff5f56] shadow-[0_0_8px_rgba(255,95,86,0.4)]" />
+              <div className="h-3 w-3 rounded-full bg-[#ffbd2e] shadow-[0_0_8px_rgba(255,189,46,0.4)]" />
+              <div className="h-3 w-3 rounded-full bg-[#27c93f] shadow-[0_0_8px_rgba(39,201,63,0.4)]" />
             </div>
-            <span className="ml-4 text-xs text-white/30 font-mono">developer.ts</span>
+            <span className="ml-4 font-mono text-xs text-white/30">developer.ts</span>
           </div>
           <div className="flex items-center gap-2">
-            <GitBranch className="w-3 h-3 text-white/20" />
-            <span className="text-xs text-white/20 font-mono">main</span>
+            <GitBranch className="h-3 w-3 text-white/20" />
+            <span className="font-mono text-xs text-white/20">main</span>
           </div>
         </div>
 
         {/* Code Content */}
-        <div className="p-6 bg-gradient-to-b from-[#0d1117] to-[#010409] min-h-[400px] overflow-hidden">
+        <div className="min-h-[400px] overflow-hidden bg-gradient-to-b from-[#0d1117] to-[#010409] p-6">
           <pre className="font-mono text-sm leading-relaxed">
             <code>
               {displayedCode.split('\n').map((line, i) => (
-                <motion.div 
-                  key={i} 
+                <motion.div
+                  key={i}
                   className="flex"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.1 }}
                 >
-                  <span className="w-8 text-white/20 select-none text-right pr-4 flex-shrink-0">
+                  <span className="w-8 flex-shrink-0 select-none pr-4 text-right text-white/20">
                     {i + 1}
                   </span>
-                  <span className="flex-1">
-                    {highlightSyntax(line)}
-                  </span>
+                  <span className="flex-1">{highlightSyntax(line)}</span>
                 </motion.div>
               ))}
             </code>
@@ -115,15 +113,18 @@ function AnimatedTerminal() {
             <motion.span
               animate={{ opacity: [1, 0] }}
               transition={{ duration: 0.5, repeat: Infinity }}
-              className="inline-block w-2 h-5 bg-cyan-400 ml-12 shadow-[0_0_10px_rgba(0,212,255,0.5)]"
+              className="ml-12 inline-block h-5 w-2 bg-cyan-400 shadow-[0_0_10px_rgba(0,212,255,0.5)]"
             />
           )}
         </div>
 
         {/* Footer Stats */}
-        <div className="flex items-center justify-between px-4 py-2 bg-[#161b22] border-t border-white/5 text-xs text-white/30 font-mono">
+        <div className="flex items-center justify-between border-t border-white/5 bg-[#161b22] px-4 py-2 font-mono text-xs text-white/30">
           <span>TypeScript</span>
-          <span>Line {currentLine}, Col {displayedCode.length > 0 ? displayedCode.split('\n').pop()?.length || 0 : 0}</span>
+          <span>
+            Line {currentLine}, Col{' '}
+            {displayedCode.length > 0 ? displayedCode.split('\n').pop()?.length || 0 : 0}
+          </span>
         </div>
       </div>
 
@@ -132,7 +133,7 @@ function AnimatedTerminal() {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 2, duration: 0.5 }}
-        className="absolute -right-4 top-20 px-3 py-1.5 rounded-lg bg-green-500/20 border border-green-500/30 text-green-400 text-xs font-medium"
+        className="absolute -right-4 top-20 rounded-lg border border-green-500/30 bg-green-500/20 px-3 py-1.5 text-xs font-medium text-green-400"
       >
         No errors
       </motion.div>
@@ -143,30 +144,60 @@ function AnimatedTerminal() {
 // Enhanced syntax highlighting
 function highlightSyntax(line: string): React.ReactNode {
   if (line.trim().startsWith('//')) {
-    return <span className="text-white/30 italic">{line}</span>;
+    return <span className="italic text-white/30">{line}</span>;
   }
 
-  const keywords = ['const', 'export', 'default', 'true', 'false', 'async', 'await', 'return', 'this'];
-  
+  const keywords = [
+    'const',
+    'export',
+    'default',
+    'true',
+    'false',
+    'async',
+    'await',
+    'return',
+    'this',
+  ];
+
   // Simple tokenization
   const tokens = line.split(/(\s+|[{}[\](),.:;]|"[^"]*")/);
-  
+
   return (
     <>
       {tokens.map((token, i) => {
         if (token.startsWith('"') && token.endsWith('"')) {
-          return <span key={i} className="text-[#a5d6ff]">{token}</span>;
+          return (
+            <span key={i} className="text-[#a5d6ff]">
+              {token}
+            </span>
+          );
         }
         if (keywords.includes(token)) {
-          return <span key={i} className="text-[#ff7b72]">{token}</span>;
+          return (
+            <span key={i} className="text-[#ff7b72]">
+              {token}
+            </span>
+          );
         }
         if (token.includes(':')) {
-          return <span key={i} className="text-[#79c0ff]">{token}</span>;
+          return (
+            <span key={i} className="text-[#79c0ff]">
+              {token}
+            </span>
+          );
         }
         if (/^[A-Z]/.test(token)) {
-          return <span key={i} className="text-[#ffa657]">{token}</span>;
+          return (
+            <span key={i} className="text-[#ffa657]">
+              {token}
+            </span>
+          );
         }
-        return <span key={i} className="text-white/80">{token}</span>;
+        return (
+          <span key={i} className="text-white/80">
+            {token}
+          </span>
+        );
       })}
     </>
   );
@@ -201,7 +232,7 @@ const FeatureCard = memo(function FeatureCard({
   feature,
   index,
 }: {
-  feature: typeof features[0];
+  feature: (typeof features)[0];
   index: number;
 }) {
   const Icon = feature.icon;
@@ -211,16 +242,20 @@ const FeatureCard = memo(function FeatureCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1.5 + index * 0.15, duration: 0.5 }}
-      className="group relative p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-cyan-500/30 transition-all duration-500 overflow-hidden"
+      className="group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 transition-all duration-500 hover:border-cyan-500/30"
     >
       {/* Hover glow */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
-      
-      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-4 shadow-lg`}>
-        <Icon className="w-6 h-6 text-white" />
+      <div
+        className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 transition-opacity duration-500 group-hover:opacity-5`}
+      />
+
+      <div
+        className={`h-12 w-12 rounded-xl bg-gradient-to-br ${feature.gradient} mb-4 flex items-center justify-center shadow-lg`}
+      >
+        <Icon className="h-6 w-6 text-white" />
       </div>
-      <h3 className="text-white font-semibold mb-2 text-lg">{feature.title}</h3>
-      <p className="text-sm text-white/50 leading-relaxed">{feature.description}</p>
+      <h3 className="mb-2 text-lg font-semibold text-white">{feature.title}</h3>
+      <p className="text-sm leading-relaxed text-white/50">{feature.description}</p>
     </motion.div>
   );
 });
@@ -242,15 +277,15 @@ export function DeveloperIntro({ onComplete }: DeveloperIntroProps) {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col relative">
+    <div className="relative flex min-h-screen flex-col">
       {/* Background gradient specific to developer path */}
-      <div className="absolute inset-0 bg-gradient-to-b from-cyan-950/20 via-transparent to-transparent pointer-events-none" />
-      <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
-      
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-cyan-950/20 via-transparent to-transparent" />
+      <div className="pointer-events-none absolute left-1/4 top-0 h-[600px] w-[600px] rounded-full bg-cyan-500/10 blur-[120px]" />
+
       {/* Content */}
-      <div className="flex-1 flex items-center py-12 px-4 relative">
-        <div className="max-w-7xl mx-auto w-full">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+      <div className="relative flex flex-1 items-center px-4 py-12">
+        <div className="mx-auto w-full max-w-7xl">
+          <div className="grid items-center gap-16 lg:grid-cols-2">
             {/* Left: Text */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -261,26 +296,26 @@ export function DeveloperIntro({ onComplete }: DeveloperIntroProps) {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 mb-8"
+                className="mb-8 inline-flex items-center gap-2 rounded-full border border-cyan-500/20 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 px-4 py-2"
               >
-                <Terminal className="w-4 h-4 text-cyan-400" />
-                <span className="text-sm text-cyan-300 font-medium">Developer Mode Activated</span>
+                <Terminal className="h-4 w-4 text-cyan-400" />
+                <span className="text-sm font-medium text-cyan-300">Developer Mode Activated</span>
               </motion.div>
 
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-[1.1]">
+              <h1 className="mb-8 text-5xl font-bold leading-[1.1] text-white md:text-6xl lg:text-7xl">
                 Welcome to the{' '}
                 <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
                   Technical Deep Dive
                 </span>
               </h1>
 
-              <p className="text-xl text-white/50 mb-12 leading-relaxed max-w-xl">
-                You've chosen the developer path. Here, we explore code architecture, 
-                engineering philosophy, and the technical decisions behind real-world projects.
+              <p className="mb-12 max-w-xl text-xl leading-relaxed text-white/50">
+                You've chosen the developer path. Here, we explore code architecture, engineering
+                philosophy, and the technical decisions behind real-world projects.
               </p>
 
               {/* Feature Cards */}
-              <div className="grid sm:grid-cols-3 gap-4">
+              <div className="grid gap-4 sm:grid-cols-3">
                 {features.map((feature, index) => (
                   <FeatureCard key={feature.title} feature={feature} index={index} />
                 ))}
@@ -300,13 +335,11 @@ export function DeveloperIntro({ onComplete }: DeveloperIntroProps) {
       </div>
 
       {/* Bottom Action Bar */}
-      <div className="sticky bottom-0 bg-black/80 backdrop-blur-xl border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-4 py-5 flex items-center justify-between">
+      <div className="sticky bottom-0 border-t border-white/5 bg-black/80 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5">
           <div className="flex items-center gap-4">
-            <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-            <p className="text-sm text-white/40">
-              Ready to explore the technical side?
-            </p>
+            <div className="h-2 w-2 animate-pulse rounded-full bg-cyan-400" />
+            <p className="text-sm text-white/40">Ready to explore the technical side?</p>
           </div>
 
           <motion.button
@@ -314,25 +347,20 @@ export function DeveloperIntro({ onComplete }: DeveloperIntroProps) {
             animate={{ opacity: isReady ? 1 : 0.5 }}
             onClick={() => isReady && onComplete()}
             disabled={!isReady}
-            className={`
-              group relative inline-flex items-center gap-3
-              px-8 py-4 rounded-xl
-              font-semibold text-white text-lg
-              transition-all duration-300 overflow-hidden
-              ${isReady
-                ? 'bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 shadow-xl shadow-cyan-500/20 cursor-pointer'
-                : 'bg-white/10 cursor-wait'
-              }
-            `}
+            className={`group relative inline-flex items-center gap-3 overflow-hidden rounded-xl px-8 py-4 text-lg font-semibold text-white transition-all duration-300 ${
+              isReady
+                ? 'cursor-pointer bg-gradient-to-r from-cyan-600 to-blue-600 shadow-xl shadow-cyan-500/20 hover:from-cyan-500 hover:to-blue-500'
+                : 'cursor-wait bg-white/10'
+            } `}
           >
             {isReady ? (
               <>
                 <span className="relative z-10">Start Journey</span>
-                <ArrowRight className="w-5 h-5 relative z-10 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="relative z-10 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </>
             ) : (
               <>
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
                 <span>Initializing...</span>
               </>
             )}

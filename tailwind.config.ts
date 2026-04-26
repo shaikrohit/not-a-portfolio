@@ -11,7 +11,7 @@ const config: Config = {
     extend: {
       /**
        * DESIGN SYSTEM: COLOR PALETTE
-       * 
+       *
        * Philosophy: Restraint over expression.
        * We use a neutral palette with ONE accent color.
        * Colors should feel timeless — not trendy.
@@ -19,17 +19,17 @@ const config: Config = {
       colors: {
         // Neutral palette - carefully selected for readability
         neutral: {
-          50: '#FAFAFA',   // Background light
-          100: '#F5F5F5',  // Surface light
-          200: '#E5E5E5',  // Border light
-          300: '#D4D4D4',  // Muted
-          400: '#A3A3A3',  // Placeholder
-          500: '#737373',  // Secondary text
-          600: '#525252',  // Primary text light mode
-          700: '#404040',  // Strong
-          800: '#262626',  // Background dark
-          900: '#171717',  // Surface dark
-          950: '#0A0A0A',  // Deep dark
+          50: '#FAFAFA', // Background light
+          100: '#F5F5F5', // Surface light
+          200: '#E5E5E5', // Border light
+          300: '#D4D4D4', // Muted
+          400: '#A3A3A3', // Placeholder
+          500: '#737373', // Secondary text
+          600: '#525252', // Primary text light mode
+          700: '#404040', // Strong
+          800: '#262626', // Background dark
+          900: '#171717', // Surface dark
+          950: '#0A0A0A', // Deep dark
         },
         // Single accent color - confident, not flashy
         accent: {
@@ -60,10 +60,10 @@ const config: Config = {
       },
       /**
        * TYPOGRAPHY SYSTEM
-       * 
+       *
        * Font: Inter (humanist sans-serif) for body
        * Serif option: Playfair Display for elegant headings
-       * 
+       *
        * Philosophy: Typography should feel invisible when reading,
        * memorable when glancing.
        */
@@ -74,11 +74,11 @@ const config: Config = {
       },
       fontSize: {
         // Modular scale: 1.25 (major third)
-        'xs': ['0.75rem', { lineHeight: '1rem' }],
-        'sm': ['0.875rem', { lineHeight: '1.25rem' }],
-        'base': ['1rem', { lineHeight: '1.625rem' }],
-        'lg': ['1.125rem', { lineHeight: '1.75rem' }],
-        'xl': ['1.25rem', { lineHeight: '1.875rem' }],
+        xs: ['0.75rem', { lineHeight: '1rem' }],
+        sm: ['0.875rem', { lineHeight: '1.25rem' }],
+        base: ['1rem', { lineHeight: '1.625rem' }],
+        lg: ['1.125rem', { lineHeight: '1.75rem' }],
+        xl: ['1.25rem', { lineHeight: '1.875rem' }],
         '2xl': ['1.5rem', { lineHeight: '2rem' }],
         '3xl': ['1.875rem', { lineHeight: '2.375rem' }],
         '4xl': ['2.25rem', { lineHeight: '2.75rem' }],
@@ -87,36 +87,36 @@ const config: Config = {
       },
       /**
        * SPACING SYSTEM
-       * 
+       *
        * Based on 4px/8px grid.
        * Mathematical consistency creates visual harmony.
        */
       spacing: {
         '0': '0',
-        '1': '0.25rem',   // 4px
-        '2': '0.5rem',    // 8px
-        '3': '0.75rem',   // 12px
-        '4': '1rem',      // 16px
-        '5': '1.25rem',   // 20px
-        '6': '1.5rem',    // 24px
-        '8': '2rem',      // 32px
-        '10': '2.5rem',   // 40px
-        '12': '3rem',     // 48px
-        '16': '4rem',     // 64px
-        '20': '5rem',     // 80px
-        '24': '6rem',     // 96px
-        '32': '8rem',     // 128px
-        '40': '10rem',    // 160px
-        '48': '12rem',    // 192px
-        '56': '14rem',    // 224px
-        '64': '16rem',    // 256px
+        '1': '0.25rem', // 4px
+        '2': '0.5rem', // 8px
+        '3': '0.75rem', // 12px
+        '4': '1rem', // 16px
+        '5': '1.25rem', // 20px
+        '6': '1.5rem', // 24px
+        '8': '2rem', // 32px
+        '10': '2.5rem', // 40px
+        '12': '3rem', // 48px
+        '16': '4rem', // 64px
+        '20': '5rem', // 80px
+        '24': '6rem', // 96px
+        '32': '8rem', // 128px
+        '40': '10rem', // 160px
+        '48': '12rem', // 192px
+        '56': '14rem', // 224px
+        '64': '16rem', // 256px
       },
       /**
        * ANIMATION SYSTEM
-       * 
+       *
        * Philosophy: Animation should feel like breathing.
        * Never jarring. Always purposeful.
-       * 
+       *
        * Timing: We use ease-out for entrances, ease-in for exits.
        * Duration: 200-400ms for micro-interactions, 500-800ms for transitions.
        */
@@ -139,20 +139,20 @@ const config: Config = {
        * LAYOUT
        */
       maxWidth: {
-        'prose': '65ch',
-        'content': '720px',
-        'wide': '1024px',
-        'full': '1280px',
+        prose: '65ch',
+        content: '720px',
+        wide: '1024px',
+        full: '1280px',
       },
       /**
        * SHADOWS
-       * 
+       *
        * Minimal shadows. We prefer borders and spacing.
        */
       boxShadow: {
-        'subtle': '0 1px 2px 0 rgb(0 0 0 / 0.03)',
-        'soft': '0 2px 8px -2px rgb(0 0 0 / 0.08)',
-        'medium': '0 4px 16px -4px rgb(0 0 0 / 0.1)',
+        subtle: '0 1px 2px 0 rgb(0 0 0 / 0.03)',
+        soft: '0 2px 8px -2px rgb(0 0 0 / 0.08)',
+        medium: '0 4px 16px -4px rgb(0 0 0 / 0.1)',
       },
       /**
        * KEYFRAME ANIMATIONS

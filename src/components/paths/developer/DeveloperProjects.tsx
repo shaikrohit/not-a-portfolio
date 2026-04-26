@@ -4,22 +4,22 @@
  * ============================================================================
  * DEVELOPER PATH - PROJECTS STEP
  * ============================================================================
- * 
+ *
  * Featured projects showcase with detailed case studies,
  * technical breakdowns, and interactive previews.
  */
 
 import React, { useState, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ArrowRight, 
-  ExternalLink, 
-  Github, 
-  Code2, 
+import {
+  ArrowRight,
+  ExternalLink,
+  Github,
+  Code2,
   Layers,
   Zap,
   ChevronLeft,
-  ChevronRight as ChevronRightIcon
+  ChevronRight as ChevronRightIcon,
 } from 'lucide-react';
 
 // ============================================================================
@@ -59,7 +59,8 @@ const projects: Project[] = [
     id: 'conversational-portfolio',
     title: 'Conversational Portfolio',
     tagline: 'This very website',
-    description: 'A paradigm shift from traditional portfolios. Instead of static pages, visitors choose their own path through an adaptive conversation-like experience.',
+    description:
+      'A paradigm shift from traditional portfolios. Instead of static pages, visitors choose their own path through an adaptive conversation-like experience.',
     image: '/projects/portfolio.png',
     gradient: 'from-blue-600 to-blue-400',
     tech: ['Next.js 15', 'React 19', 'TypeScript', 'Framer Motion', 'Zustand'],
@@ -79,16 +80,20 @@ const projects: Project[] = [
       github: 'https://github.com/username/portfolio',
     },
     caseStudy: {
-      challenge: 'Traditional portfolios feel impersonal and overwhelming. Visitors scan briefly and leave without understanding the person behind the work.',
-      solution: 'Created an adaptive experience where visitors self-identify their intent upfront. Each path delivers curated content relevant to their needs.',
-      outcome: 'Deeper engagement, more meaningful connections, and conversations that start with context already established.',
+      challenge:
+        'Traditional portfolios feel impersonal and overwhelming. Visitors scan briefly and leave without understanding the person behind the work.',
+      solution:
+        'Created an adaptive experience where visitors self-identify their intent upfront. Each path delivers curated content relevant to their needs.',
+      outcome:
+        'Deeper engagement, more meaningful connections, and conversations that start with context already established.',
     },
   },
   {
     id: 'dev-toolkit',
     title: 'Developer Toolkit',
     tagline: 'CLI tools for modern workflows',
-    description: 'A collection of CLI tools that automate repetitive development tasks. From scaffolding to deployment, all in one unified interface.',
+    description:
+      'A collection of CLI tools that automate repetitive development tasks. From scaffolding to deployment, all in one unified interface.',
     image: '/projects/toolkit.png',
     gradient: 'from-green-500 to-emerald-400',
     tech: ['Node.js', 'TypeScript', 'Commander.js', 'Chalk', 'Docker'],
@@ -109,16 +114,20 @@ const projects: Project[] = [
       github: 'https://github.com/username/dev-toolkit',
     },
     caseStudy: {
-      challenge: 'Switching between different tools for common tasks breaks flow and wastes time. Each project requires different setup procedures.',
-      solution: 'Built a unified CLI that wraps and orchestrates common tools. Plugins extend functionality without bloating the core.',
-      outcome: 'Consistent workflow across projects. New team members onboard faster with standardized commands.',
+      challenge:
+        'Switching between different tools for common tasks breaks flow and wastes time. Each project requires different setup procedures.',
+      solution:
+        'Built a unified CLI that wraps and orchestrates common tools. Plugins extend functionality without bloating the core.',
+      outcome:
+        'Consistent workflow across projects. New team members onboard faster with standardized commands.',
     },
   },
   {
     id: 'realtime-dashboard',
     title: 'Real-time Dashboard',
     tagline: 'Live data visualization platform',
-    description: 'A dashboard framework for monitoring real-time data streams. WebSocket-powered updates with sub-100ms latency.',
+    description:
+      'A dashboard framework for monitoring real-time data streams. WebSocket-powered updates with sub-100ms latency.',
     image: '/projects/dashboard.png',
     gradient: 'from-purple-500 to-violet-400',
     tech: ['React', 'D3.js', 'WebSockets', 'Redis', 'PostgreSQL'],
@@ -138,9 +147,12 @@ const projects: Project[] = [
       demo: 'https://dashboard-demo.example.com',
     },
     caseStudy: {
-      challenge: 'Existing dashboards either lacked real-time capabilities or required heavy infrastructure. Teams needed insights immediately, not after batch processing.',
-      solution: 'Designed a WebSocket-first architecture with smart batching to balance update frequency and performance.',
-      outcome: 'Reduced incident response time by 60% through immediate visibility into system health.',
+      challenge:
+        'Existing dashboards either lacked real-time capabilities or required heavy infrastructure. Teams needed insights immediately, not after batch processing.',
+      solution:
+        'Designed a WebSocket-first architecture with smart batching to balance update frequency and performance.',
+      outcome:
+        'Reduced incident response time by 60% through immediate visibility into system health.',
     },
   },
 ];
@@ -156,44 +168,49 @@ interface ProjectCardProps {
   index: number;
 }
 
-const ProjectCard = memo(function ProjectCard({ project, isActive, onClick, index }: ProjectCardProps) {
+const ProjectCard = memo(function ProjectCard({
+  project,
+  isActive,
+  onClick,
+  index,
+}: ProjectCardProps) {
   return (
     <motion.button
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1, duration: 0.4 }}
       onClick={onClick}
-      className={`
-        group relative overflow-hidden rounded-2xl
-        transition-all duration-500 text-left w-full
-        ${isActive ? 'ring-2 ring-blue-500/50' : ''}
-      `}
+      className={`group relative w-full overflow-hidden rounded-2xl text-left transition-all duration-500 ${isActive ? 'ring-2 ring-blue-500/50' : ''} `}
     >
       {/* Gradient Background */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-10 group-hover:opacity-20 transition-opacity duration-500`} />
-      
+      <div
+        className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-10 transition-opacity duration-500 group-hover:opacity-20`}
+      />
+
       {/* Content */}
-      <div className="relative p-6 bg-white/[0.02] border border-white/5 rounded-2xl group-hover:border-white/10 transition-colors">
+      <div className="relative rounded-2xl border border-white/5 bg-white/[0.02] p-6 transition-colors group-hover:border-white/10">
         {/* Header */}
-        <div className="flex items-start justify-between mb-4">
+        <div className="mb-4 flex items-start justify-between">
           <div>
-            <h3 className="text-lg font-semibold text-white mb-1">{project.title}</h3>
+            <h3 className="mb-1 text-lg font-semibold text-white">{project.title}</h3>
             <p className="text-sm text-white/40">{project.tagline}</p>
           </div>
-          <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${project.gradient} opacity-80 flex items-center justify-center`}>
-            <Code2 className="w-5 h-5 text-white" />
+          <div
+            className={`h-10 w-10 rounded-lg bg-gradient-to-br ${project.gradient} flex items-center justify-center opacity-80`}
+          >
+            <Code2 className="h-5 w-5 text-white" />
           </div>
         </div>
 
         {/* Tech Stack */}
-        <div className="flex flex-wrap gap-1.5 mb-4">
+        <div className="mb-4 flex flex-wrap gap-1.5">
           {project.tech.slice(0, 3).map((tech) => (
-            <span key={tech} className="px-2 py-0.5 text-xs bg-white/5 text-white/50 rounded">
+            <span key={tech} className="rounded bg-white/5 px-2 py-0.5 text-xs text-white/50">
               {tech}
             </span>
           ))}
           {project.tech.length > 3 && (
-            <span className="px-2 py-0.5 text-xs bg-white/5 text-white/30 rounded">
+            <span className="rounded bg-white/5 px-2 py-0.5 text-xs text-white/30">
               +{project.tech.length - 3}
             </span>
           )}
@@ -202,7 +219,7 @@ const ProjectCard = memo(function ProjectCard({ project, isActive, onClick, inde
         {/* Metrics */}
         <div className="grid grid-cols-3 gap-2">
           {project.metrics.map((metric) => (
-            <div key={metric.label} className="text-center p-2 bg-white/[0.02] rounded-lg">
+            <div key={metric.label} className="rounded-lg bg-white/[0.02] p-2 text-center">
               <div className="text-sm font-semibold text-white">{metric.value}</div>
               <div className="text-[10px] text-white/30">{metric.label}</div>
             </div>
@@ -213,7 +230,7 @@ const ProjectCard = memo(function ProjectCard({ project, isActive, onClick, inde
         {isActive && (
           <motion.div
             layoutId="project-indicator"
-            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-12 h-1 bg-blue-500 rounded-t-full"
+            className="absolute bottom-0 left-1/2 h-1 w-12 -translate-x-1/2 rounded-t-full bg-blue-500"
           />
         )}
       </div>
@@ -239,32 +256,38 @@ const ProjectDetail = memo(function ProjectDetail({ project }: ProjectDetailProp
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
-      className="h-full flex flex-col"
+      className="flex h-full flex-col"
     >
       {/* Header */}
       <div className="mb-6">
-        <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r ${project.gradient} text-white text-sm mb-3`}>
-          <Layers className="w-3.5 h-3.5" />
+        <div
+          className={`inline-flex items-center gap-2 rounded-full bg-gradient-to-r px-3 py-1 ${project.gradient} mb-3 text-sm text-white`}
+        >
+          <Layers className="h-3.5 w-3.5" />
           <span>Featured Project</span>
         </div>
-        <h2 className="text-2xl font-bold text-white mb-2">{project.title}</h2>
+        <h2 className="mb-2 text-2xl font-bold text-white">{project.title}</h2>
         <p className="text-white/50">{project.description}</p>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 p-1 bg-white/5 rounded-lg mb-6 w-fit">
+      <div className="mb-6 flex w-fit gap-1 rounded-lg bg-white/5 p-1">
         <button
           onClick={() => setActiveTab('overview')}
-          className={`px-4 py-2 text-sm rounded-md transition-all ${
-            activeTab === 'overview' ? 'bg-white/10 text-white' : 'text-white/40 hover:text-white/60'
+          className={`rounded-md px-4 py-2 text-sm transition-all ${
+            activeTab === 'overview'
+              ? 'bg-white/10 text-white'
+              : 'text-white/40 hover:text-white/60'
           }`}
         >
           Overview
         </button>
         <button
           onClick={() => setActiveTab('casestudy')}
-          className={`px-4 py-2 text-sm rounded-md transition-all ${
-            activeTab === 'casestudy' ? 'bg-white/10 text-white' : 'text-white/40 hover:text-white/60'
+          className={`rounded-md px-4 py-2 text-sm transition-all ${
+            activeTab === 'casestudy'
+              ? 'bg-white/10 text-white'
+              : 'text-white/40 hover:text-white/60'
           }`}
         >
           Case Study
@@ -284,13 +307,16 @@ const ProjectDetail = memo(function ProjectDetail({ project }: ProjectDetailProp
             >
               {/* Tech Stack */}
               <div>
-                <h4 className="text-sm font-medium text-white/80 mb-3 flex items-center gap-2">
-                  <Code2 className="w-4 h-4 text-blue-400" />
+                <h4 className="mb-3 flex items-center gap-2 text-sm font-medium text-white/80">
+                  <Code2 className="h-4 w-4 text-blue-400" />
                   Tech Stack
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {project.tech.map((tech) => (
-                    <span key={tech} className="px-3 py-1.5 text-sm bg-blue-500/10 border border-blue-500/20 text-blue-300 rounded-lg">
+                    <span
+                      key={tech}
+                      className="rounded-lg border border-blue-500/20 bg-blue-500/10 px-3 py-1.5 text-sm text-blue-300"
+                    >
                       {tech}
                     </span>
                   ))}
@@ -299,8 +325,8 @@ const ProjectDetail = memo(function ProjectDetail({ project }: ProjectDetailProp
 
               {/* Features */}
               <div>
-                <h4 className="text-sm font-medium text-white/80 mb-3 flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-blue-400" />
+                <h4 className="mb-3 flex items-center gap-2 text-sm font-medium text-white/80">
+                  <Zap className="h-4 w-4 text-blue-400" />
                   Key Features
                 </h4>
                 <ul className="space-y-2">
@@ -312,7 +338,7 @@ const ProjectDetail = memo(function ProjectDetail({ project }: ProjectDetailProp
                       transition={{ delay: i * 0.05 }}
                       className="flex items-center gap-2 text-white/60"
                     >
-                      <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                      <div className="h-1.5 w-1.5 rounded-full bg-blue-400" />
                       {feature}
                     </motion.li>
                   ))}
@@ -328,16 +354,20 @@ const ProjectDetail = memo(function ProjectDetail({ project }: ProjectDetailProp
               className="space-y-6"
             >
               <div>
-                <h4 className="text-sm font-medium text-red-400 mb-2">The Challenge</h4>
-                <p className="text-white/50 text-sm leading-relaxed">{project.caseStudy.challenge}</p>
+                <h4 className="mb-2 text-sm font-medium text-red-400">The Challenge</h4>
+                <p className="text-sm leading-relaxed text-white/50">
+                  {project.caseStudy.challenge}
+                </p>
               </div>
               <div>
-                <h4 className="text-sm font-medium text-blue-400 mb-2">The Solution</h4>
-                <p className="text-white/50 text-sm leading-relaxed">{project.caseStudy.solution}</p>
+                <h4 className="mb-2 text-sm font-medium text-blue-400">The Solution</h4>
+                <p className="text-sm leading-relaxed text-white/50">
+                  {project.caseStudy.solution}
+                </p>
               </div>
               <div>
-                <h4 className="text-sm font-medium text-green-400 mb-2">The Outcome</h4>
-                <p className="text-white/50 text-sm leading-relaxed">{project.caseStudy.outcome}</p>
+                <h4 className="mb-2 text-sm font-medium text-green-400">The Outcome</h4>
+                <p className="text-sm leading-relaxed text-white/50">{project.caseStudy.outcome}</p>
               </div>
             </motion.div>
           )}
@@ -345,15 +375,15 @@ const ProjectDetail = memo(function ProjectDetail({ project }: ProjectDetailProp
       </div>
 
       {/* Links */}
-      <div className="mt-6 pt-6 border-t border-white/5 flex gap-3">
+      <div className="mt-6 flex gap-3 border-t border-white/5 pt-6">
         {project.links.demo && (
           <a
             href={project.links.demo}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500 hover:bg-blue-400 text-white text-sm rounded-lg transition-colors"
+            className="inline-flex items-center gap-2 rounded-lg bg-blue-500 px-4 py-2 text-sm text-white transition-colors hover:bg-blue-400"
           >
-            <ExternalLink className="w-4 h-4" />
+            <ExternalLink className="h-4 w-4" />
             Live Demo
           </a>
         )}
@@ -362,9 +392,9 @@ const ProjectDetail = memo(function ProjectDetail({ project }: ProjectDetailProp
             href={project.links.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 text-white/70 text-sm rounded-lg transition-colors"
+            className="inline-flex items-center gap-2 rounded-lg bg-white/5 px-4 py-2 text-sm text-white/70 transition-colors hover:bg-white/10"
           >
-            <Github className="w-4 h-4" />
+            <Github className="h-4 w-4" />
             Source Code
           </a>
         )}
@@ -402,9 +432,9 @@ export function DeveloperProjects({ onComplete }: DeveloperProjectsProps) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="flex-1 py-8 px-4">
-        <div className="max-w-6xl mx-auto">
+    <div className="flex min-h-screen flex-col">
+      <div className="flex-1 px-4 py-8">
+        <div className="mx-auto max-w-6xl">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -413,40 +443,40 @@ export function DeveloperProjects({ onComplete }: DeveloperProjectsProps) {
           >
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
+                <h1 className="mb-3 text-3xl font-bold text-white md:text-4xl">
                   Featured Projects
                 </h1>
-                <p className="text-white/50 max-w-2xl">
-                  A selection of projects that demonstrate my approach to
-                  solving problems and building products.
+                <p className="max-w-2xl text-white/50">
+                  A selection of projects that demonstrate my approach to solving problems and
+                  building products.
                 </p>
               </div>
 
               {/* Navigation Arrows */}
-              <div className="hidden md:flex items-center gap-2">
+              <div className="hidden items-center gap-2 md:flex">
                 <button
                   onClick={prevProject}
-                  className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white/40 hover:text-white transition-colors"
+                  className="rounded-lg bg-white/5 p-2 text-white/40 transition-colors hover:bg-white/10 hover:text-white"
                 >
-                  <ChevronLeft className="w-5 h-5" />
+                  <ChevronLeft className="h-5 w-5" />
                 </button>
-                <span className="text-sm text-white/30 min-w-[3rem] text-center">
+                <span className="min-w-[3rem] text-center text-sm text-white/30">
                   {currentIndex + 1}/{projects.length}
                 </span>
                 <button
                   onClick={nextProject}
-                  className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white/40 hover:text-white transition-colors"
+                  className="rounded-lg bg-white/5 p-2 text-white/40 transition-colors hover:bg-white/10 hover:text-white"
                 >
-                  <ChevronRightIcon className="w-5 h-5" />
+                  <ChevronRightIcon className="h-5 w-5" />
                 </button>
               </div>
             </div>
           </motion.div>
 
           {/* Content Grid */}
-          <div className="grid lg:grid-cols-5 gap-6">
+          <div className="grid gap-6 lg:grid-cols-5">
             {/* Project Cards */}
-            <div className="lg:col-span-2 space-y-4">
+            <div className="space-y-4 lg:col-span-2">
               {projects.map((project, index) => (
                 <ProjectCard
                   key={project.id}
@@ -460,7 +490,7 @@ export function DeveloperProjects({ onComplete }: DeveloperProjectsProps) {
 
             {/* Detail Panel */}
             <div className="lg:col-span-3">
-              <div className="sticky top-24 p-6 rounded-2xl bg-white/[0.02] border border-white/5 min-h-[600px]">
+              <div className="sticky top-24 min-h-[600px] rounded-2xl border border-white/5 bg-white/[0.02] p-6">
                 <AnimatePresence mode="wait">
                   <ProjectDetail key={activeProject.id} project={activeProject} />
                 </AnimatePresence>
@@ -471,15 +501,15 @@ export function DeveloperProjects({ onComplete }: DeveloperProjectsProps) {
       </div>
 
       {/* Bottom Action */}
-      <div className="sticky bottom-0 glass-strong border-t border-white/5">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div className="glass-strong sticky bottom-0 border-t border-white/5">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
           <div className="flex items-center gap-4">
             <div className="flex gap-1.5">
               {projects.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => goToProject(i)}
-                  className={`w-2 h-2 rounded-full transition-colors ${
+                  className={`h-2 w-2 rounded-full transition-colors ${
                     i === currentIndex ? 'bg-blue-500' : 'bg-white/10 hover:bg-white/20'
                   }`}
                 />
@@ -492,10 +522,10 @@ export function DeveloperProjects({ onComplete }: DeveloperProjectsProps) {
 
           <button
             onClick={onComplete}
-            className="group inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 transition-all duration-300 shadow-lg shadow-blue-500/30"
+            className="group inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-3 font-medium text-white shadow-lg shadow-blue-500/30 transition-all duration-300 hover:from-blue-500 hover:to-blue-400"
           >
             <span>Let's Connect</span>
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </button>
         </div>
       </div>

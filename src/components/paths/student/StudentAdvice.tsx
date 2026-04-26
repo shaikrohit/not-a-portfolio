@@ -4,15 +4,15 @@
  * ============================================================================
  * STUDENT PATH - ADVICE STEP
  * ============================================================================
- * 
+ *
  * Honest advice and lessons learned, presented as
  * actionable tips with personal context.
  */
 
 import React, { useState, memo } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  ArrowRight, 
+import {
+  ArrowRight,
   Lightbulb,
   AlertTriangle,
   CheckCircle,
@@ -20,7 +20,7 @@ import {
   Heart,
   Target,
   Clock,
-  Users
+  Users,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
@@ -58,7 +58,8 @@ const adviceList: Advice[] = [
       'Skip days because "you\'re not in the mood"',
       'Wait for motivation—discipline beats motivation',
     ],
-    reality: 'I made more progress coding 30 minutes daily for 6 months than I did in my first year of sporadic "when I feel like it" learning.',
+    reality:
+      'I made more progress coding 30 minutes daily for 6 months than I did in my first year of sporadic "when I feel like it" learning.',
   },
   {
     id: 'projects',
@@ -75,7 +76,8 @@ const adviceList: Advice[] = [
       'Follow tutorials line by line without understanding',
       'Only build what instructors tell you to build',
     ],
-    reality: 'Tutorial Hell is real. I spent 6 months watching tutorials and couldn\'t build a simple form. The day I started building without guidance, everything changed.',
+    reality:
+      "Tutorial Hell is real. I spent 6 months watching tutorials and couldn't build a simple form. The day I started building without guidance, everything changed.",
   },
   {
     id: 'community',
@@ -90,9 +92,10 @@ const adviceList: Advice[] = [
     dont: [
       'Isolate yourself and struggle alone',
       'Be afraid to ask "stupid" questions',
-      'Compare your beginning to someone\'s middle',
+      "Compare your beginning to someone's middle",
     ],
-    reality: 'The developers I met online became my mentors, collaborators, and friends. Some even helped me get job interviews.',
+    reality:
+      'The developers I met online became my mentors, collaborators, and friends. Some even helped me get job interviews.',
   },
   {
     id: 'imposter',
@@ -102,20 +105,21 @@ const adviceList: Advice[] = [
     do: [
       'Accept that confusion is part of the process',
       'Document your wins, no matter how small',
-      'Remember: if you\'re confused, you\'re learning',
+      "Remember: if you're confused, you're learning",
     ],
     dont: [
       'Let self-doubt stop you from applying to jobs',
       'Compare yourself to people with years more experience',
       'Think "real" developers don\'t Google things',
     ],
-    reality: 'I still Google basic things. I still feel like I don\'t belong in technical discussions. But I\'ve shipped products, mentored developers, and gotten paid. Feelings aren\'t facts.',
+    reality:
+      "I still Google basic things. I still feel like I don't belong in technical discussions. But I've shipped products, mentored developers, and gotten paid. Feelings aren't facts.",
   },
   {
     id: 'fundamentals',
     icon: Lightbulb,
     title: 'Master Fundamentals First',
-    summary: 'Frameworks change; principles don\'t',
+    summary: "Frameworks change; principles don't",
     do: [
       'Learn vanilla JavaScript before React',
       'Understand how the web works (HTTP, DNS, etc.)',
@@ -123,10 +127,11 @@ const adviceList: Advice[] = [
     ],
     dont: [
       'Jump to frameworks before understanding basics',
-      'Learn the newest framework just because it\'s popular',
+      "Learn the newest framework just because it's popular",
       'Skip data structures because they\'re "boring"',
     ],
-    reality: 'When I finally understood JavaScript fundamentals, learning React took days instead of months. Fundamentals are the shortcut everyone skips.',
+    reality:
+      'When I finally understood JavaScript fundamentals, learning React took days instead of months. Fundamentals are the shortcut everyone skips.',
   },
 ];
 
@@ -141,7 +146,12 @@ interface AdviceCardProps {
   onToggle: () => void;
 }
 
-const AdviceCard = memo(function AdviceCard({ advice, index, isExpanded, onToggle }: AdviceCardProps) {
+const AdviceCard = memo(function AdviceCard({
+  advice,
+  index,
+  isExpanded,
+  onToggle,
+}: AdviceCardProps) {
   const Icon = advice.icon;
 
   return (
@@ -149,26 +159,26 @@ const AdviceCard = memo(function AdviceCard({ advice, index, isExpanded, onToggl
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1, duration: 0.4 }}
-      className="rounded-2xl bg-white/[0.02] border border-white/5 overflow-hidden"
+      className="overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02]"
     >
       {/* Header */}
       <button
         onClick={onToggle}
-        className="w-full p-5 text-left hover:bg-white/[0.02] transition-colors"
+        className="w-full p-5 text-left transition-colors hover:bg-white/[0.02]"
       >
         <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center flex-shrink-0">
-            <Icon className="w-6 h-6 text-blue-400" />
+          <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-blue-500/10">
+            <Icon className="h-6 w-6 text-blue-400" />
           </div>
           <div className="flex-1">
-            <h3 className="text-lg font-semibold text-white mb-1">{advice.title}</h3>
+            <h3 className="mb-1 text-lg font-semibold text-white">{advice.title}</h3>
             <p className="text-sm text-white/40">{advice.summary}</p>
           </div>
           <motion.div
             animate={{ rotate: isExpanded ? 180 : 0 }}
-            className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center"
+            className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5"
           >
-            <ArrowRight className="w-4 h-4 text-white/30 rotate-90" />
+            <ArrowRight className="h-4 w-4 rotate-90 text-white/30" />
           </motion.div>
         </div>
       </button>
@@ -183,19 +193,19 @@ const AdviceCard = memo(function AdviceCard({ advice, index, isExpanded, onToggl
         transition={{ duration: 0.3 }}
         className="overflow-hidden"
       >
-        <div className="px-5 pb-5 space-y-4">
+        <div className="space-y-4 px-5 pb-5">
           {/* Do's and Don'ts */}
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid gap-4 md:grid-cols-2">
             {/* Do's */}
-            <div className="p-4 rounded-xl bg-green-500/5 border border-green-500/10">
-              <h4 className="text-sm font-medium text-green-400 mb-3 flex items-center gap-2">
-                <CheckCircle className="w-4 h-4" />
+            <div className="rounded-xl border border-green-500/10 bg-green-500/5 p-4">
+              <h4 className="mb-3 flex items-center gap-2 text-sm font-medium text-green-400">
+                <CheckCircle className="h-4 w-4" />
                 Do This
               </h4>
               <ul className="space-y-2">
                 {advice.do.map((item, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm text-white/60">
-                    <div className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 flex-shrink-0" />
+                    <div className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-green-400" />
                     {item}
                   </li>
                 ))}
@@ -203,15 +213,15 @@ const AdviceCard = memo(function AdviceCard({ advice, index, isExpanded, onToggl
             </div>
 
             {/* Don'ts */}
-            <div className="p-4 rounded-xl bg-red-500/5 border border-red-500/10">
-              <h4 className="text-sm font-medium text-red-400 mb-3 flex items-center gap-2">
-                <XCircle className="w-4 h-4" />
+            <div className="rounded-xl border border-red-500/10 bg-red-500/5 p-4">
+              <h4 className="mb-3 flex items-center gap-2 text-sm font-medium text-red-400">
+                <XCircle className="h-4 w-4" />
                 Avoid This
               </h4>
               <ul className="space-y-2">
                 {advice.dont.map((item, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm text-white/60">
-                    <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-1.5 flex-shrink-0" />
+                    <div className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-red-400" />
                     {item}
                   </li>
                 ))}
@@ -220,9 +230,9 @@ const AdviceCard = memo(function AdviceCard({ advice, index, isExpanded, onToggl
           </div>
 
           {/* Personal Reality */}
-          <div className="p-4 rounded-xl bg-blue-500/5 border border-blue-500/10">
-            <h4 className="text-sm font-medium text-blue-400 mb-2 flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4" />
+          <div className="rounded-xl border border-blue-500/10 bg-blue-500/5 p-4">
+            <h4 className="mb-2 flex items-center gap-2 text-sm font-medium text-blue-400">
+              <AlertTriangle className="h-4 w-4" />
               Real Talk
             </h4>
             <p className="text-sm text-white/50">{advice.reality}</p>
@@ -249,21 +259,19 @@ export function StudentAdvice({ onComplete }: StudentAdviceProps) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="flex-1 py-8 px-4">
-        <div className="max-w-4xl mx-auto">
+    <div className="flex min-h-screen flex-col">
+      <div className="flex-1 px-4 py-8">
+        <div className="mx-auto max-w-4xl">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
-              Honest Advice
-            </h1>
-            <p className="text-white/50 max-w-2xl">
-              What I wish someone told me when I started. These lessons were learned 
-              the hard way—hopefully they save you some time.
+            <h1 className="mb-3 text-3xl font-bold text-white md:text-4xl">Honest Advice</h1>
+            <p className="max-w-2xl text-white/50">
+              What I wish someone told me when I started. These lessons were learned the hard
+              way—hopefully they save you some time.
             </p>
           </motion.div>
 
@@ -285,31 +293,29 @@ export function StudentAdvice({ onComplete }: StudentAdviceProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="mt-10 p-6 rounded-2xl bg-gradient-to-r from-blue-500/10 to-blue-600/10 border border-blue-500/20 text-center"
+            className="mt-10 rounded-2xl border border-blue-500/20 bg-gradient-to-r from-blue-500/10 to-blue-600/10 p-6 text-center"
           >
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-blue-500/20 mb-4">
-              <Heart className="w-6 h-6 text-blue-400" />
+            <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-blue-500/20">
+              <Heart className="h-6 w-6 text-blue-400" />
             </div>
-            <h3 className="text-lg font-semibold text-white mb-2">
-              The Most Important Advice
-            </h3>
-            <p className="text-white/50 max-w-lg mx-auto">
-              Don't quit. The difference between developers who make it and those who don't 
-              isn't talent—it's persistence. Keep going, even when it's hard.
+            <h3 className="mb-2 text-lg font-semibold text-white">The Most Important Advice</h3>
+            <p className="mx-auto max-w-lg text-white/50">
+              Don't quit. The difference between developers who make it and those who don't isn't
+              talent—it's persistence. Keep going, even when it's hard.
             </p>
           </motion.div>
         </div>
       </div>
 
       {/* Bottom Action */}
-      <div className="sticky bottom-0 glass-strong border-t border-white/5">
-        <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-center">
+      <div className="glass-strong sticky bottom-0 border-t border-white/5">
+        <div className="mx-auto flex max-w-4xl items-center justify-center px-4 py-4">
           <button
             onClick={onComplete}
-            className="group inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 transition-all duration-300 shadow-lg shadow-blue-500/30"
+            className="group inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-3 font-medium text-white shadow-lg shadow-blue-500/30 transition-all duration-300 hover:from-blue-500 hover:to-blue-400"
           >
             <span>Ask Me Anything</span>
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </button>
         </div>
       </div>

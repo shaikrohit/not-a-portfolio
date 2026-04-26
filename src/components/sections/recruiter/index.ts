@@ -2,16 +2,16 @@
  * ============================================================================
  * RECRUITER SECTIONS - INDEX
  * ============================================================================
- * 
+ *
  * @description Exports all Recruiter path sections.
  *              These are shown when visitor selects "Recruiter" type.
- * 
+ *
  * @usage
  * ```tsx
- * import { 
- *   SummarySection, 
- *   SkillsSection, 
- *   ExperienceSection 
+ * import {
+ *   SummarySection,
+ *   SkillsSection,
+ *   ExperienceSection
  * } from '@/components/sections/recruiter';
  * ```
  * ============================================================================

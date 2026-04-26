@@ -45,25 +45,26 @@ const paths = [
 
 export function PathSelectionSection() {
   return (
-    <section className="relative py-32 px-6 overflow-hidden bg-gray-50/50">
-      <motion.div 
+    <section className="relative overflow-hidden bg-gray-50/50 px-6 py-32">
+      <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-100px' }}
-        className="text-center max-w-3xl mx-auto mb-20"
+        className="mx-auto mb-20 max-w-3xl text-center"
       >
-        <motion.span className="inline-block px-4 py-1.5 rounded-full bg-blue-100 text-blue-600 text-sm font-medium mb-6">
+        <motion.span className="mb-6 inline-block rounded-full bg-blue-100 px-4 py-1.5 text-sm font-medium text-blue-600">
           Choose Your Path
         </motion.span>
-        <h2 className="text-4xl md:text-5xl font-bold text-neutral-900 mb-6">
+        <h2 className="mb-6 text-4xl font-bold text-neutral-900 md:text-5xl">
           What brings you here?
         </h2>
-        <p className="text-lg text-neutral-500 leading-relaxed">
-          Select a path that matches your interest. Each journey is tailored to provide the most relevant experience.
+        <p className="text-lg leading-relaxed text-neutral-500">
+          Select a path that matches your interest. Each journey is tailored to provide the most
+          relevant experience.
         </p>
       </motion.div>
 
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8">
+      <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-2">
         {paths.map((path, index) => (
           <motion.div
             key={path.id}
@@ -73,34 +74,38 @@ export function PathSelectionSection() {
             transition={{ delay: index * 0.1, duration: 0.6 }}
           >
             <motion.button
-              className="w-full text-left group relative p-10 rounded-3xl bg-white border border-gray-200 hover:border-blue-400 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 overflow-hidden"
+              className="group relative w-full overflow-hidden rounded-3xl border border-gray-200 bg-white p-10 text-left transition-all duration-500 hover:border-blue-400 hover:shadow-2xl hover:shadow-blue-500/10"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() =>
+                document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })
+              }
               aria-label={`Start journey as ${path.title}`}
             >
               <motion.div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                 style={{
                   background: `radial-gradient(800px circle at 50% 50%, ${path.glowColor}, transparent 40%)`,
                 }}
               />
 
               <div className="relative z-10">
-                <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${path.gradient} mb-8 shadow-lg shadow-blue-500/20`}>
-                  <path.icon className="w-8 h-8 text-white" />
+                <div
+                  className={`inline-flex rounded-2xl bg-gradient-to-br p-4 ${path.gradient} mb-8 shadow-lg shadow-blue-500/20`}
+                >
+                  <path.icon className="h-8 w-8 text-white" />
                 </div>
 
                 <div className="mb-6">
-                  <h3 className="text-3xl font-bold text-neutral-900 mb-2">{path.title}</h3>
-                  <p className="text-blue-500 font-medium">{path.subtitle}</p>
+                  <h3 className="mb-2 text-3xl font-bold text-neutral-900">{path.title}</h3>
+                  <p className="font-medium text-blue-500">{path.subtitle}</p>
                 </div>
 
-                <p className="text-neutral-500 mb-8 text-lg leading-relaxed">{path.description}</p>
+                <p className="mb-8 text-lg leading-relaxed text-neutral-500">{path.description}</p>
 
-                <div className="flex items-center gap-3 text-neutral-400 group-hover:text-blue-600 transition-colors">
+                <div className="flex items-center gap-3 text-neutral-400 transition-colors group-hover:text-blue-600">
                   <span className="text-sm font-bold uppercase tracking-widest">Start Journey</span>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-2" />
                 </div>
               </div>
             </motion.button>

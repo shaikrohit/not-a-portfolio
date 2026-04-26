@@ -1,6 +1,6 @@
 /**
  * ESLint Configuration (Flat Config)
- * 
+ *
  * Next.js 15+ supports ESLint flat config natively.
  * This replaces the legacy .eslintrc.* files.
  */
@@ -22,20 +22,13 @@ const compat = new FlatCompat({
 const eslintConfig = [
   // Extend Next.js recommended config
   ...compat.extends('next/core-web-vitals'),
-  
+
   // Prettier (disables conflicting rules)
   prettierConfig,
 
   // Global ignores
   {
-    ignores: [
-      '.next/**',
-      'node_modules/**',
-      'out/**',
-      'build/**',
-      'dist/**',
-      'coverage/**',
-    ],
+    ignores: ['.next/**', 'node_modules/**', 'out/**', 'build/**', 'dist/**', 'coverage/**'],
   },
 
   // TypeScript config
@@ -72,7 +65,7 @@ const eslintConfig = [
     rules: {
       // React rules
       'react/no-unescaped-entities': 'off',
-      
+
       // General rules
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       'prefer-const': 'error',

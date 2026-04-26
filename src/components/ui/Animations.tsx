@@ -2,7 +2,7 @@
 
 /**
  * ANIMATED PRESENCE WRAPPER
- * 
+ *
  * Wraps content in Framer Motion's AnimatePresence
  * with our design system animations.
  */
@@ -74,11 +74,7 @@ interface StaggerChildrenProps {
   className?: string;
 }
 
-export function StaggerChildren({
-  children,
-  staggerDelay = 0.1,
-  className,
-}: StaggerChildrenProps) {
+export function StaggerChildren({ children, staggerDelay = 0.1, className }: StaggerChildrenProps) {
   return (
     <motion.div
       initial="initial"
@@ -214,12 +210,7 @@ interface TypingEffectProps {
   onComplete?: () => void;
 }
 
-export function TypingEffect({
-  text,
-  className,
-  speed = 50,
-  onComplete,
-}: TypingEffectProps) {
+export function TypingEffect({ text, className, speed = 50, onComplete }: TypingEffectProps) {
   const [displayedText, setDisplayedText] = React.useState('');
   const [currentIndex, setCurrentIndex] = React.useState(0);
 

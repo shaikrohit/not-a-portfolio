@@ -1,9 +1,9 @@
 /**
  * Prettier Configuration
- * 
+ *
  * Formatting rules for consistent code style across the project.
  * Works in harmony with ESLint via eslint-config-prettier.
- * 
+ *
  * @see https://prettier.io/docs/en/options.html
  */
 

@@ -14,7 +14,7 @@ This document explains the architectural choices behind "Not a Portfolio" — wh
 ├─────────────────────────────────────────────────────────────────┤
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐  │
 │  │   Entry     │  │  Sections   │  │      Navigation         │  │
-│  │  Experience │  │  (Adaptive) │  │   (Visitor-aware)       │  │ 
+│  │  Experience │  │  (Adaptive) │  │   (Visitor-aware)       │  │
 │  └──────┬──────┘  └──────┬──────┘  └────────────┬────────────┘  │
 │         │                │                      │               │
 │         ▼                ▼                      ▼               │
@@ -55,12 +55,14 @@ This document explains the architectural choices behind "Not a Portfolio" — wh
 **Decision:** Use Next.js App Router with client-side state management (Zustand).
 
 **Reasoning:**
+
 - The visitor's journey is inherently stateful (visitor type, current section, visited pages)
 - State needs to persist across page navigations
 - Server components can't hold client state, but can render static content
 - Zustand provides a simple, TypeScript-first API
 
 **Alternative Considered:** Server-side session management
+
 - Rejected because it adds complexity without benefit for this use case
 - No authentication needed, just preference storage
 
@@ -69,6 +71,7 @@ This document explains the architectural choices behind "Not a Portfolio" — wh
 **Decision:** Single page with conditional section rendering, not separate routes.
 
 **Reasoning:**
+
 ```tsx
 // What we chose: Conditional rendering
 <SectionRenderer visitorType={visitorType} currentSection={currentSection} />
@@ -78,6 +81,7 @@ This document explains the architectural choices behind "Not a Portfolio" — wh
 ```
 
 **Benefits:**
+
 - Content configuration lives in one place (`src/content/config.ts`)
 - Adding new visitor types requires minimal changes
 - Simpler mental model: one page, many views
@@ -92,9 +96,10 @@ components/
 └── sections/     # Content sections (grouped by visitor type)
 ```
 
-**Principle:** Components are organized by *role*, not by feature.
+**Principle:** Components are organized by _role_, not by feature.
 
 **Why:**
+
 - `ui/` components are context-agnostic and reusable
 - `sections/` components know about content but not about routing
 - `layout/` components know about structure but not about content
@@ -107,12 +112,13 @@ components/
 
 ```typescript
 // Three separate stores for different concerns
-useVisitorStore    // Who is visiting, their session
-useNavigationStore // Where they are in the journey
-useThemeStore      // Light/dark mode preference
+useVisitorStore; // Who is visiting, their session
+useNavigationStore; // Where they are in the journey
+useThemeStore; // Light/dark mode preference
 ```
 
 **Why separate stores?**
+
 - Each concern has different persistence needs
 - Easier to reason about and test
 - Zustand handles this elegantly with minimal overhead
@@ -122,7 +128,9 @@ useThemeStore      // Light/dark mode preference
 ```typescript
 // Visitor state: Persisted to localStorage
 persist(
-  (set, get) => ({ /* state */ }),
+  (set, get) => ({
+    /* state */
+  }),
   {
     name: 'visitor-storage',
     storage: createJSONStorage(() => localStorage),
@@ -131,15 +139,17 @@ persist(
       hasCompletedEntry: state.hasCompletedEntry,
     }),
   }
-)
+);
 ```
 
 **What's persisted:**
+
 - `visitorType`: So returning visitors skip the entry screen
 - `hasCompletedEntry`: Entry completion flag
 - `unlockedSections`: Progress through the site
 
 **What's NOT persisted:**
+
 - Active session details (recreated on each visit)
 - UI state (menus, modals)
 
@@ -152,15 +162,16 @@ persist(
 ```typescript
 // Data we collect
 interface VisitorSession {
-  id: string;              // Random, not linked to identity
-  visitorType: string;     // Self-reported
-  country: string;         // Derived from timezone, not IP
-  pagesVisited: string[];  // Navigation path
+  id: string; // Random, not linked to identity
+  visitorType: string; // Self-reported
+  country: string; // Derived from timezone, not IP
+  pagesVisited: string[]; // Navigation path
   timeSpentSeconds: number;
 }
 ```
 
 **Why timezone for country?**
+
 ```typescript
 // Instead of IP geolocation (privacy-invasive)
 const country = getCountryFromTimezone();
@@ -213,23 +224,24 @@ CREATE TABLE visitor_messages (
 // Centralized animation variants
 export const fadeUp: Variants = {
   initial: { opacity: 0, y: 20 },
-  animate: { 
-    opacity: 1, 
+  animate: {
+    opacity: 1,
     y: 0,
-    transition: { 
-      duration: 0.4, 
-      ease: [0.4, 0, 0.2, 1] // Smooth ease-out
-    }
+    transition: {
+      duration: 0.4,
+      ease: [0.4, 0, 0.2, 1], // Smooth ease-out
+    },
   },
-  exit: { 
-    opacity: 0, 
+  exit: {
+    opacity: 0,
     y: -10,
-    transition: { duration: 0.2 }
+    transition: { duration: 0.2 },
   },
 };
 ```
 
 **Why centralized?**
+
 - Consistency across the site
 - Easy to adjust timing globally
 - Components don't need to know animation details
@@ -247,7 +259,7 @@ All content lives in `src/content/config.ts`:
 export const profile = {
   name: 'Your Name',
   introduction: {
-    developer: '...',  // Different intro per visitor type
+    developer: '...', // Different intro per visitor type
     recruiter: '...',
     student: '...',
     explorer: '...',
@@ -265,6 +277,7 @@ export const projects: Project[] = [
 ```
 
 **Benefits:**
+
 - Non-developers can update content without touching components
 - Clear separation between content and presentation
 - Easy to add new visitor types or content categories
@@ -299,8 +312,10 @@ export default function Layout({ children }) {
   return (
     <html>
       <body>
-        <ThemeProvider>  {/* Client Component */}
-          {children}     {/* Can be Server or Client */}
+        <ThemeProvider>
+          {' '}
+          {/* Client Component */}
+          {children} {/* Can be Server or Client */}
         </ThemeProvider>
       </body>
     </html>
@@ -360,12 +375,12 @@ CREATE POLICY "Allow aggregated read" ON visitor_sessions
 
 ### Current Trade-offs
 
-| Decision | Trade-off |
-|----------|-----------|
-| Client-side state | Requires JavaScript; no SSR for visitor-specific content |
-| Single page app | Larger initial bundle; all sections loaded |
-| localStorage persistence | Lost if cookies cleared; not synced across devices |
-| Timezone for geo | Less accurate than IP lookup; may be wrong |
+| Decision                 | Trade-off                                                |
+| ------------------------ | -------------------------------------------------------- |
+| Client-side state        | Requires JavaScript; no SSR for visitor-specific content |
+| Single page app          | Larger initial bundle; all sections loaded               |
+| localStorage persistence | Lost if cookies cleared; not synced across devices       |
+| Timezone for geo         | Less accurate than IP lookup; may be wrong               |
 
 ### Future Improvements
 
@@ -378,10 +393,10 @@ CREATE POLICY "Allow aggregated read" ON visitor_sessions
 
 ## Appendix: Key Files
 
-| File | Purpose |
-|------|---------|
-| `src/app/page.tsx` | Main page, section orchestration |
-| `src/store/index.ts` | All Zustand stores |
-| `src/content/config.ts` | All content configuration |
-| `src/lib/animations.ts` | Animation variants |
-| `tailwind.config.ts` | Design system tokens |
+| File                    | Purpose                          |
+| ----------------------- | -------------------------------- |
+| `src/app/page.tsx`      | Main page, section orchestration |
+| `src/store/index.ts`    | All Zustand stores               |
+| `src/content/config.ts` | All content configuration        |
+| `src/lib/animations.ts` | Animation variants               |
+| `tailwind.config.ts`    | Design system tokens             |

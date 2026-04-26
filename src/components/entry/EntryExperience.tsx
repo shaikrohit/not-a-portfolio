@@ -2,7 +2,7 @@
 
 /**
  * ENTRY EXPERIENCE - PREMIUM REDESIGN
- * 
+ *
  * The most critical component of this site.
  * Apple-level quality with cinematic transitions.
  */
@@ -59,9 +59,11 @@ const pathColors = {
 };
 
 export function EntryExperience() {
-  const [stage, setStage] = useState<'greeting' | 'question' | 'options' | 'transition'>('greeting');
+  const [stage, setStage] = useState<'greeting' | 'question' | 'options' | 'transition'>(
+    'greeting'
+  );
   const [selectedType, setSelectedType] = useState<VisitorType | null>(null);
-  
+
   const { setVisitorType, startSession, hasCompletedEntry } = useVisitorStore();
   const { setCurrentSection, unlockSection } = useNavigationStore();
 
@@ -88,11 +90,11 @@ export function EntryExperience() {
   const handleTypeSelect = (type: VisitorType) => {
     setSelectedType(type);
     setVisitorType(type);
-    
+
     // Unlock appropriate sections based on visitor type
     const sectionsToUnlock = getSectionsForVisitorType(type);
     sectionsToUnlock.forEach((section) => unlockSection(section));
-    
+
     // Transition to main content
     setTimeout(() => {
       setStage('transition');
@@ -112,18 +114,18 @@ export function EntryExperience() {
         'bg-gradient-to-br from-[#050505] via-[#0a0a0a] to-[#080808]',
         'flex items-center justify-center',
         'transition-opacity duration-1000',
-        stage === 'transition' && 'opacity-0 pointer-events-none'
+        stage === 'transition' && 'pointer-events-none opacity-0'
       )}
     >
       {/* Premium background effects */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-gradient-to-r from-blue-600/5 via-purple-600/5 to-blue-600/5 rounded-full blur-3xl" />
-        
+        <div className="absolute left-1/2 top-1/2 h-[1000px] w-[1000px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r from-blue-600/5 via-purple-600/5 to-blue-600/5 blur-3xl" />
+
         {/* Animated particles */}
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-white/20 rounded-full"
+            className="absolute h-1 w-1 rounded-full bg-white/20"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -141,7 +143,7 @@ export function EntryExperience() {
         ))}
       </div>
 
-      <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
+      <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
         <AnimatePresence mode="wait">
           {/* Stage 1: Greeting */}
           {stage === 'greeting' && (
@@ -154,7 +156,7 @@ export function EntryExperience() {
               className="space-y-8"
             >
               <motion.div
-                className="w-3 h-3 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mx-auto"
+                className="mx-auto h-3 w-3 rounded-full bg-gradient-to-r from-blue-400 to-purple-400"
                 animate={{
                   scale: [1, 1.5, 1],
                   opacity: [0.5, 1, 0.5],
@@ -169,7 +171,7 @@ export function EntryExperience() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
-                className="text-2xl md:text-3xl text-white/60 font-light tracking-wide"
+                className="text-2xl font-light tracking-wide text-white/60 md:text-3xl"
               >
                 Welcome.
               </motion.p>
@@ -191,7 +193,7 @@ export function EntryExperience() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
-                  className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight"
+                  className="text-4xl font-bold leading-tight tracking-tight text-white md:text-5xl lg:text-6xl"
                 >
                   Before I introduce myself,
                 </motion.h1>
@@ -199,7 +201,7 @@ export function EntryExperience() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
-                  className="text-xl md:text-2xl text-white/50 font-light"
+                  className="text-xl font-light text-white/50 md:text-2xl"
                 >
                   I&apos;d like to know who you are.
                 </motion.p>
@@ -212,10 +214,10 @@ export function EntryExperience() {
               >
                 <button
                   onClick={() => setStage('options')}
-                  className="group inline-flex items-center gap-3 px-8 py-4 text-white/70 hover:text-white transition-all duration-500 rounded-full border border-white/10 hover:border-white/30 hover:bg-white/[0.02]"
+                  className="group inline-flex items-center gap-3 rounded-full border border-white/10 px-8 py-4 text-white/70 transition-all duration-500 hover:border-white/30 hover:bg-white/[0.02] hover:text-white"
                 >
                   <span className="text-lg">Continue</span>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </button>
               </motion.div>
             </motion.div>
@@ -236,13 +238,11 @@ export function EntryExperience() {
                 animate={{ opacity: 1, y: 0 }}
                 className="flex items-center justify-center gap-3"
               >
-                <Sparkles className="w-5 h-5 text-blue-400" />
-                <p className="text-lg text-white/60">
-                  Select the path that best describes you
-                </p>
+                <Sparkles className="h-5 w-5 text-blue-400" />
+                <p className="text-lg text-white/60">Select the path that best describes you</p>
               </motion.div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+              <div className="mx-auto grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-2">
                 {visitorOptions.map((option, index) => (
                   <VisitorTypeCard
                     key={option.id}
@@ -292,51 +292,51 @@ function VisitorTypeCard({ option, index, isSelected, onSelect }: VisitorTypeCar
       transition={{ delay: index * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       onClick={onSelect}
       className={cn(
-        'group relative p-6 rounded-2xl text-left overflow-hidden',
+        'group relative overflow-hidden rounded-2xl p-6 text-left',
         'border transition-all duration-500',
         'focus:outline-none focus:ring-2 focus:ring-blue-500/50',
         isSelected
-          ? 'bg-white/[0.08] border-white/20 shadow-xl'
-          : 'bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.12]'
+          ? 'border-white/20 bg-white/[0.08] shadow-xl'
+          : 'border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] hover:bg-white/[0.04]'
       )}
     >
       {/* Gradient background on selection */}
-      <div className={cn(
-        'absolute inset-0 bg-gradient-to-br opacity-0 transition-opacity duration-500',
-        colorClass,
-        isSelected && 'opacity-10'
-      )} />
-      
+      <div
+        className={cn(
+          'absolute inset-0 bg-gradient-to-br opacity-0 transition-opacity duration-500',
+          colorClass,
+          isSelected && 'opacity-10'
+        )}
+      />
+
       {/* Hover glow effect */}
-      <div className={cn(
-        'absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-5 transition-opacity duration-500',
-        colorClass
-      )} />
+      <div
+        className={cn(
+          'absolute inset-0 bg-gradient-to-br opacity-0 transition-opacity duration-500 group-hover:opacity-5',
+          colorClass
+        )}
+      />
 
       <div className="relative z-10 space-y-4">
         <motion.div
           whileHover={{ scale: 1.1, rotate: 5 }}
           className={cn(
-            'w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500',
-            isSelected
-              ? `bg-gradient-to-br ${colorClass} shadow-lg`
-              : 'bg-white/[0.05]'
+            'flex h-12 w-12 items-center justify-center rounded-xl transition-all duration-500',
+            isSelected ? `bg-gradient-to-br ${colorClass} shadow-lg` : 'bg-white/[0.05]'
           )}
         >
           <Icon
             className={cn(
-              'w-6 h-6 transition-colors duration-300',
-              isSelected
-                ? 'text-white'
-                : 'text-white/50 group-hover:text-white/80'
+              'h-6 w-6 transition-colors duration-300',
+              isSelected ? 'text-white' : 'text-white/50 group-hover:text-white/80'
             )}
           />
         </motion.div>
-        
+
         <div>
           <p
             className={cn(
-              'font-semibold text-lg transition-colors duration-300',
+              'text-lg font-semibold transition-colors duration-300',
               isSelected ? 'text-white' : 'text-white/90'
             )}
           >
@@ -344,7 +344,7 @@ function VisitorTypeCard({ option, index, isSelected, onSelect }: VisitorTypeCar
           </p>
           <p
             className={cn(
-              'text-sm mt-1.5 transition-colors duration-300 leading-relaxed',
+              'mt-1.5 text-sm leading-relaxed transition-colors duration-300',
               isSelected ? 'text-white/60' : 'text-white/40'
             )}
           >
@@ -355,10 +355,7 @@ function VisitorTypeCard({ option, index, isSelected, onSelect }: VisitorTypeCar
 
       {/* Selection indicator */}
       <motion.div
-        className={cn(
-          'absolute top-4 right-4 w-3 h-3 rounded-full bg-gradient-to-br',
-          colorClass
-        )}
+        className={cn('absolute right-4 top-4 h-3 w-3 rounded-full bg-gradient-to-br', colorClass)}
         initial={false}
         animate={{
           scale: isSelected ? 1 : 0,
@@ -366,12 +363,14 @@ function VisitorTypeCard({ option, index, isSelected, onSelect }: VisitorTypeCar
         }}
         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
       />
-      
+
       {/* Bottom shine line on hover */}
-      <div className={cn(
-        'absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity',
-        isSelected ? 'via-white/30' : 'via-white/10'
-      )} />
+      <div
+        className={cn(
+          'absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100',
+          isSelected ? 'via-white/30' : 'via-white/10'
+        )}
+      />
     </motion.button>
   );
 }

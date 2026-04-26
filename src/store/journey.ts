@@ -4,7 +4,7 @@
  * ============================================================================
  * JOURNEY CONTROLLER
  * ============================================================================
- * 
+ *
  * Central state management for the user journey.
  * Handles path selection, step progression, and navigation restrictions.
  */
@@ -30,15 +30,15 @@ export interface JourneyState {
   // Path info
   selectedPath: PathType | null;
   isPathConfirmed: boolean;
-  
+
   // Navigation
   currentStepIndex: number;
   steps: JourneyStep[];
-  
+
   // Session
   startedAt: Date | null;
   lastActiveAt: Date | null;
-  
+
   // Validation
   validationErrors: Record<string, string>;
 }
@@ -47,16 +47,16 @@ export interface JourneyActions {
   // Path selection
   selectPath: (path: PathType) => void;
   confirmPath: () => void;
-  
+
   // Navigation
   nextStep: () => boolean;
   completeCurrentStep: (data?: Record<string, unknown>) => void;
-  
+
   // Validation
   setValidationError: (field: string, error: string) => void;
   clearValidationError: (field: string) => void;
   clearAllErrors: () => void;
-  
+
   // Utils
   canProceed: () => boolean;
   reset: () => void;
@@ -142,13 +142,13 @@ export const useJourneyStore = create<JourneyState & JourneyActions>()(
 
       nextStep: () => {
         const { currentStepIndex, steps, canProceed } = get();
-        
+
         if (!canProceed()) {
           return false;
         }
 
         const nextIndex = currentStepIndex + 1;
-        
+
         if (nextIndex >= steps.length) {
           // Journey complete
           return false;
@@ -164,7 +164,7 @@ export const useJourneyStore = create<JourneyState & JourneyActions>()(
 
       completeCurrentStep: (data) => {
         const { currentStepIndex, steps } = get();
-        
+
         const updatedSteps = steps.map((step, index) => {
           if (index === currentStepIndex) {
             return {
@@ -205,7 +205,7 @@ export const useJourneyStore = create<JourneyState & JourneyActions>()(
 
       canProceed: () => {
         const { validationErrors, steps, currentStepIndex } = get();
-        
+
         // Check for validation errors
         if (Object.keys(validationErrors).length > 0) {
           return false;
@@ -250,7 +250,7 @@ export function useCurrentStep() {
 export function useProgress() {
   const { steps, currentStepIndex } = useJourneyStore();
   const completedSteps = steps.filter((s) => s.isCompleted).length;
-  
+
   return {
     current: currentStepIndex + 1,
     total: steps.length,

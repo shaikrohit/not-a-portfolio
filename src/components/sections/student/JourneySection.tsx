@@ -4,14 +4,14 @@
  * ============================================================================
  * JOURNEY SECTION (Student)
  * ============================================================================
- * 
+ *
  * @description Learning journey timeline.
  *              Part of the Student path.
- * 
+ *
  * @usage
  * ```tsx
  * import { JourneySection } from '@/components/sections/student';
- * 
+ *
  * <JourneySection />
  * ```
  * ============================================================================
@@ -81,7 +81,7 @@ const journeyMilestones: MilestoneData[] = [
 
 /**
  * TimelineMilestone
- * 
+ *
  * A single milestone in the journey timeline.
  */
 function TimelineMilestone({ milestone, index }: { milestone: MilestoneData; index: number }) {
@@ -90,19 +90,19 @@ function TimelineMilestone({ milestone, index }: { milestone: MilestoneData; ind
   return (
     <div className="relative flex items-center">
       {/* Timeline Line */}
-      <div className="absolute left-1/2 top-0 bottom-0 w-px bg-neutral-200 dark:bg-neutral-800 -translate-x-1/2" />
-      
+      <div className="absolute bottom-0 left-1/2 top-0 w-px -translate-x-1/2 bg-neutral-200 dark:bg-neutral-800" />
+
       {/* Dot */}
       <motion.div
-        className="absolute left-1/2 w-4 h-4 bg-accent rounded-full -translate-x-1/2 z-10"
+        className="absolute left-1/2 z-10 h-4 w-4 -translate-x-1/2 rounded-full bg-accent"
         initial={{ scale: 0 }}
         whileInView={{ scale: 1 }}
         viewport={{ once: true }}
       />
-      
+
       {/* Content */}
-      <div className={`w-1/2 ${isLeft ? 'pr-12 text-right' : 'pl-12 ml-auto'}`}>
-        <Text variant="overline" className="text-accent mb-1">
+      <div className={`w-1/2 ${isLeft ? 'pr-12 text-right' : 'ml-auto pl-12'}`}>
+        <Text variant="overline" className="mb-1 text-accent">
           {milestone.year}
         </Text>
         <Text variant="h4" className="mb-2">
@@ -111,7 +111,7 @@ function TimelineMilestone({ milestone, index }: { milestone: MilestoneData; ind
         <Text variant="body-small" muted className="mb-3">
           {milestone.description}
         </Text>
-        <div className="inline-block px-3 py-2 bg-neutral-100 dark:bg-neutral-900 rounded-lg">
+        <div className="inline-block rounded-lg bg-neutral-100 px-3 py-2 dark:bg-neutral-900">
           <Text variant="body-small" className="italic">
             "{milestone.lesson}"
           </Text>
@@ -127,7 +127,7 @@ function TimelineMilestone({ milestone, index }: { milestone: MilestoneData; ind
 
 /**
  * JourneySection
- * 
+ *
  * Displays the learning journey for students.
  * Shows milestones with lessons learned at each stage.
  */
@@ -136,14 +136,14 @@ export function JourneySection() {
     <section className="section">
       <div className="container-narrow">
         {/* Header */}
-        <FadeIn className="text-center mb-16">
+        <FadeIn className="mb-16 text-center">
           <Text variant="overline" className="mb-4">
             The Path
           </Text>
           <Text variant="h2" className="mb-4" balance>
             My Learning Journey
           </Text>
-          <Text variant="body-large" muted className="max-w-xl mx-auto">
+          <Text variant="body-large" muted className="mx-auto max-w-xl">
             How I got here and what I learned along the way.
           </Text>
         </FadeIn>

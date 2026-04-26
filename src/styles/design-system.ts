@@ -2,10 +2,10 @@
  * ============================================================================
  * DESIGN SYSTEM - BLUE & BLACK THEME
  * ============================================================================
- * 
+ *
  * A premium, enterprise-grade design system using only blue and black shades.
  * Every color, spacing, and animation is carefully crafted for elegance.
- * 
+ *
  * Philosophy: Minimal, classic, and visually refined.
  */
 
@@ -23,7 +23,7 @@ export const colors = {
     muted: '#1a1a24',
     light: '#24242e',
   },
-  
+
   // Blue Shades - Trust, intelligence, premium feel
   blue: {
     pure: '#0066FF',
@@ -32,13 +32,13 @@ export const colors = {
     deep: '#0052cc',
     dark: '#003d99',
     midnight: '#002266',
-    
+
     // Subtle variations for gradients and accents
     glow: 'rgba(0, 102, 255, 0.15)',
     shimmer: 'rgba(51, 136, 255, 0.08)',
     border: 'rgba(0, 102, 255, 0.3)',
   },
-  
+
   // Text Colors
   text: {
     primary: '#ffffff',
@@ -47,7 +47,7 @@ export const colors = {
     disabled: 'rgba(255, 255, 255, 0.3)',
     accent: '#3388FF',
   },
-  
+
   // Surface Colors
   surface: {
     base: '#050508',
@@ -56,7 +56,7 @@ export const colors = {
     card: 'rgba(18, 18, 24, 0.8)',
     glass: 'rgba(10, 10, 15, 0.85)',
   },
-  
+
   // State Colors
   state: {
     success: '#10b981',

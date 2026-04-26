@@ -1,8 +1,8 @@
 /**
  * GLOBAL STATE STORE
- * 
+ *
  * Using Zustand for lightweight, hook-based state management.
- * 
+ *
  * State is organized by domain:
  * - Visitor: Who is visiting and their journey
  * - Navigation: Current section and progress
@@ -16,7 +16,7 @@ import { generateSessionId, getCountryFromTimezone } from '@/lib/utils';
 
 /**
  * Visitor Store
- * 
+ *
  * Tracks the visitor's identity and session.
  * Persisted to localStorage for return visits.
  */
@@ -25,7 +25,7 @@ interface VisitorStore {
   visitorType: VisitorType | null;
   session: VisitorSession | null;
   hasCompletedEntry: boolean;
-  
+
   // Actions
   setVisitorType: (type: VisitorType) => void;
   startSession: () => void;
@@ -46,15 +46,13 @@ export const useVisitorStore = create<VisitorStore>()(
         set({
           visitorType: type,
           hasCompletedEntry: true,
-          session: currentSession
-            ? { ...currentSession, visitorType: type }
-            : null,
+          session: currentSession ? { ...currentSession, visitorType: type } : null,
         });
       },
 
       startSession: () => {
         const existingSession = get().session;
-        
+
         // If session exists and is less than 30 minutes old, continue it
         if (existingSession) {
           const timeSinceActive = Date.now() - new Date(existingSession.lastActiveAt).getTime();
@@ -135,7 +133,7 @@ export const useVisitorStore = create<VisitorStore>()(
 
 /**
  * Navigation Store
- * 
+ *
  * Tracks user's progress through the site.
  * Manages unlockable sections and visited areas.
  */
@@ -195,14 +193,14 @@ export const useNavigationStore = create<NavigationStore>()(
 
 /**
  * Theme Store
- * 
+ *
  * Manages light/dark mode.
  * Respects system preference by default.
  */
 interface ThemeStore {
   mode: 'light' | 'dark' | 'system';
   resolvedMode: 'light' | 'dark';
-  
+
   setMode: (mode: 'light' | 'dark' | 'system') => void;
   toggleMode: () => void;
   initializeTheme: () => void;
@@ -216,19 +214,17 @@ export const useThemeStore = create<ThemeStore>()(
 
       setMode: (mode) => {
         let resolved: 'light' | 'dark' = 'light';
-        
+
         if (mode === 'system') {
           if (typeof window !== 'undefined') {
-            resolved = window.matchMedia('(prefers-color-scheme: dark)').matches
-              ? 'dark'
-              : 'light';
+            resolved = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
           }
         } else {
           resolved = mode;
         }
 
         set({ mode, resolvedMode: resolved });
-        
+
         // Apply to document
         if (typeof document !== 'undefined') {
           document.documentElement.classList.remove('light', 'dark');
@@ -270,14 +266,14 @@ export const useThemeStore = create<ThemeStore>()(
 
 /**
  * UI Store
- * 
+ *
  * Ephemeral UI state that doesn't need persistence.
  */
 interface UIStore {
   isMenuOpen: boolean;
   isContactOpen: boolean;
   activePromptId: string | null;
-  
+
   setMenuOpen: (open: boolean) => void;
   setContactOpen: (open: boolean) => void;
   setActivePrompt: (id: string | null) => void;

@@ -1,13 +1,13 @@
 /**
  * TYPE DEFINITIONS
- * 
+ *
  * Central type definitions for the application.
  * Strong typing enables confident refactoring and clear contracts.
  */
 
 /**
  * Visitor Types
- * 
+ *
  * These four personas represent the primary audiences.
  * The entire content strategy adapts based on this selection.
  */
@@ -22,7 +22,7 @@ export interface VisitorTypeOption {
 
 /**
  * Analytics & Visitor Tracking
- * 
+ *
  * We collect minimal, ethical data.
  * No personal information. No cookies for tracking.
  * Just enough to understand who visits and how.
@@ -60,7 +60,7 @@ export interface AnalyticsSummary {
 
 /**
  * Content Types
- * 
+ *
  * Structured content that adapts to visitor types.
  */
 export interface Project {
@@ -125,7 +125,7 @@ export interface ThemeState {
 
 /**
  * Interaction Types
- * 
+ *
  * Micro-interactions and prompts that guide the conversation.
  */
 export interface Prompt {

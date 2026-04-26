@@ -4,15 +4,15 @@
  * ============================================================================
  * EXPLORER PATH - PREMIUM COSMIC DESIGN
  * ============================================================================
- * 
+ *
  * Mysterious, adventurous discovery experience with cosmic
  * purple/pink palette and exploration-focused UI.
  */
 
 import React, { useState, useEffect, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Compass, 
+import {
+  Compass,
   Sparkles,
   Code,
   Briefcase,
@@ -23,7 +23,7 @@ import {
   Star,
   Rocket,
   Map,
-  Telescope
+  Telescope,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
@@ -87,12 +87,12 @@ const quickFacts = [
 
 const CosmicStarField = memo(function CosmicStarField() {
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div className="pointer-events-none absolute inset-0 overflow-hidden">
       {/* Static stars */}
       {[...Array(40)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-1 h-1 bg-white rounded-full"
+          className="absolute h-1 w-1 rounded-full bg-white"
           style={{
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
@@ -108,12 +108,12 @@ const CosmicStarField = memo(function CosmicStarField() {
           }}
         />
       ))}
-      
+
       {/* Shooting stars */}
       {[...Array(3)].map((_, i) => (
         <motion.div
           key={`shooting-${i}`}
-          className="absolute w-20 h-0.5 bg-gradient-to-r from-purple-400 to-transparent"
+          className="absolute h-0.5 w-20 bg-gradient-to-r from-purple-400 to-transparent"
           style={{
             top: `${20 + i * 30}%`,
             rotate: -45,
@@ -143,7 +143,12 @@ interface InterestCardProps {
   index: number;
 }
 
-const InterestCard = memo(function InterestCard({ area, isSelected, onSelect, index }: InterestCardProps) {
+const InterestCard = memo(function InterestCard({
+  area,
+  isSelected,
+  onSelect,
+  index,
+}: InterestCardProps) {
   const Icon = area.icon;
 
   return (
@@ -152,20 +157,19 @@ const InterestCard = memo(function InterestCard({ area, isSelected, onSelect, in
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3 + index * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       onClick={onSelect}
-      className={`
-        group relative overflow-hidden p-6 rounded-2xl text-left
-        transition-all duration-500 border
-        ${isSelected
-          ? 'bg-white/[0.08] border-purple-500/50 ring-2 ring-purple-500/30 shadow-xl shadow-purple-500/10'
-          : 'bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.04] hover:border-purple-500/20'
-        }
-      `}
+      className={`group relative overflow-hidden rounded-2xl border p-6 text-left transition-all duration-500 ${
+        isSelected
+          ? 'border-purple-500/50 bg-white/[0.08] shadow-xl shadow-purple-500/10 ring-2 ring-purple-500/30'
+          : 'border-white/[0.06] bg-white/[0.02] hover:border-purple-500/20 hover:bg-white/[0.04]'
+      } `}
     >
       {/* Gradient Background */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${area.color} opacity-0 ${isSelected ? 'opacity-10' : ''} group-hover:opacity-5 transition-opacity duration-500`} />
-      
+      <div
+        className={`absolute inset-0 bg-gradient-to-br ${area.color} opacity-0 ${isSelected ? 'opacity-10' : ''} transition-opacity duration-500 group-hover:opacity-5`}
+      />
+
       {/* Sparkle effect on hover */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+      <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
         {[...Array(3)].map((_, i) => (
           <motion.div
             key={i}
@@ -184,21 +188,23 @@ const InterestCard = memo(function InterestCard({ area, isSelected, onSelect, in
               delay: i * 0.3,
             }}
           >
-            <Star className="w-3 h-3 text-purple-400/50" />
+            <Star className="h-3 w-3 text-purple-400/50" />
           </motion.div>
         ))}
       </div>
 
       <div className="relative z-10">
-        <motion.div 
+        <motion.div
           whileHover={{ scale: 1.1, rotate: 5 }}
-          className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${area.color} flex items-center justify-center mb-4 shadow-lg shadow-purple-500/20`}
+          className={`h-14 w-14 rounded-2xl bg-gradient-to-br ${area.color} mb-4 flex items-center justify-center shadow-lg shadow-purple-500/20`}
         >
-          <Icon className="w-7 h-7 text-white" />
+          <Icon className="h-7 w-7 text-white" />
         </motion.div>
 
-        <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-purple-300 transition-colors">{area.title}</h3>
-        <p className="text-sm text-white/50 leading-relaxed">{area.description}</p>
+        <h3 className="mb-2 text-lg font-semibold text-white transition-colors group-hover:text-purple-300">
+          {area.title}
+        </h3>
+        <p className="text-sm leading-relaxed text-white/50">{area.description}</p>
 
         <AnimatePresence>
           {isSelected && (
@@ -206,16 +212,16 @@ const InterestCard = memo(function InterestCard({ area, isSelected, onSelect, in
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
               exit={{ scale: 0, rotate: 180 }}
-              className="absolute top-4 right-4 w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg"
+              className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg"
             >
-              <Eye className="w-4 h-4 text-white" />
+              <Eye className="h-4 w-4 text-white" />
             </motion.div>
           )}
         </AnimatePresence>
       </div>
-      
+
       {/* Bottom shine line */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/30 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
     </motion.button>
   );
 });
@@ -250,58 +256,58 @@ export function ExplorerDiscover({ onComplete }: ExplorerDiscoverProps) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a0510] via-[#0d0815] to-[#08050f] text-white flex flex-col relative overflow-hidden">
+    <div className="relative flex min-h-screen flex-col overflow-hidden bg-gradient-to-br from-[#0a0510] via-[#0d0815] to-[#08050f] text-white">
       {/* Premium Cosmic Background */}
       <div className="absolute inset-0">
         {/* Gradient orbs */}
-        <div className="absolute top-0 left-1/4 w-[800px] h-[800px] bg-gradient-to-br from-purple-600/15 via-fuchsia-600/8 to-transparent rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-gradient-to-tl from-pink-600/10 via-purple-500/5 to-transparent rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-0 w-[400px] h-[400px] bg-gradient-to-r from-violet-500/8 to-transparent rounded-full blur-3xl" />
-        
+        <div className="via-fuchsia-600/8 absolute left-1/4 top-0 h-[800px] w-[800px] rounded-full bg-gradient-to-br from-purple-600/15 to-transparent blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-[600px] w-[600px] rounded-full bg-gradient-to-tl from-pink-600/10 via-purple-500/5 to-transparent blur-3xl" />
+        <div className="from-violet-500/8 absolute left-0 top-1/2 h-[400px] w-[400px] rounded-full bg-gradient-to-r to-transparent blur-3xl" />
+
         {/* Star field */}
         <CosmicStarField />
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 flex-1 flex flex-col justify-center px-6 py-12">
-        <div className="max-w-5xl mx-auto w-full">
+      <div className="relative z-10 flex flex-1 flex-col justify-center px-6 py-12">
+        <div className="mx-auto w-full max-w-5xl">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-16"
+            className="mb-16 text-center"
           >
             {/* Animated Compass Icon */}
             <motion.div
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ delay: 0.2, type: 'spring', stiffness: 120, damping: 15 }}
-              className="relative inline-flex items-center justify-center w-24 h-24 mb-8"
+              className="relative mb-8 inline-flex h-24 w-24 items-center justify-center"
             >
-              <motion.div 
-                className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-600 rounded-3xl"
+              <motion.div
+                className="absolute inset-0 rounded-3xl bg-gradient-to-br from-purple-500 to-pink-600"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
               />
-              <div className="relative z-10 w-full h-full bg-gradient-to-br from-purple-500 to-fuchsia-600 rounded-3xl flex items-center justify-center shadow-2xl shadow-purple-500/30">
+              <div className="relative z-10 flex h-full w-full items-center justify-center rounded-3xl bg-gradient-to-br from-purple-500 to-fuchsia-600 shadow-2xl shadow-purple-500/30">
                 <motion.div
                   animate={{ rotate: [0, 10, -10, 0] }}
                   transition={{ duration: 4, repeat: Infinity }}
                 >
-                  <Compass className="w-12 h-12 text-white" />
+                  <Compass className="h-12 w-12 text-white" />
                 </motion.div>
               </div>
-              
+
               {/* Orbiting elements */}
               <motion.div
-                className="absolute w-6 h-6 rounded-full bg-gradient-to-br from-pink-400 to-purple-500 flex items-center justify-center"
+                className="absolute flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-pink-400 to-purple-500"
                 animate={{
                   rotate: 360,
                 }}
                 transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
                 style={{ transformOrigin: '60px 60px' }}
               >
-                <Star className="w-3 h-3 text-white" />
+                <Star className="h-3 w-3 text-white" />
               </motion.div>
             </motion.div>
 
@@ -309,7 +315,7 @@ export function ExplorerDiscover({ onComplete }: ExplorerDiscoverProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-[0.95] tracking-tight"
+              className="mb-6 text-5xl font-bold leading-[0.95] tracking-tight md:text-6xl lg:text-7xl"
             >
               <span className="bg-gradient-to-r from-white via-white to-white/80 bg-clip-text text-transparent">
                 Welcome,
@@ -319,15 +325,15 @@ export function ExplorerDiscover({ onComplete }: ExplorerDiscoverProps) {
                 Explorer!
               </span>
             </motion.h1>
-            
+
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="text-xl text-white/60 max-w-2xl mx-auto leading-relaxed"
+              className="mx-auto max-w-2xl text-xl leading-relaxed text-white/60"
             >
-              Curious minds welcome! Let&apos;s discover what interests you most.
-              This is your personalized journey through my world.
+              Curious minds welcome! Let&apos;s discover what interests you most. This is your
+              personalized journey through my world.
             </motion.p>
           </motion.div>
 
@@ -336,7 +342,7 @@ export function ExplorerDiscover({ onComplete }: ExplorerDiscoverProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="flex flex-wrap justify-center gap-4 mb-16"
+            className="mb-16 flex flex-wrap justify-center gap-4"
           >
             {quickFacts.map((fact, i) => {
               const FactIcon = fact.icon;
@@ -346,11 +352,13 @@ export function ExplorerDiscover({ onComplete }: ExplorerDiscoverProps) {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.5 + i * 0.1 }}
-                  className="text-center px-6 py-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm"
+                  className="rounded-2xl border border-white/[0.06] bg-white/[0.03] px-6 py-4 text-center backdrop-blur-sm"
                 >
-                  <div className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-1">{fact.value}</div>
-                  <div className="text-xs text-white/40 flex items-center justify-center gap-2">
-                    <FactIcon className="w-3 h-3 text-purple-400" />
+                  <div className="mb-1 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-2xl font-bold text-transparent">
+                    {fact.value}
+                  </div>
+                  <div className="flex items-center justify-center gap-2 text-xs text-white/40">
+                    <FactIcon className="h-3 w-3 text-purple-400" />
                     {fact.label}
                   </div>
                 </motion.div>
@@ -365,17 +373,17 @@ export function ExplorerDiscover({ onComplete }: ExplorerDiscoverProps) {
             transition={{ delay: 0.6 }}
             className="mb-12"
           >
-            <div className="flex items-center justify-center gap-3 mb-8">
+            <div className="mb-8 flex items-center justify-center gap-3">
               <div className="h-px w-12 bg-gradient-to-r from-transparent to-purple-500/50" />
-              <h2 className="text-xl font-semibold text-white text-center flex items-center gap-2">
-                <Map className="w-5 h-5 text-purple-400" />
+              <h2 className="flex items-center gap-2 text-center text-xl font-semibold text-white">
+                <Map className="h-5 w-5 text-purple-400" />
                 What interests you?
-                <span className="text-white/40 text-sm">(Select any)</span>
+                <span className="text-sm text-white/40">(Select any)</span>
               </h2>
               <div className="h-px w-12 bg-gradient-to-l from-transparent to-purple-500/50" />
             </div>
-            
-            <div className="grid sm:grid-cols-2 gap-4">
+
+            <div className="grid gap-4 sm:grid-cols-2">
               {interestAreas.map((area, index) => (
                 <InterestCard
                   key={area.id}
@@ -395,7 +403,7 @@ export function ExplorerDiscover({ onComplete }: ExplorerDiscoverProps) {
                 initial={{ opacity: 0, y: 20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                className="p-8 rounded-2xl bg-gradient-to-r from-purple-500/10 via-fuchsia-500/10 to-pink-500/10 border border-purple-500/20 text-center relative overflow-hidden"
+                className="relative overflow-hidden rounded-2xl border border-purple-500/20 bg-gradient-to-r from-purple-500/10 via-fuchsia-500/10 to-pink-500/10 p-8 text-center"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-600/5 to-transparent" />
                 <div className="relative z-10">
@@ -403,10 +411,11 @@ export function ExplorerDiscover({ onComplete }: ExplorerDiscoverProps) {
                     animate={{ rotate: 360 }}
                     transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
                   >
-                    <Sparkles className="w-10 h-10 text-purple-400 mx-auto mb-4" />
+                    <Sparkles className="mx-auto mb-4 h-10 w-10 text-purple-400" />
                   </motion.div>
-                  <p className="text-white/70 text-lg">
-                    Great choices! I&apos;ll show you the most relevant highlights based on your interests.
+                  <p className="text-lg text-white/70">
+                    Great choices! I&apos;ll show you the most relevant highlights based on your
+                    interests.
                   </p>
                 </div>
               </motion.div>
@@ -419,22 +428,21 @@ export function ExplorerDiscover({ onComplete }: ExplorerDiscoverProps) {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: isReady ? 1 : 0, y: isReady ? 0 : 20 }}
-        className="sticky bottom-0 px-6 py-5 bg-black/80 backdrop-blur-xl border-t border-white/[0.06]"
+        className="sticky bottom-0 border-t border-white/[0.06] bg-black/80 px-6 py-5 backdrop-blur-xl"
       >
-        <div className="max-w-5xl mx-auto flex items-center justify-between">
+        <div className="mx-auto flex max-w-5xl items-center justify-between">
           <p className="text-sm text-white/40">
-            {selectedAreas.size === 0 
+            {selectedAreas.size === 0
               ? 'Select interests for a personalized experience, or continue to see everything.'
-              : `${selectedAreas.size} area${selectedAreas.size > 1 ? 's' : ''} selected`
-            }
+              : `${selectedAreas.size} area${selectedAreas.size > 1 ? 's' : ''} selected`}
           </p>
 
           <button
             onClick={onComplete}
-            className="group flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 hover:-translate-y-0.5"
+            className="group flex items-center gap-3 rounded-xl bg-gradient-to-r from-purple-600 to-fuchsia-600 px-8 py-4 font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-purple-500/25"
           >
             <span>Start Exploring</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
           </button>
         </div>
       </motion.div>

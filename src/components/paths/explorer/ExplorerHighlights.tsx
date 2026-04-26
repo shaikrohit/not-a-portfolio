@@ -4,21 +4,21 @@
  * ============================================================================
  * EXPLORER PATH - HIGHLIGHTS STEP
  * ============================================================================
- * 
+ *
  * Quick visual tour of key highlights with
  * interactive cards and bite-sized content.
  */
 
 import React, { useState, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ArrowRight, 
+import {
+  ArrowRight,
   Code,
   Trophy,
   Heart,
   Lightbulb,
   ChevronLeft,
-  ChevronRight as ChevronRightIcon
+  ChevronRight as ChevronRightIcon,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
@@ -47,7 +47,8 @@ const highlights: Highlight[] = [
     icon: Code,
     category: 'Technical',
     title: 'Building Modern Web Apps',
-    description: 'I specialize in creating fast, accessible, and beautiful web applications using cutting-edge technologies.',
+    description:
+      'I specialize in creating fast, accessible, and beautiful web applications using cutting-edge technologies.',
     visual: '⚡',
     color: 'from-blue-500 to-blue-400',
     details: [
@@ -77,7 +78,8 @@ const highlights: Highlight[] = [
     icon: Lightbulb,
     category: 'Philosophy',
     title: 'Clarity Over Cleverness',
-    description: 'I believe in writing code that future developers (including future me) will thank me for.',
+    description:
+      'I believe in writing code that future developers (including future me) will thank me for.',
     visual: '💡',
     color: 'from-purple-500 to-purple-400',
     details: [
@@ -92,7 +94,8 @@ const highlights: Highlight[] = [
     icon: Heart,
     category: 'Beyond Code',
     title: 'More Than Just Programming',
-    description: 'I\'m passionate about mentoring, writing, and helping others grow in their tech journey.',
+    description:
+      "I'm passionate about mentoring, writing, and helping others grow in their tech journey.",
     visual: '✨',
     color: 'from-cyan-500 to-cyan-400',
     details: [
@@ -114,37 +117,36 @@ interface HighlightCardProps {
 }
 
 const HighlightCard = memo(function HighlightCard({ highlight }: HighlightCardProps) {
-
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.4 }}
-      className="w-full max-w-2xl mx-auto"
+      className="mx-auto w-full max-w-2xl"
     >
-      <div className="relative overflow-hidden rounded-3xl bg-white/[0.02] border border-white/5 p-8 md:p-10">
+      <div className="relative overflow-hidden rounded-3xl border border-white/5 bg-white/[0.02] p-8 md:p-10">
         {/* Background Gradient */}
         <div className={`absolute inset-0 bg-gradient-to-br ${highlight.color} opacity-5`} />
-        <div className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-br ${highlight.color} opacity-10 blur-3xl`} />
+        <div
+          className={`absolute right-0 top-0 h-64 w-64 bg-gradient-to-br ${highlight.color} opacity-10 blur-3xl`}
+        />
 
         {/* Content */}
         <div className="relative">
           {/* Category & Icon */}
-          <div className="flex items-center justify-between mb-6">
-            <span className={`px-3 py-1 rounded-full bg-gradient-to-r ${highlight.color} text-white text-sm font-medium`}>
+          <div className="mb-6 flex items-center justify-between">
+            <span
+              className={`rounded-full bg-gradient-to-r px-3 py-1 ${highlight.color} text-sm font-medium text-white`}
+            >
               {highlight.category}
             </span>
             <div className="text-5xl">{highlight.visual}</div>
           </div>
 
           {/* Title & Description */}
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            {highlight.title}
-          </h2>
-          <p className="text-lg text-white/50 mb-8">
-            {highlight.description}
-          </p>
+          <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">{highlight.title}</h2>
+          <p className="mb-8 text-lg text-white/50">{highlight.description}</p>
 
           {/* Details */}
           <div className="grid grid-cols-2 gap-3">
@@ -154,9 +156,9 @@ const HighlightCard = memo(function HighlightCard({ highlight }: HighlightCardPr
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 + i * 0.1 }}
-                className="flex items-center gap-2 p-3 rounded-xl bg-white/[0.03] border border-white/5"
+                className="flex items-center gap-2 rounded-xl border border-white/5 bg-white/[0.03] p-3"
               >
-                <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${highlight.color}`} />
+                <div className={`h-2 w-2 rounded-full bg-gradient-to-r ${highlight.color}`} />
                 <span className="text-sm text-white/60">{detail}</span>
               </motion.div>
             ))}
@@ -181,13 +183,9 @@ const NavDot = memo(function NavDot({ isActive, onClick, highlight }: NavDotProp
   return (
     <button
       onClick={onClick}
-      className={`
-        relative w-12 h-12 rounded-xl transition-all duration-300
-        ${isActive 
-          ? `bg-gradient-to-br ${highlight.color} shadow-lg` 
-          : 'bg-white/5 hover:bg-white/10'
-        }
-      `}
+      className={`relative h-12 w-12 rounded-xl transition-all duration-300 ${
+        isActive ? `bg-gradient-to-br ${highlight.color} shadow-lg` : 'bg-white/5 hover:bg-white/10'
+      } `}
     >
       <span className="text-xl">{highlight.visual}</span>
     </button>
@@ -225,18 +223,16 @@ export function ExplorerHighlights({ onComplete }: ExplorerHighlightsProps) {
   const currentHighlight = highlights[currentIndex]!;
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="flex-1 py-8 px-4 flex flex-col items-center justify-center">
+    <div className="flex min-h-screen flex-col">
+      <div className="flex flex-1 flex-col items-center justify-center px-4 py-8">
         <div className="w-full max-w-4xl">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-8"
+            className="mb-8 text-center"
           >
-            <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
-              Quick Highlights
-            </h1>
+            <h1 className="mb-2 text-2xl font-bold text-white md:text-3xl">Quick Highlights</h1>
             <p className="text-white/40">
               Swipe through to get a quick overview • {currentIndex + 1}/{highlights.length}
             </p>
@@ -247,20 +243,24 @@ export function ExplorerHighlights({ onComplete }: ExplorerHighlightsProps) {
             {/* Navigation Arrows */}
             <button
               onClick={goPrev}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/50 hover:text-white transition-colors"
+              className="absolute left-0 top-1/2 z-10 flex h-10 w-10 -translate-x-4 -translate-y-1/2 items-center justify-center rounded-full bg-white/5 text-white/50 transition-colors hover:bg-white/10 hover:text-white"
             >
-              <ChevronLeft className="w-5 h-5" />
+              <ChevronLeft className="h-5 w-5" />
             </button>
             <button
               onClick={goNext}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/50 hover:text-white transition-colors"
+              className="absolute right-0 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 translate-x-4 items-center justify-center rounded-full bg-white/5 text-white/50 transition-colors hover:bg-white/10 hover:text-white"
             >
-              <ChevronRightIcon className="w-5 h-5" />
+              <ChevronRightIcon className="h-5 w-5" />
             </button>
 
             {/* Card */}
             <AnimatePresence mode="wait">
-              <HighlightCard key={currentHighlight.id} highlight={currentHighlight} isActive={true} />
+              <HighlightCard
+                key={currentHighlight.id}
+                highlight={currentHighlight}
+                isActive={true}
+              />
             </AnimatePresence>
           </div>
 
@@ -282,7 +282,7 @@ export function ExplorerHighlights({ onComplete }: ExplorerHighlightsProps) {
               {highlights.map((_, i) => (
                 <div
                   key={i}
-                  className={`w-8 h-1 rounded-full transition-colors ${
+                  className={`h-1 w-8 rounded-full transition-colors ${
                     viewedHighlights.has(i) ? 'bg-blue-500' : 'bg-white/10'
                   }`}
                 />
@@ -296,28 +296,23 @@ export function ExplorerHighlights({ onComplete }: ExplorerHighlightsProps) {
       </div>
 
       {/* Bottom Action */}
-      <div className="sticky bottom-0 glass-strong border-t border-white/5">
-        <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div className="glass-strong sticky bottom-0 border-t border-white/5">
+        <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-4">
           <p className="text-sm text-white/30">
-            {allViewed ? 'Great! You\'ve seen all highlights.' : 'View all highlights to continue.'}
+            {allViewed ? "Great! You've seen all highlights." : 'View all highlights to continue.'}
           </p>
 
           <button
             onClick={onComplete}
             disabled={!allViewed}
-            className={`
-              group inline-flex items-center gap-2
-              px-6 py-3 rounded-lg
-              font-medium text-white
-              transition-all duration-300
-              ${allViewed
-                ? 'bg-gradient-to-r from-blue-600 to-indigo-500 hover:from-blue-500 hover:to-indigo-400 shadow-lg shadow-blue-500/30'
-                : 'bg-white/10 text-white/30 cursor-not-allowed'
-              }
-            `}
+            className={`group inline-flex items-center gap-2 rounded-lg px-6 py-3 font-medium text-white transition-all duration-300 ${
+              allViewed
+                ? 'bg-gradient-to-r from-blue-600 to-indigo-500 shadow-lg shadow-blue-500/30 hover:from-blue-500 hover:to-indigo-400'
+                : 'cursor-not-allowed bg-white/10 text-white/30'
+            } `}
           >
             <span>Deep Dive</span>
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </button>
         </div>
       </div>

@@ -1,9 +1,9 @@
 /**
  * CONTENT CONFIGURATION
- * 
+ *
  * This file contains all the content that adapts based on visitor type.
  * The content is structured for easy updates without touching components.
- * 
+ *
  * Philosophy: Content should be honest, thoughtful, and non-promotional.
  */
 
@@ -18,29 +18,29 @@ export const profile = {
   title: 'Full Stack Developer & Cybersecurity Enthusiast',
   tagline: 'Building secure digital experiences with precision.',
   location: 'Kuppam, India',
-  
+
   // Different introductions for different visitors
   introduction: {
     developer: `I'm a computer engineering student and developer who believes security isn't an afterthought—it's the foundation. 
     I specialize in building full-stack applications with a focus on penetration testing and network security.
     
     This site isn't just a portfolio; it's a window into how I secure and build the web.`,
-    
+
     recruiter: `I'm a high-achieving Computer Engineering student (96% aggregate) and AI Developer at Sithafal Technologies. 
     I've won regional innovation awards and delivered projects ranging from AI assistants to secure network tools.
     
     I'm seeking opportunities where I can apply my skills in cybersecurity and web development to build resilient systems.`,
-    
+
     student: `I'm currently a student at Dr. Y.C. James Yen Govt Polytechnic. I know how overwhelming it feels to start in tech, 
     especially in fields like Cybersecurity. I've maintained a 96% score while building real-world projects.
     
     I'm here to show you that with discipline and curiosity, you can master both the creative and technical sides of dev.`,
-    
+
     explorer: `Welcome! I'm Shaik Rohit. I build things, break them (to make them better), and learn every day.
     
     Feel free to explore my work in AI, Web Dev, and Cybersecurity. This experience adapts to you.`,
   },
-  
+
   email: 'shaik.rohit.official@gmail.com',
   github: 'https://github.com/shaikrohit',
   linkedin: 'https://www.linkedin.com/in/rohitshaik',
@@ -54,7 +54,7 @@ export const profile = {
 export const philosophy = {
   title: 'Engineering Philosophy',
   subtitle: 'Principles that guide how I build software',
-  
+
   principles: [
     {
       id: 'clarity',
@@ -103,7 +103,8 @@ export const techStack: Skill[] = [
     yearsUsed: 5,
     reasoning: `Types catch errors before runtime and serve as documentation. 
     The productivity gain from autocomplete and refactoring support is worth the initial investment.`,
-    businessOutcome: 'Reduced production bugs by 40% and accelerated onboarding for new team members.',
+    businessOutcome:
+      'Reduced production bugs by 40% and accelerated onboarding for new team members.',
   },
   {
     name: 'React',

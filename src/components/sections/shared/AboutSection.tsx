@@ -4,14 +4,14 @@
  * ============================================================================
  * ABOUT SECTION (Shared)
  * ============================================================================
- * 
+ *
  * @description General about section shown across all paths.
  *              Shared between Developer, Recruiter, Student, and Explorer.
- * 
+ *
  * @usage
  * ```tsx
  * import { AboutSection } from '@/components/sections/shared';
- * 
+ *
  * <AboutSection />
  * ```
  * ============================================================================
@@ -38,14 +38,14 @@ const personalFacts = [
 
 /**
  * FactCard
- * 
+ *
  * A fun fact about the person.
  */
-function FactCard({ fact }: { fact: typeof personalFacts[0] }) {
+function FactCard({ fact }: { fact: (typeof personalFacts)[0] }) {
   return (
     <Card padding="md" className="text-center">
-      <Text className="text-3xl mb-2">{fact.emoji}</Text>
-      <Text variant="h4" className="text-base mb-1">
+      <Text className="mb-2 text-3xl">{fact.emoji}</Text>
+      <Text variant="h4" className="mb-1 text-base">
         {fact.label}
       </Text>
       <Text variant="body-small" muted>
@@ -61,7 +61,7 @@ function FactCard({ fact }: { fact: typeof personalFacts[0] }) {
 
 /**
  * AboutSection
- * 
+ *
  * Personal introduction and fun facts.
  * Shown on all visitor paths.
  */
@@ -69,7 +69,7 @@ export function AboutSection() {
   return (
     <section className="section">
       <div className="container-narrow">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
           {/* Left: Content */}
           <FadeIn>
             <Text variant="overline" className="mb-4">
@@ -82,10 +82,9 @@ export function AboutSection() {
               {profile.introduction.explorer}
             </Text>
             <Text variant="body" muted>
-              When I'm not coding, you'll find me exploring new technologies,
-              contributing to open source, or mentoring aspiring developers.
-              I believe that the best software comes from teams that value
-              both technical excellence and human connection.
+              When I'm not coding, you'll find me exploring new technologies, contributing to open
+              source, or mentoring aspiring developers. I believe that the best software comes from
+              teams that value both technical excellence and human connection.
             </Text>
           </FadeIn>
 

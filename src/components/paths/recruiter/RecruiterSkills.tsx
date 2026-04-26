@@ -4,19 +4,14 @@
  * ============================================================================
  * RECRUITER PATH - SKILLS STEP
  * ============================================================================
- * 
+ *
  * Skills matrix with proficiency levels, organized by category
  * with visual skill bars and endorsements.
  */
 
 import React, { useState, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ArrowRight, 
-  Star,
-  CheckCircle,
-  TrendingUp
-} from 'lucide-react';
+import { ArrowRight, Star, CheckCircle, TrendingUp } from 'lucide-react';
 
 // ============================================================================
 // TYPES
@@ -111,21 +106,18 @@ const CategoryTab = memo(function CategoryTab({ category, isActive, onClick }: C
   return (
     <button
       onClick={onClick}
-      className={`
-        flex items-center gap-2 px-4 py-3 rounded-xl
-        transition-all duration-300 text-left w-full
-        ${isActive
-          ? 'bg-blue-500/10 border border-blue-500/30'
-          : 'bg-white/[0.02] border border-white/5 hover:bg-white/[0.04]'
-        }
-      `}
+      className={`flex w-full items-center gap-2 rounded-xl px-4 py-3 text-left transition-all duration-300 ${
+        isActive
+          ? 'border border-blue-500/30 bg-blue-500/10'
+          : 'border border-white/5 bg-white/[0.02] hover:bg-white/[0.04]'
+      } `}
     >
       <span className="text-xl">{category.icon}</span>
-      <div className="flex-1 min-w-0">
-        <div className={`font-medium truncate ${isActive ? 'text-white' : 'text-white/70'}`}>
+      <div className="min-w-0 flex-1">
+        <div className={`truncate font-medium ${isActive ? 'text-white' : 'text-white/70'}`}>
           {category.name}
         </div>
-        <div className="text-xs text-white/30 truncate">{category.skills.length} skills</div>
+        <div className="truncate text-xs text-white/30">{category.skills.length} skills</div>
       </div>
     </button>
   );
@@ -160,14 +152,14 @@ const SkillBar = memo(function SkillBar({ skill, index }: SkillBarProps) {
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: index * 0.05, duration: 0.3 }}
-      className="p-4 rounded-xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-colors"
+      className="rounded-xl border border-white/5 bg-white/[0.02] p-4 transition-colors hover:border-white/10"
     >
-      <div className="flex items-center justify-between mb-3">
+      <div className="mb-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="font-medium text-white">{skill.name}</span>
           {skill.trending && (
-            <span className="flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] bg-green-500/10 text-green-400">
-              <TrendingUp className="w-2.5 h-2.5" />
+            <span className="flex items-center gap-1 rounded bg-green-500/10 px-1.5 py-0.5 text-[10px] text-green-400">
+              <TrendingUp className="h-2.5 w-2.5" />
               Hot
             </span>
           )}
@@ -176,7 +168,7 @@ const SkillBar = memo(function SkillBar({ skill, index }: SkillBarProps) {
       </div>
 
       {/* Progress Bar */}
-      <div className="h-2 bg-white/5 rounded-full overflow-hidden mb-3">
+      <div className="mb-3 h-2 overflow-hidden rounded-full bg-white/5">
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${skill.level}%` }}
@@ -189,7 +181,7 @@ const SkillBar = memo(function SkillBar({ skill, index }: SkillBarProps) {
       <div className="flex items-center justify-between text-xs text-white/30">
         <span>{skill.years} years experience</span>
         <span className="flex items-center gap-1">
-          <Star className="w-3 h-3" />
+          <Star className="h-3 w-3" />
           {skill.endorsements} endorsements
         </span>
       </div>
@@ -203,11 +195,13 @@ const SkillBar = memo(function SkillBar({ skill, index }: SkillBarProps) {
 
 const SkillsSummary = memo(function SkillsSummary() {
   const totalSkills = skillCategories.reduce((acc, cat) => acc + cat.skills.length, 0);
-  const expertSkills = skillCategories.reduce((acc, cat) => 
-    acc + cat.skills.filter(s => s.level >= 90).length, 0
+  const expertSkills = skillCategories.reduce(
+    (acc, cat) => acc + cat.skills.filter((s) => s.level >= 90).length,
+    0
   );
-  const totalEndorsements = skillCategories.reduce((acc, cat) => 
-    acc + cat.skills.reduce((a, s) => a + s.endorsements, 0), 0
+  const totalEndorsements = skillCategories.reduce(
+    (acc, cat) => acc + cat.skills.reduce((a, s) => a + s.endorsements, 0),
+    0
   );
 
   return (
@@ -215,17 +209,17 @@ const SkillsSummary = memo(function SkillsSummary() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3 }}
-      className="grid grid-cols-3 gap-4 mb-8"
+      className="mb-8 grid grid-cols-3 gap-4"
     >
-      <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 text-center">
+      <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4 text-center">
         <div className="text-3xl font-bold text-blue-400">{totalSkills}</div>
         <div className="text-sm text-white/30">Total Skills</div>
       </div>
-      <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 text-center">
+      <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4 text-center">
         <div className="text-3xl font-bold text-blue-400">{expertSkills}</div>
         <div className="text-sm text-white/30">Expert Level</div>
       </div>
-      <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5 text-center">
+      <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4 text-center">
         <div className="text-3xl font-bold text-blue-400">{totalEndorsements}</div>
         <div className="text-sm text-white/30">Endorsements</div>
       </div>
@@ -245,21 +239,19 @@ export function RecruiterSkills({ onComplete }: RecruiterSkillsProps) {
   const [activeCategory, setActiveCategory] = useState(skillCategories[0]!);
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="flex-1 py-8 px-4">
-        <div className="max-w-6xl mx-auto">
+    <div className="flex min-h-screen flex-col">
+      <div className="flex-1 px-4 py-8">
+        <div className="mx-auto max-w-6xl">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             className="mb-6"
           >
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
-              Skills & Expertise
-            </h1>
-            <p className="text-white/50 max-w-2xl">
-              A comprehensive overview of my technical and professional skills,
-              backed by years of hands-on experience.
+            <h1 className="mb-3 text-3xl font-bold text-white md:text-4xl">Skills & Expertise</h1>
+            <p className="max-w-2xl text-white/50">
+              A comprehensive overview of my technical and professional skills, backed by years of
+              hands-on experience.
             </p>
           </motion.div>
 
@@ -267,9 +259,9 @@ export function RecruiterSkills({ onComplete }: RecruiterSkillsProps) {
           <SkillsSummary />
 
           {/* Content Grid */}
-          <div className="grid lg:grid-cols-4 gap-6">
+          <div className="grid gap-6 lg:grid-cols-4">
             {/* Category Navigation */}
-            <div className="lg:col-span-1 space-y-2">
+            <div className="space-y-2 lg:col-span-1">
               {skillCategories.map((category) => (
                 <CategoryTab
                   key={category.id}
@@ -290,8 +282,8 @@ export function RecruiterSkills({ onComplete }: RecruiterSkillsProps) {
                   exit={{ opacity: 0 }}
                 >
                   {/* Category Header */}
-                  <div className="mb-6 p-4 rounded-xl bg-gradient-to-r from-blue-500/5 to-blue-600/5 border border-blue-500/10">
-                    <div className="flex items-center gap-3 mb-2">
+                  <div className="mb-6 rounded-xl border border-blue-500/10 bg-gradient-to-r from-blue-500/5 to-blue-600/5 p-4">
+                    <div className="mb-2 flex items-center gap-3">
                       <span className="text-2xl">{activeCategory.icon}</span>
                       <h2 className="text-xl font-semibold text-white">{activeCategory.name}</h2>
                     </div>
@@ -299,7 +291,7 @@ export function RecruiterSkills({ onComplete }: RecruiterSkillsProps) {
                   </div>
 
                   {/* Skills List */}
-                  <div className="grid md:grid-cols-2 gap-4">
+                  <div className="grid gap-4 md:grid-cols-2">
                     {activeCategory.skills.map((skill, index) => (
                       <SkillBar key={skill.name} skill={skill} index={index} />
                     ))}
@@ -312,19 +304,19 @@ export function RecruiterSkills({ onComplete }: RecruiterSkillsProps) {
       </div>
 
       {/* Bottom Action */}
-      <div className="sticky bottom-0 glass-strong border-t border-white/5">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div className="glass-strong sticky bottom-0 border-t border-white/5">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
           <div className="flex items-center gap-2 text-sm text-white/30">
-            <CheckCircle className="w-4 h-4 text-green-400" />
+            <CheckCircle className="h-4 w-4 text-green-400" />
             All skills verified through professional experience
           </div>
 
           <button
             onClick={onComplete}
-            className="group inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 transition-all duration-300 shadow-lg shadow-blue-500/30"
+            className="group inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-blue-500 px-6 py-3 font-medium text-white shadow-lg shadow-blue-500/30 transition-all duration-300 hover:from-blue-500 hover:to-blue-400"
           >
             <span>View Achievements</span>
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </button>
         </div>
       </div>
