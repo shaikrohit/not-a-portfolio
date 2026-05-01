@@ -58,15 +58,21 @@ export function TriviaGame() {
   const [showResult, setShowResult] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [leaderboard, setLeaderboard] = useState<any[]>([]);
+  const [leaderboard, setLeaderboard] = useState<any[] | null>(null);
+
   const [username, setUsername] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     const fetchLeaderboard = async () => {
-      const data = await getTriviaLeaderboard();
-      setLeaderboard(data);
+      try {
+        const data = await getTriviaLeaderboard();
+        setLeaderboard(data || []);
+      } catch (error) {
+        console.error('Failed to fetch leaderboard:', error);
+        setLeaderboard([]);
+      }
     };
     fetchLeaderboard();
   }, [submitted]);
@@ -263,8 +269,18 @@ export function TriviaGame() {
               </h3>
 
               <div className="relative z-10 space-y-4">
-                {leaderboard.length === 0 ? (
-                  <p className="text-neutral-400">Loading top scores...</p>
+                {leaderboard === null ? (
+                  <div className="flex flex-col items-center justify-center py-10 text-center">
+                    <div className="h-6 w-6 animate-spin rounded-full border-2 border-white/20 border-t-purple-400" />
+                    <p className="mt-4 text-sm text-neutral-400">Loading champions...</p>
+                  </div>
+                ) : leaderboard.length === 0 ? (
+                  <div className="rounded-xl border border-white/5 bg-white/5 p-8 text-center">
+                    <p className="text-neutral-400">No champions yet.</p>
+                    <p className="mt-2 text-sm font-medium text-purple-400/80">
+                      Be the first to claim a spot!
+                    </p>
+                  </div>
                 ) : (
                   leaderboard.map((entry, idx) => (
                     <motion.div
@@ -272,17 +288,25 @@ export function TriviaGame() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: idx * 0.1 }}
-                      className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-4"
+                      className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-4 transition-colors hover:bg-white/10"
                     >
                       <div className="flex items-center gap-4">
                         <span
-                          className={`font-bold ${idx === 0 ? 'text-yellow-400' : idx === 1 ? 'text-neutral-300' : idx === 2 ? 'text-amber-600' : 'text-neutral-500'}`}
+                          className={`flex h-8 w-8 items-center justify-center rounded-lg font-bold ${
+                            idx === 0
+                              ? 'bg-yellow-400/20 text-yellow-400'
+                              : idx === 1
+                                ? 'bg-neutral-300/20 text-neutral-300'
+                                : idx === 2
+                                  ? 'bg-amber-600/20 text-amber-600'
+                                  : 'bg-white/5 text-neutral-500'
+                          }`}
                         >
-                          #{idx + 1}
+                          {idx + 1}
                         </span>
                         <span className="font-medium text-white">{entry.username}</span>
                       </div>
-                      <span className="font-mono text-purple-300">{entry.score} pts</span>
+                      <span className="font-mono font-bold text-purple-300">{entry.score} pts</span>
                     </motion.div>
                   ))
                 )}

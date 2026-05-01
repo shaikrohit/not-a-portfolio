@@ -1,0 +1,20 @@
+# Ignore build outputs
+.next
+dist
+build
+out
+
+# Ignore dependencies
+node_modules
+
+# Ignore auto-generated files (This fixes your current CI failure)
+next-env.d.ts
+public/site.webmanifest
+
+# Ignore lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Ignore secret files
+.env*
