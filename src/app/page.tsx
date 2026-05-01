@@ -11,6 +11,8 @@
 
 import React from 'react';
 
+import dynamic from 'next/dynamic';
+
 // Layout Components
 import { Navigation } from '@/components/layout/Navigation';
 import { Footer } from '@/components/layout/Footer';
@@ -18,15 +20,19 @@ import { CursorGlow } from '@/components/layout/CursorGlow';
 import { MorphingBackground } from '@/components/layout/MorphingBackground';
 import { ScrollProgress } from '@/components/layout/ScrollProgress';
 
-// Section Components
+// Hero is static for LCP
 import { HeroSection } from '@/components/sections/HeroSection';
-import { PathSelectionSection } from '@/components/sections/PathSelectionSection';
-import { AboutSection } from '@/components/sections/AboutSection';
-import { ExperienceSection } from '@/components/sections/ExperienceSection';
-import { ProjectsSection } from '@/components/sections/ProjectsSection';
-import { SkillsSection } from '@/components/sections/SkillsSection';
-import { TriviaGame } from '@/components/sections/TriviaGame';
-import { ContactSection } from '@/components/sections/ContactSection';
+
+// Dynamically import sections below the fold
+const PathSelectionSection = dynamic(() => import('@/components/sections/PathSelectionSection').then(mod => mod.PathSelectionSection), {
+  loading: () => <div className="h-96 animate-pulse bg-neutral-50/50" />,
+});
+const AboutSection = dynamic(() => import('@/components/sections/AboutSection').then(mod => mod.AboutSection));
+const ExperienceSection = dynamic(() => import('@/components/sections/ExperienceSection').then(mod => mod.ExperienceSection));
+const ProjectsSection = dynamic(() => import('@/components/sections/ProjectsSection').then(mod => mod.ProjectsSection));
+const SkillsSection = dynamic(() => import('@/components/sections/SkillsSection').then(mod => mod.SkillsSection));
+const TriviaGame = dynamic(() => import('@/components/sections/TriviaGame').then(mod => mod.TriviaGame));
+const ContactSection = dynamic(() => import('@/components/sections/ContactSection').then(mod => mod.ContactSection));
 
 export default function HomePage() {
   return (

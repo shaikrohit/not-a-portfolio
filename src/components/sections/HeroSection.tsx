@@ -35,13 +35,14 @@ export function HeroSection() {
           initial="hidden"
           animate="visible"
           variants={textVariants}
-          className="mb-10 inline-flex items-center gap-3 rounded-full border border-blue-500/20 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 px-5 py-2.5"
+          className="mb-10 inline-flex items-center gap-3 rounded-full border border-pink-500/20 bg-gradient-to-r from-pink-500/10 to-emerald-500/10 px-5 py-2.5 shadow-[0_0_20px_-5px_rgba(236,72,153,0.3)]"
         >
           <span className="relative flex h-2.5 w-2.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75" />
-            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-blue-500" />
+            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-pink-500" />
           </span>
-          <span className="text-sm font-medium text-blue-300/90">Open to new opportunities</span>
+          <span className="text-sm font-semibold bg-gradient-to-r from-pink-500 to-emerald-500 bg-clip-text text-transparent">
+            Open to new opportunities
+          </span>
         </motion.div>
 
         {/* Main Heading */}

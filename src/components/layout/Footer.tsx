@@ -49,7 +49,7 @@ export function Footer() {
               ))}
             </div>
             <p className="text-sm font-medium text-neutral-400">
-              &copy; {new Date().getFullYear()} Shaik Rohit. Built with Next.js & Framer Motion.
+              Designed with care for a better digital experience.
             </p>
           </div>
         </div>
