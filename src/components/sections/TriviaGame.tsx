@@ -230,7 +230,9 @@ export function TriviaGame() {
               ) : (
                 <div className="rounded-xl border border-blue-200 bg-blue-50 p-6 text-center font-medium text-blue-800">
                   <p>Score submitted for verification!</p>
-                  <p className="mt-1 text-sm font-normal text-blue-600">It will appear on the leaderboard once approved.</p>
+                  <p className="mt-1 text-sm font-normal text-blue-600">
+                    It will appear on the leaderboard once approved.
+                  </p>
                 </div>
               )}
 

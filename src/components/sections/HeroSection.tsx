@@ -40,7 +40,7 @@ export function HeroSection() {
           <span className="relative flex h-2.5 w-2.5">
             <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-pink-500" />
           </span>
-          <span className="text-sm font-semibold bg-gradient-to-r from-pink-500 to-emerald-500 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-pink-500 to-emerald-500 bg-clip-text text-sm font-semibold text-transparent">
             Open to new opportunities
           </span>
         </motion.div>

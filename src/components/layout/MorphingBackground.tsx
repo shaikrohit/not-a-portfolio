@@ -10,7 +10,7 @@ export function MorphingBackground() {
 
       {/* Blobs - Reduced for mobile performance */}
       <motion.div
-        className="absolute right-[-10%] top-[-20%] h-[600px] w-[600px] md:h-[1000px] md:w-[1000px] rounded-full opacity-20 md:opacity-30 blur-[80px] md:blur-[140px]"
+        className="absolute right-[-10%] top-[-20%] h-[600px] w-[600px] rounded-full opacity-20 blur-[80px] md:h-[1000px] md:w-[1000px] md:opacity-30 md:blur-[140px]"
         style={{
           background: 'radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, transparent 70%)',
         }}
@@ -26,7 +26,7 @@ export function MorphingBackground() {
       />
 
       <motion.div
-        className="hidden md:block absolute bottom-[-10%] left-[-10%] h-[800px] w-[800px] rounded-full opacity-20 blur-[120px]"
+        className="absolute bottom-[-10%] left-[-10%] hidden h-[800px] w-[800px] rounded-full opacity-20 blur-[120px] md:block"
         style={{
           background: 'radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, transparent 70%)',
         }}
@@ -42,7 +42,6 @@ export function MorphingBackground() {
           delay: 5,
         }}
       />
-
 
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.02]"

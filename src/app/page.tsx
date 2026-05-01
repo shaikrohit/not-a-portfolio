@@ -24,15 +24,31 @@ import { ScrollProgress } from '@/components/layout/ScrollProgress';
 import { HeroSection } from '@/components/sections/HeroSection';
 
 // Dynamically import sections below the fold
-const PathSelectionSection = dynamic(() => import('@/components/sections/PathSelectionSection').then(mod => mod.PathSelectionSection), {
-  loading: () => <div className="h-96 animate-pulse bg-neutral-50/50" />,
-});
-const AboutSection = dynamic(() => import('@/components/sections/AboutSection').then(mod => mod.AboutSection));
-const ExperienceSection = dynamic(() => import('@/components/sections/ExperienceSection').then(mod => mod.ExperienceSection));
-const ProjectsSection = dynamic(() => import('@/components/sections/ProjectsSection').then(mod => mod.ProjectsSection));
-const SkillsSection = dynamic(() => import('@/components/sections/SkillsSection').then(mod => mod.SkillsSection));
-const TriviaGame = dynamic(() => import('@/components/sections/TriviaGame').then(mod => mod.TriviaGame));
-const ContactSection = dynamic(() => import('@/components/sections/ContactSection').then(mod => mod.ContactSection));
+const PathSelectionSection = dynamic(
+  () =>
+    import('@/components/sections/PathSelectionSection').then((mod) => mod.PathSelectionSection),
+  {
+    loading: () => <div className="h-96 animate-pulse bg-neutral-50/50" />,
+  }
+);
+const AboutSection = dynamic(() =>
+  import('@/components/sections/AboutSection').then((mod) => mod.AboutSection)
+);
+const ExperienceSection = dynamic(() =>
+  import('@/components/sections/ExperienceSection').then((mod) => mod.ExperienceSection)
+);
+const ProjectsSection = dynamic(() =>
+  import('@/components/sections/ProjectsSection').then((mod) => mod.ProjectsSection)
+);
+const SkillsSection = dynamic(() =>
+  import('@/components/sections/SkillsSection').then((mod) => mod.SkillsSection)
+);
+const TriviaGame = dynamic(() =>
+  import('@/components/sections/TriviaGame').then((mod) => mod.TriviaGame)
+);
+const ContactSection = dynamic(() =>
+  import('@/components/sections/ContactSection').then((mod) => mod.ContactSection)
+);
 
 export default function HomePage() {
   return (

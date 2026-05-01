@@ -14,11 +14,37 @@ function getSupabaseClient() {
   return createClient(supabaseUrl, supabaseServiceKey);
 }
 
+interface TriviaScore {
+  id: string;
+  username: string;
+  score: number;
+  created_at: string;
+  is_approved: boolean;
+}
+
 // In-memory fallback if Supabase isn't configured yet
-const memoryScores = [
-  { id: '1', username: 'MemeLord', score: 100, created_at: new Date().toISOString() },
-  { id: '2', username: 'GuessMaster', score: 80, created_at: new Date().toISOString() },
-  { id: '3', username: 'WhoAmI', score: 60, created_at: new Date().toISOString() },
+const memoryScores: TriviaScore[] = [
+  {
+    id: '1',
+    username: 'MemeLord',
+    score: 100,
+    created_at: new Date().toISOString(),
+    is_approved: true,
+  },
+  {
+    id: '2',
+    username: 'GuessMaster',
+    score: 80,
+    created_at: new Date().toISOString(),
+    is_approved: true,
+  },
+  {
+    id: '3',
+    username: 'WhoAmI',
+    score: 60,
+    created_at: new Date().toISOString(),
+    is_approved: true,
+  },
 ];
 
 export async function submitTriviaScore(username: string, score: number) {
@@ -34,17 +60,21 @@ export async function submitTriviaScore(username: string, score: number) {
       created_at: new Date().toISOString(),
       is_approved: false,
     });
-    console.log(`[TRIVIA] New score submitted by ${cleanUsername}: ${score}. Approval required.`);
+    console.warn(`[TRIVIA] New score submitted by ${cleanUsername}: ${score}. Approval required.`);
     return { success: true };
   }
 
   try {
-    const { data, error } = await supabase.from('trivia_scores').insert({
-      username: cleanUsername,
-      score,
-      is_approved: false,
-    }).select().single();
-    
+    const { data, error } = await supabase
+      .from('trivia_scores')
+      .insert({
+        username: cleanUsername,
+        score,
+        is_approved: false,
+      })
+      .select()
+      .single();
+
     if (error) throw error;
 
     // --- EMAIL NOTIFICATION LOGIC ---
@@ -59,7 +89,7 @@ export async function submitTriviaScore(username: string, score: number) {
       await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${resendKey}`,
+          Authorization: `Bearer ${resendKey}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -86,9 +116,9 @@ export async function submitTriviaScore(username: string, score: number) {
         }),
       });
     } else {
-      console.log('--- RESEND_API_KEY missing. Printing approval link instead ---');
-      console.log(`Approve: ${approveUrl}`);
-      console.log(`Decline: ${declineUrl}`);
+      console.warn('--- RESEND_API_KEY missing. Printing approval link instead ---');
+      console.warn(`Approve: ${approveUrl}`);
+      console.warn(`Decline: ${declineUrl}`);
     }
 
     return { success: true };
@@ -102,7 +132,7 @@ export async function getTriviaLeaderboard() {
   const supabase = getSupabaseClient();
   if (!supabase) {
     return memoryScores
-      .filter(s => (s as any).is_approved)
+      .filter((s) => s.is_approved)
       .sort((a, b) => b.score - a.score)
       .slice(0, 10);
   }
@@ -154,10 +184,7 @@ export async function declineTriviaScore(id: string, secret: string) {
   if (!supabase) return { success: false };
 
   try {
-    const { error } = await supabase
-      .from('trivia_scores')
-      .delete()
-      .eq('id', id);
+    const { error } = await supabase.from('trivia_scores').delete().eq('id', id);
 
     if (error) throw error;
     return { success: true };
@@ -166,4 +193,3 @@ export async function declineTriviaScore(id: string, secret: string) {
     return { success: false, error: 'Failed to decline' };
   }
 }
-
