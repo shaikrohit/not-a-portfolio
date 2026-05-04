@@ -10,6 +10,8 @@ import {
 } from '@/app/_actions/adminTrivia';
 import { useRouter } from 'next/navigation';
 
+import ResumeManager from './ResumeManager';
+
 interface TriviaScore {
   id: string;
   username: string;
@@ -21,7 +23,7 @@ interface TriviaScore {
 export default function AdminDashboard() {
   const [scores, setScores] = useState<TriviaScore[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'pending' | 'live'>('pending');
+  const [activeTab, setActiveTab] = useState<'pending' | 'live' | 'resume'>('pending');
   const [editingScore, setEditingScore] = useState<TriviaScore | null>(null);
 
   const [editUsername, setEditUsername] = useState('');
@@ -124,6 +126,16 @@ export default function AdminDashboard() {
           >
             Live Leaderboard
           </button>
+          <button
+            onClick={() => setActiveTab('resume')}
+            className={`rounded-full px-5 py-2.5 text-sm font-medium transition-all ${
+              activeTab === 'resume'
+                ? 'border border-emerald-500/30 bg-emerald-500/20 text-emerald-300'
+                : 'border border-transparent bg-white/5 text-zinc-400 hover:text-white'
+            }`}
+          >
+            Resume Manager
+          </button>
         </div>
 
         <button
@@ -134,68 +146,74 @@ export default function AdminDashboard() {
         </button>
       </div>
 
-      <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-zinc-400">
-            <thead className="bg-white/5 text-xs font-semibold uppercase text-zinc-300">
-              <tr>
-                <th className="px-6 py-4">Player</th>
-                <th className="px-6 py-4">Score</th>
-                <th className="px-6 py-4">Date</th>
-                <th className="px-6 py-4 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading ? (
+      {activeTab === 'resume' ? (
+        <ResumeManager />
+      ) : (
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm text-zinc-400">
+              <thead className="bg-white/5 text-xs font-semibold uppercase text-zinc-300">
                 <tr>
-                  <td colSpan={4} className="px-6 py-8 text-center">
-                    Loading scores...
-                  </td>
+                  <th className="px-6 py-4">Player</th>
+                  <th className="px-6 py-4">Score</th>
+                  <th className="px-6 py-4">Date</th>
+                  <th className="px-6 py-4 text-right">Actions</th>
                 </tr>
-              ) : displayScores.length === 0 ? (
-                <tr>
-                  <td colSpan={4} className="px-6 py-8 text-center text-zinc-500">
-                    No {activeTab} scores found.
-                  </td>
-                </tr>
-              ) : (
-                displayScores.map((score) => (
-                  <tr
-                    key={score.id}
-                    className="border-b border-white/5 transition-colors hover:bg-white/[0.02]"
-                  >
-                    <td className="px-6 py-4 font-medium text-white">{score.username}</td>
-                    <td className="px-6 py-4 font-bold text-purple-400">{score.score} pts</td>
-                    <td className="px-6 py-4">{new Date(score.created_at).toLocaleDateString()}</td>
-                    <td className="space-x-3 px-6 py-4 text-right">
-                      {activeTab === 'pending' && (
-                        <button
-                          onClick={() => handleApprove(score.id)}
-                          className="text-emerald-400 transition-colors hover:text-emerald-300"
-                        >
-                          Approve
-                        </button>
-                      )}
-                      <button
-                        onClick={() => openEditModal(score)}
-                        className="text-cyan-400 transition-colors hover:text-cyan-300"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDelete(score.id)}
-                        className="text-red-400 transition-colors hover:text-red-300"
-                      >
-                        Delete
-                      </button>
+              </thead>
+              <tbody>
+                {loading ? (
+                  <tr>
+                    <td colSpan={4} className="px-6 py-8 text-center">
+                      Loading scores...
                     </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                ) : displayScores.length === 0 ? (
+                  <tr>
+                    <td colSpan={4} className="px-6 py-8 text-center text-zinc-500">
+                      No {activeTab} scores found.
+                    </td>
+                  </tr>
+                ) : (
+                  displayScores.map((score) => (
+                    <tr
+                      key={score.id}
+                      className="border-b border-white/5 transition-colors hover:bg-white/[0.02]"
+                    >
+                      <td className="px-6 py-4 font-medium text-white">{score.username}</td>
+                      <td className="px-6 py-4 font-bold text-purple-400">{score.score} pts</td>
+                      <td className="px-6 py-4">
+                        {new Date(score.created_at).toLocaleDateString()}
+                      </td>
+                      <td className="space-x-3 px-6 py-4 text-right">
+                        {activeTab === 'pending' && (
+                          <button
+                            onClick={() => handleApprove(score.id)}
+                            className="text-emerald-400 transition-colors hover:text-emerald-300"
+                          >
+                            Approve
+                          </button>
+                        )}
+                        <button
+                          onClick={() => openEditModal(score)}
+                          className="text-cyan-400 transition-colors hover:text-cyan-300"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDelete(score.id)}
+                          className="text-red-400 transition-colors hover:text-red-300"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Edit Modal */}
       {editingScore && (

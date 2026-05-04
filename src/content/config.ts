@@ -44,7 +44,9 @@ export const profile = {
   email: 'shaik.rohit.official@gmail.com',
   github: 'https://github.com/shaikrohit',
   linkedin: 'https://www.linkedin.com/in/rohitshaik',
-  resumeUrl: '/resume.pdf',
+  resumeUrl: process.env.NEXT_PUBLIC_SUPABASE_URL
+    ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/portfolio/resume.pdf`
+    : '/resume.pdf',
 };
 
 /**
