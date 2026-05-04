@@ -162,12 +162,13 @@ export async function approveTriviaScore(id: string, secret: string) {
   if (!supabase) return { success: false };
 
   try {
-    const { error } = await supabase
-      .from('trivia_scores')
-      .update({ is_approved: true })
-      .eq('id', id);
+    const { data, error } = await supabase.rpc('approve_trivia_score_rpc', {
+      score_id: id,
+    });
 
     if (error) throw error;
+    if (!data) return { success: false, error: 'Score not found or already approved' };
+
     return { success: true };
   } catch (error) {
     console.error('Error approving score:', error);
@@ -184,9 +185,13 @@ export async function declineTriviaScore(id: string, secret: string) {
   if (!supabase) return { success: false };
 
   try {
-    const { error } = await supabase.from('trivia_scores').delete().eq('id', id);
+    const { data, error } = await supabase.rpc('decline_trivia_score_rpc', {
+      score_id: id,
+    });
 
     if (error) throw error;
+    if (!data) return { success: false, error: 'Score not found' };
+
     return { success: true };
   } catch (error) {
     console.error('Error declining score:', error);
