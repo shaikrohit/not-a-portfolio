@@ -111,6 +111,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* Theme color for browser chrome */}
         <meta name="theme-color" content="#ffffff" />
+
+        {/* Google AdSense */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7343735267369878"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className="bg-[var(--surface-base)] font-sans text-[var(--text-primary)] antialiased transition-colors duration-300">
         <ThemeProvider>{children}</ThemeProvider>
