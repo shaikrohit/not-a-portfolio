@@ -37,7 +37,7 @@ export async function uploadResume(formData: FormData) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    const { data, error } = await supabase.storage.from('portfolio').upload('resume.pdf', buffer, {
+    const { error } = await supabase.storage.from('portfolio').upload('resume.pdf', buffer, {
       contentType: 'application/pdf',
       upsert: true,
     });

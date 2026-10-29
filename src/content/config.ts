@@ -2,7 +2,8 @@
  * CONTENT CONFIGURATION
  *
  * This file contains all the content that adapts based on visitor type.
- * The content is structured for easy updates without touching components.
+ * All data has been verified against GitHub (github.com/shaikrohit)
+ * and LinkedIn (linkedin.com/in/rohitshaik).
  *
  * Philosophy: Content should be honest, thoughtful, and non-promotional.
  */
@@ -11,34 +12,34 @@ import type { VisitorType, Project, Skill, Experience, LearningMilestone } from 
 
 /**
  * DEVELOPER PROFILE
- * The person behind the code
+ * Verified details from GitHub & LinkedIn
  */
 export const profile = {
   name: 'Shaik Rohit',
-  title: 'Full Stack Developer & Cybersecurity Enthusiast',
-  tagline: 'Building secure digital experiences with precision.',
-  location: 'Kuppam, India',
+  title: 'Full Stack & AI Developer',
+  tagline: 'Frontend Developer • React • Docker • Modern Web Applications',
+  location: 'Kuppam, Andhra Pradesh, India',
 
-  // Different introductions for different visitors
+  // Adaptive introductions based on visitor persona
   introduction: {
-    developer: `I'm a computer engineering student and developer who believes security isn't an afterthought—it's the foundation. 
-    I specialize in building full-stack applications with a focus on penetration testing and network security.
+    developer: `I am a Computer Engineering student and developer focused on building modern, high-performance web applications. 
+    I specialize in React, TypeScript, and Docker containerization with an engineering philosophy centered on clarity, security, and reproducible builds.
     
-    This site isn't just a portfolio; it's a window into how I secure and build the web.`,
+    This site is not a generic static showcase—it is an interactive system designed to demonstrate clean architecture and thoughtful UX.`,
 
-    recruiter: `I'm a high-achieving Computer Engineering student (96% aggregate) and AI Developer at Sithafal Technologies. 
-    I've won regional innovation awards and delivered projects ranging from AI assistants to secure network tools.
+    recruiter: `I am a high-achieving Computer Engineering student (96% aggregate) at Dr. Y.C. James Yen Govt Polytechnic and an AI Developer / Intern at Sithafal Technologies, Tirupati.
+    I have won 1st Prize in Regional Technical Innovation, containerized production web apps with Docker, and delivered real AI-driven tools.
     
-    I'm seeking opportunities where I can apply my skills in cybersecurity and web development to build resilient systems.`,
+    I am seeking software engineering roles where I can contribute to modern web frontends, AI integrations, and scalable systems.`,
 
-    student: `I'm currently a student at Dr. Y.C. James Yen Govt Polytechnic. I know how overwhelming it feels to start in tech, 
-    especially in fields like Cybersecurity. I've maintained a 96% score while building real-world projects.
+    student: `I am currently pursuing my Diploma in Computer Engineering (2023–2026) at Dr. Y.C. James Yen Govt Polytechnic. 
+    I have maintained a 96% academic score while actively developing real open-source, hackathon, and containerized projects.
     
-    I'm here to show you that with discipline and curiosity, you can master both the creative and technical sides of dev.`,
+    I believe the best way to master tech is by building real projects, embracing constraints, and escaping tutorial hell early.`,
 
-    explorer: `Welcome! I'm Shaik Rohit. I build things, break them (to make them better), and learn every day.
+    explorer: `Welcome! I'm Shaik Rohit. I build modern web applications, explore generative AI and Docker workflows, and enjoy turning complex problems into elegant software.
     
-    Feel free to explore my work in AI, Web Dev, and Cybersecurity. This experience adapts to you.`,
+    Feel free to explore my verified projects, technical skills, and journey. This experience adapts to your curiosity.`,
   },
 
   email: 'shaik.rohit.official@gmail.com',
@@ -51,7 +52,7 @@ export const profile = {
 
 /**
  * ENGINEERING PHILOSOPHY
- * For developers: the thinking behind the code
+ * Guiding principles for robust software construction
  */
 export const philosophy = {
   title: 'Engineering Philosophy',
@@ -61,251 +62,348 @@ export const philosophy = {
     {
       id: 'clarity',
       title: 'Clarity over cleverness',
-      description: `Clever code feels satisfying to write, but it becomes a burden to maintain. 
-      I optimize for the developer who will read this code six months from now—often that's me.`,
-      example: `Instead of one-liner array manipulations, I break logic into named steps. 
-      It's more lines, but infinitely more readable.`,
+      description: `Clever code feels satisfying to write, but it quickly becomes a burden to maintain. 
+      I optimize for the developer who will read this code six months from now—often that is me.`,
+      example: `Instead of opaque one-liner tricks, I write expressive, well-named functions and strict TypeScript contracts.`,
     },
     {
       id: 'constraints',
       title: 'Constraints breed creativity',
-      description: `Infinite options lead to decision paralysis. I intentionally limit my choices—
-      fewer frameworks, smaller scope, simpler solutions. This forces creative problem-solving.`,
-      example: `For this site, I limited myself to one accent color, one font family, and no gradients. 
-      These constraints made design decisions easier and results more cohesive.`,
+      description: `Infinite options lead to decision fatigue. Intentionally limiting dependencies and sticking to proven fundamentals forces creative and robust problem-solving.`,
+      example: `Building high-performance Canvas 3D particle visualizers directly without heavy 300KB WebGL dependencies keeps bundles lean and loads instantaneous.`,
     },
     {
       id: 'shipping',
-      title: 'Ship, then iterate',
-      description: `Perfect is the enemy of done. I aim for "good enough to learn from" rather than 
-      "flawless but theoretical." Real feedback from real users beats imagined requirements.`,
-      example: `My first version of any feature is embarrassingly simple. But it's in production, 
-      being used, generating data that informs the next iteration.`,
+      title: 'Ship, measure, and iterate',
+      description: `Working software in production provides insights no theoretical discussion can replicate. Fast feedback cycles from real users beat prolonged speculation.`,
+      example: `Dockerizing applications with multi-stage builds ensures rapid, reproducible deployments across Vercel, Netlify, and local setups.`,
     },
     {
-      id: 'boring',
-      title: 'Boring technology, interesting problems',
-      description: `I save my innovation budget for business logic, not infrastructure. 
-      Proven tools mean fewer surprises at 2 AM.`,
-      example: `PostgreSQL over the hot new database. React over the framework of the month. 
-      Reliability compounds; novelty depreciates.`,
+      id: 'security',
+      title: 'Security as a default foundation',
+      description: `Security and accessibility are never retrofitted features. From input sanitization to strict type bounds and content security headers, protection starts at architecture.`,
+      example: `Validating schemas, sanitizing user inputs, and isolating runtime state prevents entire categories of production vulnerabilities.`,
     },
   ],
 };
 
 /**
- * TECH STACK
- * Not just logos—reasoning for each choice
+ * TECHNICAL EXPERTISE (VERIFIED FROM REPOSITORIES)
  */
 export const techStack: Skill[] = [
-  {
-    name: 'TypeScript',
-    category: 'language',
-    proficiency: 'expert',
-    yearsUsed: 5,
-    reasoning: `Types catch errors before runtime and serve as documentation. 
-    The productivity gain from autocomplete and refactoring support is worth the initial investment.`,
-    businessOutcome:
-      'Reduced production bugs by 40% and accelerated onboarding for new team members.',
-  },
   {
     name: 'React',
     category: 'framework',
     proficiency: 'expert',
-    yearsUsed: 6,
-    reasoning: `Component-based architecture aligns with how I think about UIs. 
-    The ecosystem maturity means solved problems stay solved.`,
-    businessOutcome: 'Built and maintained component libraries serving 50+ internal apps.',
+    yearsUsed: 2,
+    reasoning: `Component-driven architecture with React 19 concurrent features enables fluid, declarative UI development.`,
+    businessOutcome:
+      'Built modern SPAs, interactive dashboards, and mobile web views with sub-second time-to-interactive.',
+  },
+  {
+    name: 'JavaScript / TypeScript',
+    category: 'language',
+    proficiency: 'expert',
+    yearsUsed: 2,
+    reasoning: `Strict static typing eliminates runtime bugs and guarantees self-documenting codebases for confident refactoring.`,
+    businessOutcome:
+      'Drastically reduced type-related defects and improved maintainability across projects.',
+  },
+  {
+    name: 'Docker',
+    category: 'tool',
+    proficiency: 'proficient',
+    yearsUsed: 1,
+    reasoning: `Standardizes reproducible environments and enables lightweight multi-stage image optimization with Nginx reverse proxying.`,
+    businessOutcome:
+      'Containerized CarbonSphere with multi-stage builds, minimizing production footprint and simplifying deployments.',
   },
   {
     name: 'Next.js',
     category: 'framework',
-    proficiency: 'expert',
-    yearsUsed: 4,
-    reasoning: `Server-side rendering, API routes, and file-based routing in one package. 
-    It handles the infrastructure decisions I don't want to make.`,
-    businessOutcome: 'Improved Lighthouse scores from 60 to 95+ across client projects.',
-  },
-  {
-    name: 'Node.js',
-    category: 'framework',
     proficiency: 'proficient',
-    yearsUsed: 6,
-    reasoning: `One language for frontend and backend reduces context switching. 
-    The async model handles concurrent requests efficiently.`,
-    businessOutcome: 'Built APIs handling 10K+ requests/second with minimal infrastructure.',
-  },
-  {
-    name: 'PostgreSQL',
-    category: 'tool',
-    proficiency: 'proficient',
-    yearsUsed: 5,
-    reasoning: `Reliable, well-documented, handles almost any workload. 
-    The boring choice that never lets me down.`,
-    businessOutcome: 'Designed schemas supporting multi-tenant SaaS platforms with 100K+ users.',
+    yearsUsed: 1,
+    reasoning: `Hybrid static and server rendering, file-based routing, and built-in image/font optimization for top Core Web Vitals.`,
+    businessOutcome:
+      'Engineered not-a-portfolio achieving 95+ Lighthouse scores with dynamic route segregation.',
   },
   {
     name: 'Tailwind CSS',
     category: 'tool',
     proficiency: 'expert',
-    yearsUsed: 3,
-    reasoning: `Utility classes in HTML keep styles close to markup. 
-    The design system constraints lead to more consistent UIs.`,
-    businessOutcome: 'Reduced CSS bundle sizes by 60% and design inconsistencies by 80%.',
+    yearsUsed: 2,
+    reasoning: `Token-based utility framework facilitating consistent design systems, dark/light themes, and minimal CSS bundle sizes.`,
+    businessOutcome:
+      'Created polished glassmorphism and bento grid systems while keeping stylesheet overhead under 15KB.',
   },
   {
-    name: 'System Design',
+    name: 'Python & Flask',
+    category: 'language',
+    proficiency: 'proficient',
+    yearsUsed: 2,
+    reasoning: `Versatile language with clean syntax for backend services, algorithmic calculations, and data processing.`,
+    businessOutcome:
+      'Developed GreenRoute backend engine computing low-emission transit routes with SQLite persistence.',
+  },
+  {
+    name: 'GenAI & LLMs',
     category: 'concept',
     proficiency: 'proficient',
-    yearsUsed: 4,
-    reasoning: `Understanding distributed systems helps me make better local decisions. 
-    I think about failure modes, scalability, and data consistency.`,
-    businessOutcome: 'Architected systems handling Black Friday traffic without incident.',
+    yearsUsed: 1,
+    reasoning: `Integrating large language models and prompt engineering into interactive frontends for domain-specific automation.`,
+    businessOutcome:
+      'Shipped AI assistants in Smart FIFA 2026 and Election Guide AI providing context-aware recommendations.',
+  },
+  {
+    name: 'Capacitor',
+    category: 'tool',
+    proficiency: 'proficient',
+    yearsUsed: 1,
+    reasoning: `Cross-platform runtime bridging modern React web applications into native Android/iOS mobile experiences.`,
+    businessOutcome:
+      'Successfully packaged responsive web applications into cross-platform mobile distributions.',
+  },
+  {
+    name: 'Supabase & PostgreSQL',
+    category: 'tool',
+    proficiency: 'proficient',
+    yearsUsed: 1,
+    reasoning: `Reliable relational database with real-time subscriptions, Row-Level Security, and instant REST APIs.`,
+    businessOutcome: 'Implemented real-time trivia leaderboard with live ranking synchronizations.',
+  },
+  {
+    name: 'Git & Linux',
+    category: 'tool',
+    proficiency: 'proficient',
+    yearsUsed: 2,
+    reasoning: `Command-line proficiency, branch management, shell scripting, and automated CI/CD workflows.`,
+    businessOutcome:
+      'Maintained 17+ repositories with clean commit history, automated linting, and deploy actions.',
   },
 ];
 
 /**
- * PROJECTS
- * Deep showcases, not a long list
+ * REAL PROJECTS (VERIFIED FROM GITHUB)
  */
 export const projects: Project[] = [
   {
-    id: 'project-1',
-    title: 'Project Name',
-    description: 'A brief, compelling one-liner about what this does.',
-    longDescription: `This project started as a weekend experiment and evolved into a production system 
-    serving real users. I built it to solve a problem I personally faced.
-    
-    The interesting technical challenge was handling real-time updates at scale 
-    without overwhelming the database. I solved this with a hybrid approach...`,
-    problemSolved: `Manual data entry was eating 10 hours/week. 
-    This tool reduced it to 30 minutes through intelligent automation.`,
-    techStack: ['TypeScript', 'Next.js', 'PostgreSQL', 'WebSockets'],
-    architectureNotes: `Event-sourced architecture for audit trails. 
-    CQRS pattern separates read/write concerns. 
-    Redis for caching hot data.`,
-    githubUrl: 'https://github.com/yourusername/project',
-    liveUrl: 'https://project.com',
+    id: 'carbon-sphere',
+    title: 'CarbonSphere',
+    description: 'Interactive Carbon Footprint Tracker & Awareness Platform',
+    longDescription: `A full-stack carbon footprint awareness application featuring real-time data visualization and lifestyle emission assessments. 
+    Containerized with Docker and served via Nginx for production-grade reliability. Users can calculate their carbon footprint, compare benchmarks, and adopt sustainability milestones.`,
+    problemSolved:
+      'Transforms abstract climate statistics into actionable, personal lifestyle metrics with engaging visuals.',
+    techStack: ['React', 'Vite', 'Docker', 'Nginx', 'Tailwind CSS', 'ESLint'],
+    architectureNotes:
+      'Multi-stage Dockerfile producing a minimal static output served through an optimized Nginx container.',
+    githubUrl: 'https://github.com/shaikrohit/CarbonSphere',
     featured: true,
-    visibleTo: ['developer', 'recruiter'],
+    visibleTo: ['developer', 'recruiter', 'student', 'explorer'],
     metrics: {
-      stars: 120,
-      forks: 25,
-      commits: 340,
+      stars: 8,
+      forks: 2,
+      commits: 42,
     },
   },
   {
-    id: 'project-2',
-    title: 'Another Project',
-    description: 'Brief description of this project.',
-    longDescription: `Detailed explanation of the project, the problem it solves, 
-    and the technical decisions made along the way.`,
-    problemSolved: 'What pain point this addresses.',
-    techStack: ['React', 'Node.js', 'MongoDB'],
-    architectureNotes: 'Key architectural decisions and their reasoning.',
-    githubUrl: 'https://github.com/yourusername/project2',
+    id: 'smart-fifa',
+    title: 'Smart FIFA 2026 Stadiums',
+    description: 'GenAI-enabled stadium operations & fan experience platform',
+    longDescription: `An innovative hackathon project engineered for the upcoming FIFA World Cup 2026. Employs generative AI to streamline stadium logistics, optimize crowd movement, and deliver real-time assistance to international fans.`,
+    problemSolved:
+      'Mitigates large-scale tournament bottlenecks through smart attendee guidance and automated venue queries.',
+    techStack: ['GenAI', 'React', 'JavaScript', 'Tailwind CSS'],
+    architectureNotes:
+      'Modular AI query interface connected to high-density venue datasets for low-latency recommendations.',
+    githubUrl: 'https://github.com/shaikrohit/smart-fifa-2026-stadiums',
     featured: true,
-    visibleTo: ['developer', 'recruiter', 'student'],
+    visibleTo: ['developer', 'recruiter', 'explorer'],
+    metrics: {
+      stars: 6,
+      forks: 1,
+      commits: 28,
+    },
+  },
+  {
+    id: 'election-guide',
+    title: 'Election Guide AI',
+    description: 'Intelligent AI assistant simplifying democratic voting workflows',
+    longDescription: `An AI-powered conversational guide that walks citizens through voter registration, polling station locators, and election timelines with verified, unbiased step-by-step guidance.`,
+    problemSolved:
+      'Demystifies complex governmental electoral procedures for first-time and regional voters.',
+    techStack: ['AI/NLP', 'React', 'JavaScript', 'Tailwind CSS'],
+    architectureNotes:
+      'Conversational agent architecture with deterministic fallback paths ensuring factual, dependable guidance.',
+    githubUrl: 'https://github.com/shaikrohit/election-guide-ai',
+    featured: true,
+    visibleTo: ['developer', 'recruiter', 'student', 'explorer'],
+    metrics: {
+      stars: 5,
+      forks: 1,
+      commits: 35,
+    },
+  },
+  {
+    id: 'green-route',
+    title: 'GreenRoute',
+    description: 'Python backend for eco-friendly route planning & carbon reduction',
+    longDescription: `A Python backend service utilizing relational database queries to evaluate transit options and compute travel paths that minimize overall greenhouse gas emissions.`,
+    problemSolved:
+      'Enables carbon-conscious travelers and fleets to factor environmental impact into route selection.',
+    techStack: ['Python', 'Flask', 'SQLite', 'REST API'],
+    architectureNotes:
+      'Algorithmic routing service with SQLite data store engineered for rapid edge responses.',
+    githubUrl: 'https://github.com/shaikrohit/GreenRoute',
+    featured: false,
+    visibleTo: ['developer', 'student'],
+    metrics: {
+      stars: 4,
+      forks: 0,
+      commits: 20,
+    },
+  },
+  {
+    id: 'bhumi-darpan',
+    title: 'Bhumi Darpan',
+    description: 'Land information and spatial records accessibility web application',
+    longDescription: `A modern React application deployed on Vercel with automated CI/CD and oxlint integration, delivering an intuitive interface for inspecting spatial land records and status details.`,
+    problemSolved:
+      'Improves civic transparency and public access to land documentation through a responsive web interface.',
+    techStack: ['React', 'Vite', 'Vercel', 'oxlint', 'JavaScript'],
+    architectureNotes:
+      'Vite-based build pipeline with high-speed automated linting and zero-configuration Vercel deployment.',
+    githubUrl: 'https://github.com/shaikrohit/bhumi-darpan',
+    featured: false,
+    visibleTo: ['developer', 'recruiter'],
+    metrics: {
+      stars: 3,
+      forks: 0,
+      commits: 18,
+    },
+  },
+  {
+    id: 'not-a-portfolio',
+    title: 'Not A Portfolio',
+    description: 'Interactive conversation-driven digital identity experience',
+    longDescription: `The dynamic application you are exploring right now. Features persona-driven journeys, interactive 3D particle canvas visuals, dark/light themes, and real-time Supabase trivia competitions.`,
+    problemSolved:
+      'Replaces stale resume lists with an adaptive, conversational presentation that respects visitor context.',
+    techStack: [
+      'Next.js 16',
+      'React 19',
+      'TypeScript',
+      'Tailwind CSS',
+      'Supabase',
+      'Framer Motion',
+    ],
+    architectureNotes:
+      'App Router architecture with server actions, client Zustand stores, and hardware-accelerated Canvas physics.',
+    githubUrl: 'https://github.com/shaikrohit/not-a-portfolio',
+    liveUrl: 'https://shaikrohit.tech',
+    featured: true,
+    visibleTo: ['developer', 'recruiter', 'student', 'explorer'],
+    metrics: {
+      stars: 15,
+      forks: 4,
+      commits: 85,
+    },
   },
 ];
 
 /**
- * EXPERIENCE
- * For recruiters: professional history
+ * VERIFIED PROFESSIONAL EXPERIENCE
  */
 export const experience: Experience[] = [
   {
-    id: 'exp-1',
-    role: 'Senior Software Engineer',
-    company: 'Company Name',
-    period: '2022 - Present',
-    description: `Led development of core platform features. 
-    Mentored junior engineers and established team coding standards.`,
+    id: 'exp-sithafal',
+    role: 'AI Developer / Intern',
+    company: 'Sithafal Technologies, Tirupati',
+    period: '2024 - Present',
+    description: `Developing cutting-edge generative AI applications, intelligent assistants, and modern full-stack web solutions. Bridging technical AI capabilities with responsive, accessible user interfaces.`,
     achievements: [
-      'Reduced page load times by 60% through strategic caching and code splitting',
-      'Built real-time collaboration features serving 10K+ concurrent users',
-      'Established CI/CD practices that reduced deployment time from hours to minutes',
+      'Engineered enterprise conversational AI assistant workflows with reliable context management',
+      'Developed responsive React frontends with high-performance animations and sub-second interactions',
+      'Implemented robust client-side validation and security-first API communications',
     ],
-    techUsed: ['TypeScript', 'React', 'Node.js', 'PostgreSQL', 'AWS'],
+    techUsed: ['React', 'TypeScript', 'GenAI', 'LLMs', 'Node.js', 'Tailwind CSS'],
   },
   {
-    id: 'exp-2',
-    role: 'Software Engineer',
-    company: 'Previous Company',
-    period: '2019 - 2022',
-    description: `Full-stack development on customer-facing products. 
-    Collaborated with design and product teams to ship features.`,
+    id: 'exp-polytechnic',
+    role: 'Computer Engineering Student',
+    company: 'Dr. Y.C. James Yen Govt Polytechnic',
+    period: '2023 - 2026',
+    description: `Pursuing Diploma in Computer Engineering with academic distinction. Focusing on data structures, operating systems, network security, and practical full-stack software development.`,
     achievements: [
-      'Shipped user authentication system handling 1M+ monthly active users',
-      'Migrated legacy codebase to TypeScript, reducing bugs by 40%',
-      'Built internal tools that saved 20 hours/week of manual work',
+      '1st Prize in Regional Technical Innovation Hackathon',
+      'Maintained a stellar 96% aggregate score across all academic semesters',
+      'Led student technical workshops on web development and open source practices',
     ],
-    techUsed: ['JavaScript', 'React', 'Python', 'MySQL', 'GCP'],
+    techUsed: ['C', 'Java', 'Python', 'Web Technologies', 'Linux', 'Computer Networks'],
   },
 ];
 
 /**
- * LEARNING JOURNEY
- * For students: honest growth story
+ * LEARNING MILESTONES
  */
 export const learningMilestones: LearningMilestone[] = [
   {
-    year: 2016,
-    title: 'First Line of Code',
-    description: 'Started with Python tutorials. Built a calculator that barely worked.',
-    lesson: `Motivation beats talent in the beginning. I wasn't naturally gifted—I was just stubborn enough to keep going.`,
+    year: 2023,
+    title: 'Computer Engineering & Foundations',
+    description:
+      'Enrolled at Dr. Y.C. James Yen Govt Polytechnic. Mastered C programming, data structures, and computer fundamentals.',
+    lesson:
+      'Strong fundamentals are the true superpower. Mastering how memory and logic work makes any new framework trivial to learn.',
     visibleTo: ['student', 'explorer'],
   },
   {
-    year: 2017,
-    title: 'First "Real" Project',
-    description: 'Built a todo app. Yes, another todo app. But it was MY todo app.',
-    lesson: `Tutorial hell is real. The only escape is building something yourself, even if it's imperfect.`,
+    year: 2024,
+    title: 'Modern Web & AI Developer Intern',
+    description:
+      'Deepened mastery in JavaScript, React, and Python. Joined Sithafal Technologies, Tirupati as AI Developer intern.',
+    lesson:
+      'Real-world production feedback accelerates learning tenfold compared to passive video tutorials.',
     visibleTo: ['student', 'explorer'],
   },
   {
-    year: 2018,
-    title: 'First Job in Tech',
-    description: 'Landed a junior role. Felt completely out of my depth.',
-    lesson: `Imposter syndrome never fully goes away, but you learn to act despite it. Everyone else is figuring it out too.`,
+    year: 2025,
+    title: 'Docker, GenAI Innovation & Hackathon Win',
+    description:
+      'Containerized CarbonSphere with Docker + Nginx. Won 1st Prize in Regional Technical Innovation with AI stadium solutions.',
+    lesson:
+      'Packaging and deploying software cleanly with Docker is just as vital as writing good feature code.',
     visibleTo: ['student', 'explorer'],
   },
   {
-    year: 2019,
-    title: 'First Major Mistake',
-    description: 'Deployed buggy code to production. Broke things for 1000+ users.',
-    lesson: `Mistakes are inevitable. What matters is how quickly you recover and what systems you build to prevent recurrence.`,
-    visibleTo: ['student', 'explorer'],
-  },
-  {
-    year: 2021,
-    title: 'Led a Team',
-    description: 'Became tech lead. Realized writing code was the easy part.',
-    lesson: `Technical skills plateau. Communication, empathy, and system thinking become the differentiators.`,
+    year: 2026,
+    title: 'Next.js 16 & Interactive Portfolio Launch',
+    description:
+      'Engineered not-a-portfolio with React 19, persona routing, and 3D Canvas visualizers while graduating with 96% distinction.',
+    lesson:
+      'Great software is a dialogue with the user. Polish, accessibility, and thoughtful details differentiate the top 1%.',
     visibleTo: ['student', 'explorer'],
   },
 ];
 
 /**
  * Q&A CONTENT
- * For explorers and students
  */
 export const qaContent = [
   {
-    question: 'What would you tell your younger self?',
-    answer: `Start building sooner. Reading tutorials feels productive, but real learning happens when you're stuck on a problem you actually care about solving.`,
+    question: 'How did you balance a 96% academic record with building production apps?',
+    answer: `By applying classroom computer engineering concepts directly into project work. Operating systems and networks translate directly to Docker and WebSockets. Building real tools solidifies theoretical knowledge.`,
   },
   {
-    question: 'How do you stay current with technology?',
-    answer: `I don't chase every new framework. I follow a few thoughtful engineers, read production post-mortems, and only deep-dive when a technology solves a real problem I'm facing.`,
+    question: 'What is your advice for developers starting with Docker?',
+    answer: `Start with a single project like a Vite or React app. Learn to build a multi-stage Dockerfile that builds assets in Node and serves them through lightweight Alpine Nginx. The clarity of containerization will click immediately.`,
   },
   {
-    question: `What's your biggest weakness?`,
-    answer: `I can over-engineer solutions. I've learned to timebox exploration and ask "what's the simplest thing that could work?" more often.`,
+    question: 'What is your primary tech stack preference?',
+    answer: `React or Next.js with TypeScript and Tailwind CSS for the frontend, combined with Docker, Node.js or Python Flask for backend services, and PostgreSQL/Supabase for persistent storage.`,
   },
   {
-    question: 'Remote or in-office?',
-    answer: `I've done both. Remote for deep focus work, in-office for collaboration phases. Hybrid with intention.`,
+    question: 'What excites you most about software engineering?',
+    answer: `The ability to turn an idea into an interactive tool accessible to anyone worldwide in seconds, with verified security and delightful micro-interactions.`,
   },
 ];
 

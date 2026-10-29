@@ -1,5 +1,6 @@
 /* Import premium styles first */
 @import './premium.css';
+@import './theme.css';
 
 @tailwind base;
 @tailwind components;
@@ -12,6 +13,7 @@
  */
 
 :root {
+  color-scheme: light;
   /* Primary Google Colors */
   --google-blue: #4285f4;
   --google-red: #ea4335;
@@ -69,9 +71,9 @@
   /* Effects */
   --shadow-glow: 0 0 40px rgba(66, 133, 244, 0.1);
   --shadow-glow-strong: 0 0 60px rgba(66, 133, 244, 0.2);
-  --border-subtle: 1px solid rgba(0, 0, 0, 0.05);
-  --border-light: 1px solid rgba(0, 0, 0, 0.1);
-  --border-accent: 1px solid rgba(66, 133, 244, 0.2);
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --border-light: rgba(0, 0, 0, 0.14);
+  --border-accent: rgba(66, 133, 244, 0.2);
 }
 
 * {
@@ -139,14 +141,22 @@ body {
     background: var(--surface-glass);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: var(--border-subtle);
+    border: 1px solid var(--border-subtle);
+    transition:
+      background-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .glass-strong {
     background: rgba(10, 10, 15, 0.95);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    border: var(--border-light);
+    border: 1px solid var(--border-light);
+    transition:
+      background-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .glow-blue {
@@ -217,6 +227,32 @@ body {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  /* Hardware acceleration utility for buttery 60/120fps motion */
+  .gpu-accelerated {
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    will-change: transform;
+  }
+
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  /* Safe area insets for mobile edge-to-edge viewports */
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .safe-left {
+    padding-left: env(safe-area-inset-left);
+  }
+  .safe-right {
+    padding-right: env(safe-area-inset-right);
+  }
 }
 
 @layer components {
@@ -253,8 +289,12 @@ body {
   .card-base {
     @apply relative rounded-xl p-6;
     background: var(--surface-card);
-    border: var(--border-subtle);
+    border: 1px solid var(--border-subtle);
     backdrop-filter: blur(12px);
+    transition:
+      background-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .card-interactive {
@@ -397,4 +437,78 @@ body {
 
 .animate-pulse-ring {
   animation: pulse-ring 2s infinite;
+}
+
+/* ============================================================================
+ * VIEW TRANSITIONS & THEME SWITCHING ANIMATION
+ * ============================================================================ */
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 250ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* ============================================================================
+ * CONTENT VISIBILITY OPTIMIZATION (Offscreen rendering deferral)
+ * Skips layout & paint calculations for below-the-fold sections until near viewport.
+ * NOTE: #hero is strictly EXEMPT to protect initial paint and LCP.
+ * ============================================================================ */
+
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+
+#paths {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 520px;
+}
+
+#about {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 750px;
+}
+
+#experience {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 700px;
+}
+
+#education {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 550px;
+}
+
+#achievements {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
+}
+
+#projects {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 950px;
+}
+
+#skills {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
+}
+
+#trivia {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 550px;
+}
+
+#contact {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
 }

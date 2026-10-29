@@ -45,7 +45,7 @@ export function ThemeToggle({ className }: { className?: string }) {
         'text-neutral-600 dark:text-neutral-400',
         'hover:bg-neutral-100 dark:hover:bg-neutral-800',
         'transition-colors duration-200',
-        'focus:outline-none focus:ring-2 focus:ring-neutral-500 focus:ring-offset-2',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2',
         className
       )}
       aria-label={`Switch to ${resolvedMode === 'light' ? 'dark' : 'light'} mode`}

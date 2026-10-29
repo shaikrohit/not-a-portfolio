@@ -269,14 +269,16 @@
    NOISE TEXTURE OVERLAY
    ============================================================================ */
 
-.noise-overlay::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.015;
-  z-index: 9998;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+@media (min-width: 768px) {
+  .noise-overlay::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.015;
+    z-index: 9998;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
 }
 
 /* ============================================================================
@@ -665,6 +667,47 @@
   .glass-card {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+  }
+}
+
+/* ============================================================================
+   FLUID TYPOGRAPHY UTILITIES
+   ============================================================================ */
+
+.fluid-display {
+  font-size: clamp(2.5rem, 7vw + 1rem, 6rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.fluid-h1 {
+  font-size: clamp(2.25rem, 5.5vw + 0.75rem, 5.5rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.fluid-h2 {
+  font-size: clamp(1.75rem, 3.5vw + 0.5rem, 3rem);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+}
+
+.fluid-h3 {
+  font-size: clamp(1.25rem, 2vw + 0.5rem, 1.875rem);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+
+/* ============================================================================
+   TOUCH & COARSE POINTER GUARDS
+   ============================================================================ */
+
+@media (pointer: coarse), (hover: none) {
+  .cursor-glow {
+    display: none !important;
+  }
+  .magnetic-button:hover {
+    transform: none !important;
   }
 }
 

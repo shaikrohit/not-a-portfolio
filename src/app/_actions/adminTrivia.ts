@@ -6,7 +6,7 @@ import { createClient } from '@supabase/supabase-js';
 const ADMIN_COOKIE_NAME = 'trivia_admin_auth';
 
 // Define the type locally to avoid importing from trivia if it's not exported
-interface TriviaScore {
+export interface TriviaScore {
   id: string;
   username: string;
   score: number;
@@ -115,7 +115,7 @@ export async function adminApproveScore(id: string) {
     if (error) throw error;
     if (!data) return { success: false, error: 'Score not found' };
     return { success: true };
-  } catch (error) {
+  } catch (_error) {
     return { success: false, error: 'Failed to approve' };
   }
 }
@@ -132,7 +132,7 @@ export async function adminDeleteScore(id: string) {
     if (error) throw error;
     if (!data) return { success: false, error: 'Score not found' };
     return { success: true };
-  } catch (error) {
+  } catch (_error) {
     return { success: false, error: 'Failed to delete' };
   }
 }

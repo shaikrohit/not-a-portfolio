@@ -229,13 +229,32 @@ export const useThemeStore = create<ThemeStore>()(
         if (typeof document !== 'undefined') {
           document.documentElement.classList.remove('light', 'dark');
           document.documentElement.classList.add(resolved);
+          document.documentElement.setAttribute('data-theme', resolved);
+
+          const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+          if (metaThemeColor) {
+            metaThemeColor.setAttribute('content', resolved === 'dark' ? '#07090e' : '#ffffff');
+          }
         }
       },
 
       toggleMode: () => {
         const current = get().resolvedMode;
         const next = current === 'light' ? 'dark' : 'light';
-        get().setMode(next);
+
+        if (
+          typeof document !== 'undefined' &&
+          'startViewTransition' in document &&
+          !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        ) {
+          (
+            document as Document & { startViewTransition: (callback: () => void) => void }
+          ).startViewTransition(() => {
+            get().setMode(next);
+          });
+        } else {
+          get().setMode(next);
+        }
       },
 
       initializeTheme: () => {
@@ -247,9 +266,16 @@ export const useThemeStore = create<ThemeStore>()(
           const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
           const handler = (e: MediaQueryListEvent) => {
             if (get().mode === 'system') {
-              set({ resolvedMode: e.matches ? 'dark' : 'light' });
+              const newMode = e.matches ? 'dark' : 'light';
+              set({ resolvedMode: newMode });
               document.documentElement.classList.remove('light', 'dark');
-              document.documentElement.classList.add(e.matches ? 'dark' : 'light');
+              document.documentElement.classList.add(newMode);
+              document.documentElement.setAttribute('data-theme', newMode);
+
+              const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+              if (metaThemeColor) {
+                metaThemeColor.setAttribute('content', newMode === 'dark' ? '#07090e' : '#ffffff');
+              }
             }
           };
           mediaQuery.addEventListener('change', handler);

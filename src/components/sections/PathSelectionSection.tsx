@@ -3,6 +3,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Code2, Briefcase, GraduationCap, Compass, ArrowRight } from 'lucide-react';
+import { useVisitorStore } from '@/store';
+import type { VisitorType } from '@/types';
 
 const paths = [
   {
@@ -44,23 +46,33 @@ const paths = [
 ];
 
 export function PathSelectionSection() {
+  const setVisitorType = useVisitorStore((state) => state.setVisitorType);
+
+  const handleSelectPath = (pathId: string) => {
+    setVisitorType(pathId as VisitorType);
+    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <section className="relative overflow-hidden bg-gray-50/50 px-6 py-32">
+    <section
+      id="paths"
+      className="bg-[var(--surface-elevated)]/40 relative overflow-hidden px-4 py-20 sm:px-6 sm:py-28 md:py-36"
+    >
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
+        initial={{ opacity: 0, y: 35 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-100px' }}
-        className="mx-auto mb-20 max-w-3xl text-center"
+        className="mx-auto mb-16 max-w-3xl text-center"
       >
-        <motion.span className="mb-6 inline-block rounded-full bg-blue-100 px-4 py-1.5 text-sm font-medium text-blue-600">
+        <span className="mb-4 inline-block rounded-full bg-blue-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-blue-600 dark:text-blue-400">
           Choose Your Path
-        </motion.span>
-        <h2 className="mb-6 text-4xl font-bold text-neutral-900 md:text-5xl">
+        </span>
+        <h2 className="mb-4 font-serif text-4xl font-bold tracking-tight text-[var(--text-primary)] md:text-5xl">
           What brings you here?
         </h2>
-        <p className="text-lg leading-relaxed text-neutral-500">
-          Select a path that matches your interest. Each journey is tailored to provide the most
-          relevant experience.
+        <p className="text-base leading-relaxed text-[var(--text-secondary)] sm:text-lg">
+          Select a path tailored to your interest. The narrative and technical depth adjust to your
+          perspective.
         </p>
       </motion.div>
 
@@ -68,18 +80,16 @@ export function PathSelectionSection() {
         {paths.map((path, index) => (
           <motion.div
             key={path.id}
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 35 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
-            transition={{ delay: index * 0.1, duration: 0.6 }}
+            transition={{ delay: index * 0.1, duration: 0.5 }}
           >
             <motion.button
-              className="group relative w-full overflow-hidden rounded-3xl border border-gray-200 bg-white p-10 text-left transition-all duration-500 hover:border-blue-400 hover:shadow-2xl hover:shadow-blue-500/10"
+              className="group relative w-full overflow-hidden rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-5 text-left backdrop-blur-xl transition-all duration-300 hover:border-blue-500/40 hover:shadow-2xl hover:shadow-blue-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900 sm:p-8 md:p-10"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() =>
-                document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })
-              }
+              onClick={() => handleSelectPath(path.id)}
               aria-label={`Start journey as ${path.title}`}
             >
               <motion.div
@@ -91,21 +101,25 @@ export function PathSelectionSection() {
 
               <div className="relative z-10">
                 <div
-                  className={`inline-flex rounded-2xl bg-gradient-to-br p-4 ${path.gradient} mb-8 shadow-lg shadow-blue-500/20`}
+                  className={`inline-flex rounded-2xl bg-gradient-to-br p-4 ${path.gradient} mb-6 shadow-lg shadow-blue-500/20`}
                 >
-                  <path.icon className="h-8 w-8 text-white" />
+                  <path.icon className="h-7 w-7 text-white" />
                 </div>
 
-                <div className="mb-6">
-                  <h3 className="mb-2 text-3xl font-bold text-neutral-900">{path.title}</h3>
-                  <p className="font-medium text-blue-500">{path.subtitle}</p>
+                <div className="mb-4">
+                  <h3 className="mb-1 text-2xl font-bold text-[var(--text-primary)] md:text-3xl">
+                    {path.title}
+                  </h3>
+                  <p className="font-semibold text-blue-600 dark:text-blue-400">{path.subtitle}</p>
                 </div>
 
-                <p className="mb-8 text-lg leading-relaxed text-neutral-500">{path.description}</p>
+                <p className="mb-8 text-base leading-relaxed text-[var(--text-secondary)]">
+                  {path.description}
+                </p>
 
-                <div className="flex items-center gap-3 text-neutral-400 transition-colors group-hover:text-blue-600">
-                  <span className="text-sm font-bold uppercase tracking-widest">Start Journey</span>
-                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-2" />
+                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                  <span>Start Journey</span>
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </div>
               </div>
             </motion.button>

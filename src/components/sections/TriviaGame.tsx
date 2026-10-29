@@ -149,28 +149,31 @@ export function TriviaGame() {
   };
 
   return (
-    <section id="trivia" className="relative overflow-hidden bg-neutral-50/50 px-6 py-32">
+    <section
+      id="trivia"
+      className="relative overflow-hidden bg-[var(--surface-base)] px-4 py-20 sm:px-6 sm:py-28 md:py-36"
+    >
       <div className="relative z-10 mx-auto max-w-5xl">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="mb-16 text-center"
         >
-          <span className="mb-4 inline-block rounded-full bg-purple-500/10 px-4 py-1.5 text-sm font-medium text-purple-600">
-            Interrogation Mode
+          <span className="mb-4 inline-block rounded-full bg-purple-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-purple-600 dark:text-purple-400">
+            Interactive Trivia
           </span>
-          <h2 className="mb-6 text-4xl font-bold text-neutral-900 md:text-5xl">
+          <h2 className="mb-4 font-serif text-4xl font-bold tracking-tight text-[var(--text-primary)] md:text-5xl">
             {gameState === 'intro'
               ? 'Think you know me?'
               : gameState === 'leaderboard'
                 ? 'Hall of Fame'
                 : 'Quick, think!'}
           </h2>
-          <p className="text-lg text-neutral-600">
+          <p className="text-base text-[var(--text-secondary)] sm:text-lg">
             {gameState === 'intro'
-              ? "Let's see how well you can guess my developer habits."
-              : 'Live updates from the leaderboard.'}
+              ? 'Test your knowledge on my tech habits, education, and projects.'
+              : 'Real-time scores verified on the leaderboard.'}
           </p>
         </motion.div>
 
@@ -181,7 +184,7 @@ export function TriviaGame() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="mx-auto max-w-2xl rounded-3xl bg-white p-8 text-center shadow-sm ring-1 ring-black/5 md:p-12"
+              className="mx-auto max-w-2xl rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-8 text-center shadow-lg backdrop-blur-xl md:p-12"
             >
               <div className="mb-10 flex justify-center">
                 <div className="relative">
@@ -192,16 +195,16 @@ export function TriviaGame() {
               <div className="flex flex-col gap-4 sm:flex-row">
                 <button
                   onClick={() => setGameState('playing')}
-                  className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-neutral-900 py-5 font-bold text-white transition-all hover:bg-neutral-800 hover:shadow-xl"
+                  className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-blue-600 py-4 font-semibold text-white shadow-lg shadow-blue-500/25 transition-all hover:bg-blue-500"
                 >
                   <Play className="h-5 w-5 fill-current" />
                   Start the Game
                 </button>
                 <button
                   onClick={() => setGameState('leaderboard')}
-                  className="flex flex-1 items-center justify-center gap-2 rounded-2xl border-2 border-neutral-200 py-5 font-bold text-neutral-700 transition-all hover:border-purple-300 hover:bg-purple-50"
+                  className="flex flex-1 items-center justify-center gap-2 rounded-2xl border border-[var(--border-light)] bg-[var(--surface-base)] py-4 font-semibold text-[var(--text-primary)] transition-all hover:border-purple-400 hover:bg-purple-500/10"
                 >
-                  <Eye className="h-5 w-5" />
+                  <Eye className="h-5 w-5 text-purple-500" />
                   View Leaderboard
                 </button>
               </div>
@@ -214,16 +217,18 @@ export function TriviaGame() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
-              className="mx-auto max-w-4xl rounded-3xl bg-white p-8 shadow-sm ring-1 ring-black/5 md:p-12"
+              className="mx-auto max-w-4xl rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-5 shadow-lg backdrop-blur-xl sm:p-8 md:p-12"
             >
               <div className="mb-8 flex items-center justify-between">
-                <span className="text-sm font-medium text-neutral-500">
+                <span className="text-sm font-medium text-[var(--text-muted)]">
                   Question {currentQuestion + 1} of {questions.length}
                 </span>
-                <span className="text-sm font-medium text-purple-600">Score: {score}</span>
+                <span className="text-sm font-semibold text-purple-600 dark:text-purple-400">
+                  Score: {score}
+                </span>
               </div>
 
-              <h3 className="mb-8 text-2xl font-bold leading-tight text-neutral-900 md:text-3xl">
+              <h3 className="mb-8 font-serif text-2xl font-bold leading-tight text-[var(--text-primary)] md:text-3xl">
                 {questions[currentQuestion]?.question}
               </h3>
 
@@ -240,12 +245,12 @@ export function TriviaGame() {
                       disabled={isAnimating}
                       onClick={() => handleAnswerClick(idx)}
                       whileHover={!isAnimating ? { scale: 1.01 } : {}}
-                      className={`relative overflow-hidden rounded-2xl border-2 p-6 text-left transition-all duration-300 ${
+                      className={`relative overflow-hidden rounded-2xl border-2 p-3.5 text-left transition-all duration-300 sm:p-5 md:p-6 ${
                         showCorrect
-                          ? 'border-green-500 bg-green-50 text-green-900'
+                          ? 'border-emerald-500 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
                           : showState && !isCorrect
-                            ? 'border-red-500 bg-red-50 text-red-900'
-                            : 'border-neutral-100 bg-white text-neutral-700 hover:border-purple-200 hover:bg-purple-50/30'
+                            ? 'border-red-500 bg-red-500/10 text-red-600 dark:text-red-400'
+                            : 'border-[var(--border-subtle)] bg-[var(--surface-base)] text-[var(--text-primary)] hover:border-purple-400 hover:bg-purple-500/10'
                       }`}
                     >
                       <span className="relative z-10 font-medium">{option}</span>
@@ -270,7 +275,7 @@ export function TriviaGame() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm"
+                className="rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-8 shadow-lg backdrop-blur-xl"
               >
                 {gameState === 'result' ? (
                   <>
@@ -278,42 +283,47 @@ export function TriviaGame() {
                       <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg shadow-purple-500/30">
                         <Trophy className="h-10 w-10 text-white" />
                       </div>
-                      <h3 className="text-3xl font-bold text-neutral-900">Game Over!</h3>
-                      <p className="mt-2 text-xl text-neutral-600">
-                        You scored: <span className="font-bold text-purple-600">{score}</span>
+                      <h3 className="font-serif text-3xl font-bold text-[var(--text-primary)]">
+                        Game Over!
+                      </h3>
+                      <p className="mt-2 text-lg text-[var(--text-secondary)]">
+                        You scored:{' '}
+                        <span className="font-bold text-purple-600 dark:text-purple-400">
+                          {score} pts
+                        </span>
                       </p>
                     </div>
 
                     {!submitted ? (
                       <form onSubmit={handleScoreSubmit} className="space-y-4">
                         <div>
-                          <label className="mb-2 block text-sm font-medium text-neutral-700">
+                          <label className="mb-2 block text-sm font-semibold text-[var(--text-secondary)]">
                             Claim your spot on the leaderboard
                           </label>
                           <div className="relative">
-                            <User className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-neutral-400" />
+                            <User className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--text-muted)]" />
                             <input
                               type="text"
                               value={username}
                               onChange={(e) => setUsername(e.target.value)}
                               placeholder="Enter your name..."
                               required
-                              className="w-full rounded-xl border border-neutral-200 bg-neutral-50 py-3 pl-12 pr-4 transition-all focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-500"
+                              className="w-full rounded-xl border border-[var(--border-light)] bg-[var(--surface-base)] py-3 pl-12 pr-4 text-[var(--text-primary)] transition-all placeholder:text-[var(--text-muted)] focus:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-500"
                             />
                           </div>
                         </div>
                         <button
                           type="submit"
                           disabled={isSubmitting || !username.trim()}
-                          className="w-full rounded-xl bg-neutral-900 py-4 font-medium text-white transition-colors hover:bg-neutral-800"
+                          className="w-full rounded-xl bg-blue-600 py-3.5 font-semibold text-white shadow-md shadow-blue-500/20 transition-colors hover:bg-blue-500 disabled:opacity-50"
                         >
                           {isSubmitting ? 'Submitting...' : 'Submit Score'}
                         </button>
                       </form>
                     ) : (
-                      <div className="rounded-xl border border-blue-200 bg-blue-50 p-6 text-center font-medium text-blue-800">
-                        <p>Score submitted for verification!</p>
-                        <p className="mt-1 text-sm font-normal text-blue-600">
+                      <div className="rounded-xl border border-blue-500/20 bg-blue-500/10 p-6 text-center font-medium text-blue-600 dark:text-blue-400">
+                        <p className="font-bold">Score submitted for verification!</p>
+                        <p className="mt-1 text-sm font-normal text-[var(--text-secondary)]">
                           It will appear once approved.
                         </p>
                       </div>
@@ -322,10 +332,12 @@ export function TriviaGame() {
                 ) : (
                   <div className="flex h-full flex-col items-center justify-center py-10 text-center">
                     <Trophy className="mb-6 h-16 w-16 text-purple-500" />
-                    <h3 className="mb-4 text-2xl font-bold">Want to play?</h3>
+                    <h3 className="mb-4 font-serif text-2xl font-bold text-[var(--text-primary)]">
+                      Want to play?
+                    </h3>
                     <button
                       onClick={() => setGameState('playing')}
-                      className="rounded-xl bg-purple-600 px-8 py-3 font-bold text-white transition-all hover:bg-purple-700"
+                      className="rounded-xl bg-blue-600 px-8 py-3.5 font-semibold text-white shadow-md shadow-blue-500/25 transition-all hover:bg-blue-500"
                     >
                       Start Challenge
                     </button>
@@ -334,7 +346,7 @@ export function TriviaGame() {
 
                 <button
                   onClick={resetGame}
-                  className="mt-4 w-full rounded-xl py-4 font-medium text-neutral-600 transition-colors hover:bg-neutral-100"
+                  className="mt-4 w-full rounded-xl py-3.5 text-sm font-semibold text-[var(--text-secondary)] transition-colors hover:bg-[var(--surface-overlay)]"
                 >
                   {gameState === 'result' ? 'Play Again' : 'Back to Intro'}
                 </button>

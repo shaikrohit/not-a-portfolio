@@ -1,0 +1,83 @@
+/**
+ * ============================================================================
+ * THEME SPECIFIC OVERRIDES & MODERN SYSTEM TOKENS
+ * ============================================================================
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap');
+
+:root {
+  --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-playfair: 'Playfair Display', Georgia, serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-serif-heading: var(--font-playfair), Georgia, serif;
+  --font-sans-body: var(--font-inter), system-ui, sans-serif;
+  --font-mono-code: var(--font-mono), monospace;
+
+  /* Gradients */
+  --gradient-hero: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #db2777 100%);
+  --gradient-accent: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  --gradient-card: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(248, 250, 252, 0.8) 100%
+  );
+
+  /* Animation Tokens */
+  --duration-reveal: 0.8s;
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root[data-theme='dark'],
+html.dark,
+:root.dark {
+  color-scheme: dark;
+  --color-blue-pure: #3b82f6;
+  --color-blue-bright: #93c5fd;
+  --color-blue-vivid: #60a5fa;
+  --color-blue-deep: #2563eb;
+  --color-blue-dark: #1d4ed8;
+  --color-blue-midnight: #172554;
+  --color-blue-glow: rgba(59, 130, 246, 0.22);
+  --color-blue-shimmer: rgba(59, 130, 246, 0.1);
+  --color-blue-border: rgba(59, 130, 246, 0.35);
+
+  --text-primary: #f8fafc;
+  --text-secondary: rgba(248, 250, 252, 0.72);
+  --text-muted: rgba(248, 250, 252, 0.48);
+  --text-disabled: rgba(248, 250, 252, 0.28);
+  --text-accent: #60a5fa;
+
+  --color-black-pure: #030712;
+  --color-black-deep: #07090e;
+  --color-black-rich: #0b0f17;
+  --color-black-soft: #111827;
+  --color-black-light: #1f2937;
+
+  --surface-base: #07090e;
+  --surface-elevated: #0f172a;
+  --surface-overlay: #1e293b;
+  --surface-card: rgba(15, 23, 42, 0.8);
+  --surface-glass: rgba(15, 23, 42, 0.75);
+
+  --shadow-glow: 0 0 40px rgba(59, 130, 246, 0.22);
+  --shadow-glow-strong: 0 0 60px rgba(59, 130, 246, 0.38);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-light: rgba(255, 255, 255, 0.14);
+  --border-accent: rgba(59, 130, 246, 0.35);
+
+  --gradient-card: linear-gradient(180deg, rgba(15, 23, 42, 0.8) 0%, rgba(11, 15, 23, 0.9) 100%);
+}
+
+/* Base typography font family utility */
+.font-serif-heading {
+  font-family: var(--font-serif-heading);
+}
+
+.font-sans-body {
+  font-family: var(--font-sans-body);
+}
+
+.font-mono-code {
+  font-family: var(--font-mono-code);
+}

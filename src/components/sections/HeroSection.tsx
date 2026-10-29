@@ -2,184 +2,188 @@
 
 import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, Mail, Github, Linkedin } from 'lucide-react';
+import { ArrowRight, Mail, Github, Linkedin, Sparkles, Terminal } from 'lucide-react';
+import { HeroScene } from '@/components/hero/HeroScene';
+import { MagneticButton } from '@/components/ui/MagneticButton';
+import { TextReveal } from '@/components/hero/TextReveal';
+import { profile } from '@/content/config';
 
 export function HeroSection() {
   const { scrollY } = useScroll();
-  const opacity = useTransform(scrollY, [0, 500], [1, 0]);
-  const y = useTransform(scrollY, [0, 500], [0, 150]);
-  const scale = useTransform(scrollY, [0, 500], [1, 0.9]);
+  const opacity = useTransform(scrollY, [0, 450], [1, 0]);
+  const y = useTransform(scrollY, [0, 450], [0, 100]);
+  const scale = useTransform(scrollY, [0, 450], [1, 0.95]);
 
-  const textVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: 0.3 + i * 0.15,
-        duration: 0.8,
-        ease: [0.16, 1, 0.3, 1],
-      },
-    }),
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
     <motion.section
       style={{ opacity, y, scale }}
-      className="relative flex min-h-screen items-center justify-center px-6 pt-20"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 pb-16 pt-20 sm:px-6 sm:pt-24"
+      id="hero"
     >
+      {/* 3D Canvas Background */}
+      <HeroScene />
+
       <div className="relative z-10 mx-auto max-w-5xl text-center">
-        {/* Status Badge */}
+        {/* Status Badge (320px Overflow Safe) */}
         <motion.div
-          custom={0}
-          initial="hidden"
-          animate="visible"
-          variants={textVariants}
-          className="mb-10 inline-flex items-center gap-3 rounded-full border border-pink-500/20 bg-gradient-to-r from-pink-500/10 to-emerald-500/10 px-5 py-2.5 shadow-[0_0_20px_-5px_rgba(236,72,153,0.3)]"
+          initial={{ opacity: 0, y: -20, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-8 inline-flex max-w-[94vw] items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-3.5 py-1.5 shadow-[0_0_25px_rgba(59,130,246,0.2)] backdrop-blur-md sm:gap-2.5 sm:px-5 sm:py-2"
         >
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-pink-500" />
+          <span className="relative flex h-2.5 w-2.5 shrink-0">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75 motion-reduce:hidden" />
+            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
           </span>
-          <span className="bg-gradient-to-r from-pink-500 to-emerald-500 bg-clip-text text-sm font-semibold text-transparent">
-            Open to new opportunities
+          <span className="truncate text-[10px] font-semibold uppercase tracking-wide text-blue-600 dark:text-blue-400 sm:overflow-visible sm:text-xs sm:tracking-wider">
+            Open for Engineering Opportunities
           </span>
+          <Sparkles className="h-3.5 w-3.5 shrink-0 text-blue-500" />
         </motion.div>
 
-        {/* Main Heading */}
-        <motion.div className="mb-6 overflow-hidden">
-          <motion.h1
-            custom={1}
-            initial="hidden"
-            animate="visible"
-            variants={textVariants}
-            className="text-6xl font-bold tracking-tight md:text-8xl"
-          >
-            <span className="text-neutral-900">Shaik </span>
-            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Rohit
-            </span>
-          </motion.h1>
+        {/* H1 Heading with Fluid Typography clamp() */}
+        <div className="mb-6">
+          <h1 className="font-serif text-[clamp(2.5rem,7vw+0.75rem,5.75rem)] font-bold leading-[1.08] tracking-tight text-[var(--text-primary)]">
+            <TextReveal text="Shaik Rohit" highlightText="Rohit" delay={0.2} />
+          </h1>
+        </div>
+
+        {/* Responsive Fluid Tagline */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.7 }}
+          className="mb-6 flex flex-wrap items-center justify-center gap-1.5 text-[clamp(0.875rem,1.8vw+0.5rem,1.375rem)] font-medium text-blue-600 dark:text-blue-400 sm:gap-2"
+        >
+          <Terminal className="h-4 w-4 shrink-0 text-blue-500 sm:h-5 sm:w-5" />
+          <span>Frontend Developer</span>
+          <span className="text-neutral-400 dark:text-neutral-600">•</span>
+          <span>React</span>
+          <span className="text-neutral-400 dark:text-neutral-600">•</span>
+          <span>Docker</span>
+          <span className="text-neutral-400 dark:text-neutral-600">•</span>
+          <span>Modern Web Applications</span>
         </motion.div>
 
-        {/* Role */}
+        {/* Responsive Fluid Bio Description */}
         <motion.p
-          custom={2}
-          initial="hidden"
-          animate="visible"
-          variants={textVariants}
-          className="mb-8 text-2xl font-light text-neutral-500 md:text-3xl"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.65, duration: 0.7 }}
+          className="mx-auto mb-10 max-w-2xl px-2 text-[clamp(0.9375rem,1vw+0.5rem,1.125rem)] leading-relaxed text-[var(--text-secondary)] sm:mb-12 sm:px-0"
         >
-          Full Stack Developer
+          Computer Engineering student at{' '}
+          <strong className="font-semibold text-[var(--text-primary)]">
+            Dr. Y.C. James Yen Govt Polytechnic (96% Distinction)
+          </strong>{' '}
+          and AI Developer / Intern at{' '}
+          <strong className="font-semibold text-[var(--text-primary)]">
+            Sithafal Technologies, Tirupati
+          </strong>
+          . Building scalable, containerized web applications and intelligent interfaces.
         </motion.p>
 
-        {/* Description */}
-        <motion.p
-          custom={3}
-          initial="hidden"
-          animate="visible"
-          variants={textVariants}
-          className="mx-auto mb-14 max-w-2xl text-lg leading-relaxed text-neutral-500 md:text-xl"
-        >
-          Specializing in <b>Cybersecurity, Penetration Testing, and Full Stack Development</b>.
-          Currently crafting secure and high-performance digital experiences while pursuing my
-          Computer Engineering degree.
-        </motion.p>
-
-        {/* CTA Buttons */}
+        {/* Responsive Touch-Safe Magnetic CTA Buttons */}
         <motion.div
-          custom={4}
-          initial="hidden"
-          animate="visible"
-          variants={textVariants}
-          className="flex flex-col items-center justify-center gap-4 sm:flex-row"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 0.6 }}
+          className="mx-auto flex w-full max-w-md flex-col items-center justify-center gap-3 sm:max-w-none sm:flex-row sm:gap-4"
         >
-          <motion.button
-            onClick={() =>
-              document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })
-            }
-            className="group relative overflow-hidden rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 px-8 py-4 font-medium text-white"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            aria-label="View My Projects"
+          <MagneticButton
+            onClick={() => scrollTo('projects')}
+            className="group relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-3.5 font-semibold text-white shadow-lg shadow-blue-500/25 transition-all duration-300 hover:shadow-blue-500/40 sm:w-auto sm:px-8 sm:py-4"
+            aria-label="View verified projects"
           >
-            <span className="relative z-10 flex items-center gap-2">
-              View My Work
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            <span className="relative z-10 flex items-center justify-center gap-2">
+              Explore Projects
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </span>
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500"
-              initial={{ x: '100%' }}
-              whileHover={{ x: 0 }}
-              transition={{ duration: 0.3 }}
-            />
-          </motion.button>
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          </MagneticButton>
 
-          <motion.button
-            onClick={() =>
-              document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
-            }
-            className="group rounded-xl border border-gray-200 bg-white px-8 py-4 font-medium text-neutral-900 shadow ring-1 ring-black/5 transition-all hover:border-gray-300 hover:bg-gray-100"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            aria-label="Contact Me"
+          <MagneticButton
+            onClick={() => scrollTo('about')}
+            className="group w-full rounded-xl border border-[var(--border-light)] bg-[var(--surface-card)] px-6 py-3.5 font-semibold text-[var(--text-primary)] backdrop-blur-md transition-all duration-300 hover:border-blue-500/40 hover:bg-[var(--surface-elevated)] sm:w-auto sm:px-8 sm:py-4"
+            aria-label="About Shaik Rohit"
           >
-            <span className="flex items-center gap-2">
-              Get in Touch
-              <Mail className="h-4 w-4 transition-transform group-hover:rotate-12" />
+            <span className="flex items-center justify-center gap-2">
+              About Journey
+              <Sparkles className="h-4 w-4 text-blue-500 transition-transform duration-300 group-hover:rotate-12" />
             </span>
-          </motion.button>
+          </MagneticButton>
+
+          <MagneticButton
+            onClick={() => scrollTo('contact')}
+            className="group w-full rounded-xl border border-transparent px-5 py-3 font-medium text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)] sm:w-auto sm:px-6 sm:py-4"
+            aria-label="Contact Shaik Rohit"
+          >
+            <span className="flex items-center justify-center gap-2">
+              <Mail className="h-4 w-4 text-blue-500" />
+              Contact
+            </span>
+          </MagneticButton>
         </motion.div>
 
-        {/* Social Links */}
+        {/* Verified Social Channels */}
         <motion.div
-          custom={5}
-          initial="hidden"
-          animate="visible"
-          variants={textVariants}
-          className="mt-16 flex items-center justify-center gap-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 0.8 }}
+          className="mt-12 flex items-center justify-center gap-3 sm:mt-14 sm:gap-4"
         >
           {[
-            { icon: Github, href: 'https://github.com/shaikrohit', label: 'GitHub' },
-            { icon: Linkedin, href: 'https://www.linkedin.com/in/rohitshaik', label: 'LinkedIn' },
-            { icon: Mail, href: 'mailto:shaik.rohit.official@gmail.com', label: 'Email' },
-          ].map((social) => (
+            { icon: Github, href: profile.github, label: 'GitHub Profile (17+ Repos)' },
+            { icon: Linkedin, href: profile.linkedin, label: 'LinkedIn Profile' },
+            { icon: Mail, href: `mailto:${profile.email}`, label: 'Direct Email' },
+          ].map((item) => (
             <motion.a
-              key={social.label}
-              href={social.href}
-              target={social.href.startsWith('http') ? '_blank' : undefined}
-              rel={social.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-              className="group relative rounded-full border border-gray-200 bg-white p-3 shadow ring-1 ring-black/5 transition-all hover:border-gray-300"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              aria-label={social.label}
+              key={item.label}
+              href={item.href}
+              target={item.href.startsWith('http') ? '_blank' : undefined}
+              rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              whileHover={{ scale: 1.12, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              className="group relative rounded-full border border-[var(--border-subtle)] bg-[var(--surface-card)] p-3 text-[var(--text-secondary)] shadow-sm backdrop-blur-sm transition-colors hover:border-blue-500/40 hover:text-blue-500"
+              aria-label={item.label}
             >
-              <social.icon className="h-5 w-5 text-neutral-500 transition-colors group-hover:text-neutral-700" />
-              <motion.span
-                className="absolute -inset-1 -z-10 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20"
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: 1 }}
-              />
+              <item.icon className="h-5 w-5" />
             </motion.a>
           ))}
         </motion.div>
       </div>
 
-      {/* Scroll Indicator */}
+      {/* Modern SVG Scroll Indicator */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5, duration: 0.8 }}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2"
+        transition={{ delay: 1.3, duration: 0.8 }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 sm:bottom-8"
       >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          className="flex flex-col items-center gap-2"
+        <button
+          onClick={() => scrollTo('paths')}
+          className="group flex flex-col items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)] transition-colors hover:text-blue-500"
+          aria-label="Scroll to explore"
         >
-          <span className="text-xs uppercase tracking-widest text-neutral-500">Scroll</span>
-          <div className="h-12 w-[1px] bg-gradient-to-b from-blue-500/30 to-transparent" />
-        </motion.div>
+          <span>Scroll</span>
+          <div className="relative h-10 w-5 rounded-full border border-[var(--border-light)] p-1">
+            <motion.div
+              animate={{ y: [0, 14, 0] }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+              className="h-1.5 w-1.5 rounded-full bg-blue-500 motion-reduce:hidden"
+            />
+          </div>
+        </button>
       </motion.div>
     </motion.section>
   );
 }
+
+export default HeroSection;

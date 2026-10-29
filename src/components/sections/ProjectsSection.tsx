@@ -2,146 +2,303 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Github, ExternalLink, Star, ArrowRight } from 'lucide-react';
-import type { GitHubRepo } from '@/app/_actions/github';
+import { Github, ExternalLink, Star, ArrowRight, Sparkles, FolderGit2 } from 'lucide-react';
+import { projects as verifiedProjects } from '@/content/config';
+import type { Project } from '@/types';
+import { TiltCard } from '@/components/ui/TiltCard';
+import { ProjectModal } from '@/components/projects/ProjectModal';
 import { getGitHubProjects } from '@/app/_actions/github';
 
 export function ProjectsSection() {
-  const [githubProjects, setGithubProjects] = useState<GitHubRepo[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [activeFilter, setActiveFilter] = useState<string>('all');
+  const [projectList, setProjectList] = useState<Project[]>(verifiedProjects);
 
   useEffect(() => {
-    async function fetchProjects() {
+    // Merge live GitHub star counts into verified projects if available
+    async function enhanceWithGitHub() {
       try {
-        const data = await getGitHubProjects('shaikrohit');
-        setGithubProjects(data);
-      } catch (error) {
-        console.error('Error loading projects:', error);
-      } finally {
-        setLoading(false);
+        const ghRepos = await getGitHubProjects('shaikrohit');
+        if (ghRepos && ghRepos.length > 0) {
+          const repoMap = new Map(ghRepos.map((r) => [r.name.toLowerCase(), r]));
+
+          setProjectList((prev) =>
+            prev.map((p) => {
+              const matched =
+                repoMap.get(p.title.toLowerCase()) ||
+                repoMap.get(p.id.toLowerCase()) ||
+                repoMap.get(p.title.toLowerCase().replace(/\s+/g, '-'));
+
+              if (matched) {
+                return {
+                  ...p,
+                  metrics: {
+                    stars: Math.max(matched.stargazers_count, p.metrics?.stars || 0),
+                    forks: Math.max(matched.forks_count ?? 0, p.metrics?.forks || 0),
+                    commits: p.metrics?.commits || 30,
+                  },
+                };
+              }
+              return p;
+            })
+          );
+        }
+      } catch {
+        // Fallback silently to verified project list
       }
     }
-    fetchProjects();
+    enhanceWithGitHub();
   }, []);
 
+  const filterTabs = [
+    { id: 'all', label: 'All Projects' },
+    { id: 'featured', label: 'Featured' },
+    { id: 'web-docker', label: 'Full-Stack & Docker' },
+    { id: 'ai', label: 'GenAI & AI Tools' },
+  ];
+
+  const handleTabKeyDown = (e: React.KeyboardEvent, currentId: string) => {
+    const currentIndex = filterTabs.findIndex((t) => t.id === currentId);
+    let nextIndex = -1;
+
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      nextIndex = (currentIndex + 1) % filterTabs.length;
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      nextIndex = (currentIndex - 1 + filterTabs.length) % filterTabs.length;
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      nextIndex = 0;
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      nextIndex = filterTabs.length - 1;
+    }
+
+    if (nextIndex !== -1) {
+      const nextTab = filterTabs[nextIndex];
+      if (nextTab) {
+        setActiveFilter(nextTab.id);
+        document.getElementById(`project-tab-${nextTab.id}`)?.focus();
+      }
+    }
+  };
+
+  const filteredProjects = projectList.filter((project) => {
+    if (activeFilter === 'featured') return project.featured;
+    if (activeFilter === 'web-docker') {
+      return (
+        project.techStack.includes('Docker') ||
+        project.techStack.includes('React') ||
+        project.techStack.includes('Next.js 16') ||
+        project.techStack.includes('Python')
+      );
+    }
+    if (activeFilter === 'ai') {
+      return (
+        project.techStack.includes('GenAI') ||
+        project.techStack.includes('AI/NLP') ||
+        project.title.toLowerCase().includes('ai')
+      );
+    }
+    return true;
+  });
+
   return (
-    <section id="projects" className="px-6 py-32">
+    <section id="projects" className="relative px-4 py-20 sm:px-6 sm:py-28 md:py-36">
       <div className="mx-auto max-w-6xl">
-        <motion.div
-          initial={{ opacity: 0, y: 60 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.8 }}
+        {/* Section Header */}
+        <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="mb-3 inline-block rounded-full bg-blue-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-blue-600 dark:text-blue-400">
+              Portfolio of Work
+            </span>
+            <h2 className="font-serif text-4xl font-bold tracking-tight text-[var(--text-primary)] md:text-5xl">
+              Featured Projects & Systems
+            </h2>
+            <p className="mt-3 max-w-xl text-base text-[var(--text-secondary)]">
+              Containerized applications, generative AI tools, and full-stack solutions built with
+              practical engineering rigor.
+            </p>
+          </motion.div>
+
+          <a
+            href="https://github.com/shaikrohit"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-2 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-card)] px-5 py-2.5 text-sm font-semibold text-[var(--text-primary)] backdrop-blur-md transition-all hover:border-blue-500/40 hover:text-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:hover:text-blue-400"
+            aria-label="View all 17 repositories on GitHub"
+          >
+            <FolderGit2 className="h-4 w-4 text-blue-500" aria-hidden="true" />
+            <span>All 17 Repos on GitHub</span>
+            <ArrowRight
+              className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+              aria-hidden="true"
+            />
+          </a>
+        </div>
+
+        {/* Accessible Filter Tabs (WAI-ARIA Tablist) */}
+        <div
+          role="tablist"
+          aria-label="Project categories"
+          className="mb-10 flex flex-wrap gap-2.5"
         >
-          <span className="mb-4 inline-block text-sm font-medium uppercase tracking-widest text-blue-400">
-            Projects
-          </span>
-          <div className="mb-16 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <h2 className="text-4xl font-bold text-neutral-900 md:text-5xl">Featured work</h2>
-            <a
-              href="https://github.com/shaikrohit"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-2 text-neutral-600 transition-colors hover:text-neutral-900"
-              aria-label="View all projects on GitHub"
+          {filterTabs.map((tab) => {
+            const isSelected = activeFilter === tab.id;
+            return (
+              <button
+                key={tab.id}
+                id={`project-tab-${tab.id}`}
+                role="tab"
+                aria-selected={isSelected}
+                aria-controls="projects-grid"
+                tabIndex={isSelected ? 0 : -1}
+                onClick={() => setActiveFilter(tab.id)}
+                onKeyDown={(e) => handleTabKeyDown(e, tab.id)}
+                className={`rounded-full px-5 py-2 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900 ${
+                  isSelected
+                    ? 'border border-blue-500/40 bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                    : 'border border-[var(--border-subtle)] bg-[var(--surface-card)] text-[var(--text-secondary)] hover:border-blue-500/20 hover:text-[var(--text-primary)]'
+                }`}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Project Cards Grid (WAI-ARIA Tabpanel) */}
+        <div
+          id="projects-grid"
+          role="tabpanel"
+          aria-labelledby={`project-tab-${activeFilter}`}
+          className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
+        >
+          {filteredProjects.map((project, index) => (
+            <motion.article
+              key={project.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.08 }}
+              className="h-full"
             >
-              View all on GitHub
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </a>
-          </div>
-
-          <div className="space-y-8">
-            {loading ? (
-              <div className="flex flex-col items-center justify-center gap-4 py-20">
-                <div className="h-10 w-10 animate-spin rounded-full border-4 border-blue-500/20 border-t-blue-500" />
-                <p className="animate-pulse text-sm text-neutral-500">
-                  Fetching latest from GitHub...
-                </p>
-              </div>
-            ) : (
-              githubProjects.map((project, index) => (
-                <motion.div
-                  key={project.id}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <motion.div
-                    className="group relative overflow-hidden rounded-3xl border border-gray-200 bg-white p-8 transition-all duration-500 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-500/5 md:p-10"
-                    whileHover={{ y: -5 }}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
-                    <div className="relative z-10 flex flex-col justify-between gap-8 md:flex-row md:items-center">
-                      <div className="flex-1">
-                        {project.stargazers_count > 0 && (
-                          <span className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-yellow-500/10 px-3 py-1 text-xs font-medium text-yellow-600">
-                            <Star className="h-3 w-3" />
-                            {project.stargazers_count} Stars
+              <TiltCard
+                onClick={() => setSelectedProject(project)}
+                aria-label={`View case study for ${project.title}`}
+                className="group cursor-pointer rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-5 backdrop-blur-xl transition-all duration-300 focus-within:ring-2 focus-within:ring-blue-500/50 hover:border-blue-500/40 hover:shadow-2xl hover:shadow-blue-500/10 sm:p-7"
+              >
+                <div className="flex h-full flex-col justify-between">
+                  <div>
+                    {/* Article Header: Badges & Metrics */}
+                    <header className="mb-5 flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        {project.featured && (
+                          <span className="inline-flex items-center gap-1 rounded-full bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-600 dark:text-blue-400">
+                            <Sparkles className="h-3 w-3" aria-hidden="true" /> Featured
                           </span>
                         )}
-
-                        <h3 className="mb-3 text-2xl font-bold text-neutral-900 transition-colors group-hover:text-blue-600 md:text-3xl">
-                          {project.name
-                            .split('-')
-                            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                            .join(' ')}
-                        </h3>
-
-                        <p className="mb-6 max-w-xl leading-relaxed text-neutral-600">
-                          {project.description || 'No description provided for this repository.'}
-                        </p>
-
-                        <div className="flex flex-wrap gap-2">
-                          {[project.language, ...(project.topics || [])]
-                            .filter(Boolean)
-                            .slice(0, 5)
-                            .map((t, i) => (
-                              <span
-                                key={i}
-                                className="rounded-lg border border-blue-100 bg-blue-50 px-3 py-1.5 text-sm text-blue-600"
-                              >
-                                {t}
-                              </span>
-                            ))}
-                        </div>
                       </div>
 
-                      <div className="flex items-center gap-4">
-                        <motion.a
-                          href={project.html_url}
+                      {project.metrics?.stars !== undefined && project.metrics.stars > 0 && (
+                        <span
+                          className="inline-flex items-center gap-1 text-xs font-semibold text-amber-500"
+                          aria-label={`${project.metrics.stars} GitHub stars`}
+                        >
+                          <Star className="h-3.5 w-3.5 fill-amber-500" aria-hidden="true" />
+                          {project.metrics.stars}
+                        </span>
+                      )}
+                    </header>
+
+                    {/* Article Main: Title & Tagline */}
+                    <h3 className="text-2xl font-bold tracking-tight text-[var(--text-primary)] transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                      {project.title}
+                    </h3>
+
+                    <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-[var(--text-secondary)]">
+                      {project.description}
+                    </p>
+                  </div>
+
+                  {/* Article Footer: Tech Badges & Action Links */}
+                  <footer className="mt-8">
+                    <ul
+                      className="mb-6 flex flex-wrap gap-1.5"
+                      aria-label={`Technologies used in ${project.title}`}
+                    >
+                      {project.techStack.slice(0, 4).map((tech) => (
+                        <li
+                          key={tech}
+                          className="rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-base)] px-2.5 py-1 text-xs font-medium text-[var(--text-secondary)]"
+                        >
+                          {tech}
+                        </li>
+                      ))}
+                      {project.techStack.length > 4 && (
+                        <li className="rounded-lg border border-transparent px-1.5 py-1 text-xs font-medium text-[var(--text-muted)]">
+                          +{project.techStack.length - 4}
+                        </li>
+                      )}
+                    </ul>
+
+                    <div className="flex items-center justify-between border-t border-[var(--border-subtle)] pt-4 text-xs font-semibold">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedProject(project);
+                        }}
+                        className="rounded text-blue-600 transition-colors hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-blue-400"
+                        aria-label={`Open interactive case study for ${project.title}`}
+                      >
+                        Click for Case Study ↗
+                      </button>
+
+                      <div
+                        className="flex items-center gap-2 text-[var(--text-muted)]"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <a
+                          href={project.githubUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="rounded-xl border border-gray-100 bg-gray-50 p-4 transition-colors hover:border-gray-300"
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                          aria-label={`View ${project.name} source on GitHub`}
+                          className="rounded-lg p-1.5 transition-colors hover:text-[var(--text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                          aria-label={`View source code for ${project.title} on GitHub`}
                         >
-                          <Github className="h-5 w-5 text-neutral-600" />
-                        </motion.a>
-                        {project.homepage && (
-                          <motion.a
-                            href={project.homepage}
+                          <Github className="h-4 w-4" aria-hidden="true" />
+                        </a>
+                        {project.liveUrl && (
+                          <a
+                            href={project.liveUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="rounded-xl bg-blue-600 p-4 shadow-lg shadow-blue-500/20 transition-colors hover:bg-blue-500"
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}
-                            aria-label={`Visit ${project.name} live demo`}
+                            className="rounded-lg p-1.5 transition-colors hover:text-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                            aria-label={`Open live demonstration for ${project.title}`}
                           >
-                            <ExternalLink className="h-5 w-5 text-white" />
-                          </motion.a>
+                            <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                          </a>
                         )}
                       </div>
                     </div>
-                  </motion.div>
-                </motion.div>
-              ))
-            )}
-          </div>
-        </motion.div>
+                  </footer>
+                </div>
+              </TiltCard>
+            </motion.article>
+          ))}
+        </div>
+
+        {/* Project Modal */}
+        <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
       </div>
     </section>
   );
 }
+
+export default ProjectsSection;

@@ -37,6 +37,7 @@ export interface DBVisitorSession {
 export interface DBVisitorMessage {
   id: string;
   session_id: string | null;
+  name?: string | null;
   visitor_type: string;
   message: string;
   email: string | null;
@@ -118,6 +119,7 @@ export async function updateSessionTime(
 // Submit a contact message
 export async function submitMessage(data: {
   sessionId?: string;
+  name?: string;
   visitorType: string;
   message: string;
   email?: string;
@@ -128,14 +130,35 @@ export async function submitMessage(data: {
   }
 
   try {
+    const cleanName = data.name?.trim();
+    const cleanEmail = data.email?.trim() || null;
+    const cleanMessage = data.message.trim();
+
+    // Primary insert with name column
     const { error } = await supabase.from('visitor_messages').insert({
       session_id: data.sessionId || null,
+      name: cleanName || null,
       visitor_type: data.visitorType,
-      message: data.message,
-      email: data.email || null,
+      message: cleanMessage,
+      email: cleanEmail,
     });
 
-    if (error) throw error;
+    if (error) {
+      console.warn('Primary insert with name failed, trying fallback:', error.message);
+      const fallbackMessage = cleanName
+        ? `From: ${cleanName} <${cleanEmail || 'No email'}>\n\n${cleanMessage}`
+        : cleanMessage;
+
+      const { error: fallbackError } = await supabase.from('visitor_messages').insert({
+        session_id: data.sessionId || null,
+        visitor_type: data.visitorType,
+        message: fallbackMessage,
+        email: cleanEmail,
+      });
+
+      if (fallbackError) throw fallbackError;
+    }
+
     return { success: true };
   } catch (error) {
     console.error('Error submitting message:', error);

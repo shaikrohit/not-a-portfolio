@@ -2,120 +2,163 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Briefcase } from 'lucide-react';
-
-const experiences = [
-  {
-    role: 'AI Developer',
-    company: 'Sithafal Technologies',
-    period: '2024 - Present',
-    description:
-      'Working on cutting-edge AI solutions and full-stack applications. Focused on integrating LLMs and building responsive user interfaces.',
-    highlights: [
-      'AI-powered assistant development',
-      'Full-stack system architecture',
-      'Security first approach',
-    ],
-    current: true,
-  },
-  {
-    role: 'Computer Engineering Student',
-    company: 'Dr. Y.C. James Yen Govt Polytechnic',
-    period: '2023 - 2026',
-    description:
-      'Pursuing Diploma in Computer Engineering with focus on core fundamentals and security.',
-    highlights: [
-      '96% aggregate score',
-      '1st Prize in Regional Technical Innovation',
-      'Leader in technical workshops',
-    ],
-    current: false,
-  },
-];
+import { Briefcase, Calendar, CheckCircle2 } from 'lucide-react';
+import { experience as verifiedExperience } from '@/content/config';
 
 export function ExperienceSection() {
   return (
-    <section id="experience" className="relative px-6 py-32">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-50/30 to-transparent" />
-
-      <div className="relative mx-auto max-w-5xl">
+    <section id="experience" className="relative px-4 py-20 sm:px-6 sm:py-28 md:py-36">
+      <div className="mx-auto max-w-5xl">
+        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 60 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.8 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.6 }}
+          className="mb-16"
         >
-          <span className="mb-4 inline-block text-sm font-medium uppercase tracking-widest text-blue-400">
-            Experience
+          <span className="mb-3 inline-block rounded-full bg-blue-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-blue-600 dark:text-blue-400">
+            Professional Track
           </span>
-          <h2 className="mb-16 text-4xl font-bold text-neutral-900 md:text-5xl">
-            Where I've worked
+          <h2 className="font-serif text-4xl font-bold tracking-tight text-[var(--text-primary)] md:text-5xl">
+            Experience & Milestones
           </h2>
+          <p className="mt-3 max-w-xl text-base text-[var(--text-secondary)]">
+            Practical engineering experience from building production generative AI workflows to
+            academic leadership.
+          </p>
+        </motion.div>
 
-          <div className="relative">
-            <div className="absolute bottom-0 left-[27px] top-0 w-[2px] bg-gradient-to-b from-blue-500 via-purple-500/50 to-transparent" />
+        {/* Interactive Timeline */}
+        <div className="relative">
+          {/* Progressive Timeline Spine */}
+          <div
+            className="absolute bottom-0 left-[19px] top-4 w-[2px] bg-gradient-to-b from-blue-500 via-indigo-500 to-purple-500/20 sm:left-[23px] md:left-[31px]"
+            aria-hidden="true"
+          />
 
-            <div className="space-y-12">
-              {experiences.map((exp, index) => (
+          <div className="space-y-12">
+            {verifiedExperience.map((exp, index) => {
+              const isCurrent = exp.period.toLowerCase().includes('present');
+
+              return (
                 <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -40 }}
+                  key={exp.id}
+                  initial={{ opacity: 0, x: -30 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.2 }}
-                  className="relative pl-20"
+                  transition={{ duration: 0.6, delay: index * 0.15 }}
+                  className="relative pl-12 sm:pl-14 md:pl-20"
                 >
-                  <div className="absolute left-0 top-0">
+                  {/* Timeline Node Icon & Beacon */}
+                  <div className="absolute left-0 top-1" aria-hidden="true">
                     <div
-                      className={`flex h-14 w-14 items-center justify-center rounded-full border-2 transition-colors ${
-                        exp.current ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-gray-50'
+                      className={`flex h-10 w-10 items-center justify-center rounded-2xl border-2 transition-all sm:h-12 sm:w-12 md:h-16 md:w-16 ${
+                        isCurrent
+                          ? 'border-blue-500 bg-blue-500/10 shadow-lg shadow-blue-500/20'
+                          : 'border-[var(--border-light)] bg-[var(--surface-elevated)]'
                       }`}
                     >
                       <Briefcase
-                        className={`h-5 w-5 ${exp.current ? 'text-blue-600' : 'text-neutral-400'}`}
+                        className={`h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 ${
+                          isCurrent
+                            ? 'text-blue-600 dark:text-blue-400'
+                            : 'text-[var(--text-muted)]'
+                        }`}
                       />
                     </div>
-                    {exp.current && (
+
+                    {/* Active Ping Beacon */}
+                    {isCurrent && (
                       <span className="absolute -right-1 -top-1 flex h-4 w-4">
-                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75" />
-                        <span className="relative inline-flex h-4 w-4 rounded-full bg-blue-500" />
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75 motion-reduce:hidden" />
+                        <span className="relative inline-flex h-4 w-4 rounded-full bg-emerald-500" />
                       </span>
                     )}
                   </div>
 
-                  <motion.div
-                    className="group rounded-2xl border border-gray-200 bg-white p-8 transition-all duration-300 hover:border-blue-200 hover:shadow-lg hover:shadow-blue-500/5"
-                    whileHover={{ x: 10 }}
-                  >
-                    <div className="mb-4 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                  {/* Semantic Experience Article Card */}
+                  <article className="group rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-5 backdrop-blur-xl transition-all duration-300 hover:border-blue-500/30 hover:shadow-xl hover:shadow-blue-500/5 sm:p-7 md:p-8">
+                    {/* Article Header: Role, Company, Period */}
+                    <header className="mb-4 flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
                       <div>
-                        <h3 className="text-xl font-bold text-neutral-900">{exp.role}</h3>
-                        <p className="font-medium text-blue-600">{exp.company}</p>
+                        <div className="flex items-center gap-2">
+                          <h3 className="text-2xl font-bold tracking-tight text-[var(--text-primary)]">
+                            {exp.role}
+                          </h3>
+                          {isCurrent && (
+                            <span className="rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+                              Active
+                            </span>
+                          )}
+                        </div>
+                        <h4 className="mt-1 text-base font-semibold text-blue-600 dark:text-blue-400">
+                          {exp.company}
+                        </h4>
                       </div>
-                      <span className="rounded-full border border-gray-100 bg-gray-50 px-3 py-1 font-mono text-sm text-neutral-500">
-                        {exp.period}
-                      </span>
-                    </div>
 
-                    <p className="mb-6 leading-relaxed text-neutral-600">{exp.description}</p>
+                      <time
+                        dateTime={isCurrent ? '2024-01-01' : '2023-08-01'}
+                        className="inline-flex items-center gap-1.5 self-start rounded-full border border-[var(--border-subtle)] bg-[var(--surface-base)] px-3.5 py-1 text-xs font-semibold text-[var(--text-muted)]"
+                      >
+                        <Calendar className="h-3.5 w-3.5 text-blue-500" aria-hidden="true" />
+                        <span>{exp.period}</span>
+                      </time>
+                    </header>
 
-                    <div className="flex flex-wrap gap-2">
-                      {exp.highlights.map((h, i) => (
-                        <span
-                          key={i}
-                          className="rounded-full border border-blue-100 bg-blue-50 px-3 py-1.5 text-xs text-blue-600"
+                    {/* Article Body: Role Description */}
+                    <p className="text-base leading-relaxed text-[var(--text-secondary)]">
+                      {exp.description}
+                    </p>
+
+                    {/* Bullet Achievements List */}
+                    {exp.achievements && exp.achievements.length > 0 && (
+                      <ul
+                        className="mt-6 space-y-2.5 border-t border-[var(--border-subtle)] pt-5"
+                        aria-label={`Key milestones and achievements at ${exp.company}`}
+                      >
+                        {exp.achievements.map((item, i) => (
+                          <li
+                            key={i}
+                            className="flex items-start gap-2.5 text-sm text-[var(--text-secondary)]"
+                          >
+                            <CheckCircle2
+                              className="mt-0.5 h-4 w-4 shrink-0 text-blue-500"
+                              aria-hidden="true"
+                            />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+
+                    {/* Article Footer: Technologies Used */}
+                    {exp.techUsed && exp.techUsed.length > 0 && (
+                      <footer className="mt-6">
+                        <ul
+                          className="flex flex-wrap gap-2"
+                          aria-label={`Technologies leveraged at ${exp.company}`}
                         >
-                          {h}
-                        </span>
-                      ))}
-                    </div>
-                  </motion.div>
+                          {exp.techUsed.map((tech) => (
+                            <li
+                              key={tech}
+                              className="rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-base)] px-2.5 py-1 text-xs font-medium text-[var(--text-primary)]"
+                            >
+                              {tech}
+                            </li>
+                          ))}
+                        </ul>
+                      </footer>
+                    )}
+                  </article>
                 </motion.div>
-              ))}
-            </div>
+              );
+            })}
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 }
+
+export default ExperienceSection;

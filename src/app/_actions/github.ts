@@ -10,6 +10,7 @@ export interface GitHubRepo {
   language: string | null;
   topics: string[];
   fork: boolean;
+  forks_count?: number;
   updated_at: string;
   pushed_at: string;
 }

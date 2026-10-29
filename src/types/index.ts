@@ -39,9 +39,11 @@ export interface VisitorSession {
 
 export interface VisitorMessage {
   id: string;
-  sessionId: string;
+  sessionId?: string | null;
+  name?: string | null;
   visitorType: VisitorType;
   message: string;
+  email?: string | null;
   createdAt: Date;
 }
 
@@ -175,9 +177,20 @@ export interface GitHubActivity {
  * Form Types
  */
 export interface ContactFormData {
-  visitorType: VisitorType;
+  name: string;
+  email: string;
   message: string;
-  email?: string; // Optional
+  visitorType?: VisitorType;
+  sessionId?: string;
+}
+
+/**
+ * Contact API Response
+ */
+export interface ContactResponse {
+  success: boolean;
+  message?: string;
+  error?: string;
 }
 
 /**
