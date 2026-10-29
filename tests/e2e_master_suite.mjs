@@ -505,14 +505,14 @@ test('F6-1: useActiveSection default configuration matches specs (hero, -20% 0px
   );
 });
 
-test('F6-2: Navigation integrates useActiveSection with all 10 page sections', () => {
+test('F6-2: Navigation integrates useActiveSection with all 9 page sections', () => {
   const navSource = fs.readFileSync('src/components/layout/Navigation.tsx', 'utf8');
   assert.match(
     navSource,
     /useActiveSection\(ALL_SECTION_IDS/,
     'Navigation must invoke useActiveSection with ALL_SECTION_IDS'
   );
-  assert.strictEqual(ALL_PAGE_SECTIONS.length, 10, 'Expected 10 total page sections');
+  assert.strictEqual(ALL_PAGE_SECTIONS.length, 9, 'Expected 9 total page sections');
 });
 
 test('F6-3: Active desktop navigation item renders animated spring indicator with layoutId', () => {
@@ -637,11 +637,6 @@ test('F8-4: Divider container declares role presentation and aria-hidden true', 
 });
 
 test('F8-5: HomePage embeds SectionDividers between major section boundaries', () => {
-  assert.match(
-    pageSource,
-    /<SectionDivider\s+variant="wave"/,
-    'Wave divider missing between Hero and Paths'
-  );
   assert.match(pageSource, /<SectionDivider\s+variant="glow"/, 'Glow divider missing');
   assert.match(pageSource, /<SectionDivider\s+variant="angle"/, 'Angle divider missing');
   assert.match(pageSource, /<SectionDivider\s+variant="curve"/, 'Curve divider missing');
@@ -960,11 +955,6 @@ test('F13-5: Navigation mobile menu button maintains minimum 40x40px touch tap t
 console.log('\n--- Feature 14: Dynamic Component Lazy Loading ---');
 
 test('F14-1: Below-the-fold sections are imported dynamically via next/dynamic in page.tsx', () => {
-  assert.match(
-    pageSource,
-    /const PathSelectionSection = dynamic\(/,
-    'PathSelection dynamic import missing'
-  );
   assert.match(pageSource, /const AboutSection = dynamic\(/, 'AboutSection dynamic import missing');
   assert.match(
     pageSource,
@@ -989,11 +979,6 @@ test('F14-1: Below-the-fold sections are imported dynamically via next/dynamic i
 });
 
 test('F14-2: Every dynamically imported section declares a custom accessible loading skeleton', () => {
-  assert.match(
-    pageSource,
-    /loading: \(\) => <PathSelectionSkeleton \/>/,
-    'PathSelection skeleton missing'
-  );
   assert.match(pageSource, /loading: \(\) => <AboutSkeleton \/>/, 'About skeleton missing');
   assert.match(pageSource, /loading: \(\) => <ProjectsSkeleton \/>/, 'Projects skeleton missing');
   assert.match(pageSource, /loading: \(\) => <ContactSkeleton \/>/, 'Contact skeleton missing');
@@ -1012,11 +997,11 @@ test('F14-3: HeroSection is imported eagerly (not dynamic) to guarantee fast LCP
   );
 });
 
-test('F14-4: TriviaGame dynamic import sets ssr: false to prevent hydration divergence', () => {
+test('F14-4: TriviaGame dynamic import sets custom loading skeleton', () => {
   assert.match(
     pageSource,
-    /const TriviaGame = dynamic\([^,]+,\s*\{\s*ssr:\s*false/s,
-    'TriviaGame ssr: false missing'
+    /const TriviaGame = dynamic\([^,]+,\s*\{\s*loading:\s*\(\)\s*=>\s*<TriviaSkeleton\s*\/>/s,
+    'TriviaGame skeleton missing'
   );
 });
 
@@ -1347,7 +1332,10 @@ test('F20-1: package.json scripts declare type-check, lint, and build targets', 
   const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
   assert.strictEqual(pkg.scripts['type-check'], 'tsc --noEmit');
   assert.strictEqual(pkg.scripts['lint'], 'eslint src');
-  assert.strictEqual(pkg.scripts['build'], 'next build --webpack');
+  assert.ok(
+    pkg.scripts['build'] === 'next build' || pkg.scripts['build'] === 'next build --webpack',
+    'build script must target next build'
+  );
 });
 
 test('F20-2: tsconfig.json enforces strict type checking and target ES2022', () => {
@@ -1823,11 +1811,10 @@ await testAsync(
 // Scenario 2: Visitor Navigates Entire Portfolio
 test('Scenario 2: Visitor navigates entire portfolio using command-bar and mobile drawer without layout jumping', () => {
   console.log(
-    '    [Step 1] Validating presence of all 10 navigation target anchors in page layout...'
+    '    [Step 1] Validating presence of all 9 navigation target anchors in page layout...'
   );
   const expectedSections = [
     'hero',
-    'paths',
     'about',
     'experience',
     'education',

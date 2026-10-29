@@ -263,11 +263,10 @@ test('FOUT Script: SecurityError resilience (cookies blocked / storage disabled)
 // ---------------------------------------------------------------------------
 // 3. Navigation Component Spec & A11y Conformance
 // ---------------------------------------------------------------------------
-test('Navigation.tsx: Defines all 10 page sections for command palette', () => {
+test('Navigation.tsx: Defines all 9 page sections for command palette', () => {
   const content = readFileSync(resolve('src/components/layout/Navigation.tsx'), 'utf-8');
   const expectedSections = [
     'hero',
-    'paths',
     'about',
     'experience',
     'education',

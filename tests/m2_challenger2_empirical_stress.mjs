@@ -53,9 +53,8 @@ async function runAsyncTest(name, fn) {
 // ============================================================================
 console.log('--- SECTION 1: useActiveSection Hook Boundary Conditions & Mutex ---');
 
-const ALL_10_SECTIONS = [
+const ALL_9_SECTIONS = [
   'hero',
-  'paths',
   'about',
   'experience',
   'education',
@@ -65,10 +64,11 @@ const ALL_10_SECTIONS = [
   'trivia',
   'contact',
 ];
+const ALL_10_SECTIONS = ALL_9_SECTIONS;
 
 // Faithful mirror of useActiveSection internal state machine
 class ActiveSectionSimulator {
-  constructor(sectionIds = ALL_10_SECTIONS, options = {}) {
+  constructor(sectionIds = ALL_9_SECTIONS, options = {}) {
     this.sectionIds = sectionIds;
     this.scrolledThreshold = options.scrolledThreshold ?? 40;
     this.activeSection = options.defaultSection ?? sectionIds[0] ?? '';
@@ -242,12 +242,12 @@ runTest('1.5: IntersectionObserver prioritizes page sequence over entry arrival 
 runTest(
   '1.6: Dynamic section mount via MutationObserver disconnects when all sections observed',
   () => {
-    const harness = new ActiveSectionSimulator(ALL_10_SECTIONS);
+    const harness = new ActiveSectionSimulator(ALL_9_SECTIONS);
     assert.strictEqual(harness.mutationObserverConnected, true);
 
-    // Mount sections 0 to 8
-    for (let i = 0; i < 9; i++) {
-      harness.simulateMount(ALL_10_SECTIONS[i]);
+    // Mount sections 0 to 7
+    for (let i = 0; i < 8; i++) {
+      harness.simulateMount(ALL_9_SECTIONS[i]);
       assert.strictEqual(
         harness.mutationObserverConnected,
         true,
@@ -255,12 +255,12 @@ runTest(
       );
     }
 
-    // Mount final 10th section ('contact')
-    harness.simulateMount(ALL_10_SECTIONS[9]);
+    // Mount final 9th section ('contact')
+    harness.simulateMount(ALL_9_SECTIONS[8]);
     assert.strictEqual(
       harness.mutationObserverConnected,
       false,
-      'MutationObserver must automatically disconnect once all 10 sections are mounted'
+      'MutationObserver must automatically disconnect once all 9 sections are mounted'
     );
   }
 );
@@ -268,7 +268,7 @@ runTest(
 await runAsyncTest(
   '1.7: Programmatic click lock (800ms) blocks scroll & intersection changes',
   async () => {
-    const harness = new ActiveSectionSimulator(ALL_10_SECTIONS);
+    const harness = new ActiveSectionSimulator(ALL_9_SECTIONS);
     harness.activeSection = 'hero';
 
     // User clicks 'education'
@@ -277,7 +277,7 @@ await runAsyncTest(
     assert.strictEqual(harness.isClickScrolling, true);
 
     // While smooth scrolling, intermediate sections trigger intersections & scroll events
-    harness.handleIntersection([{ id: 'paths', isIntersecting: true }]);
+    harness.handleIntersection([{ id: 'about', isIntersecting: true }]);
     harness.handleScroll(200, 1000, 5000);
     assert.strictEqual(
       harness.activeSection,
@@ -290,10 +290,10 @@ await runAsyncTest(
     assert.strictEqual(harness.isClickScrolling, false, 'Lock must expire after 800ms');
 
     // Now intersection should update active section
-    harness.handleIntersection([{ id: 'paths', isIntersecting: true }]);
+    harness.handleIntersection([{ id: 'about', isIntersecting: true }]);
     assert.strictEqual(
       harness.activeSection,
-      'paths',
+      'about',
       'Active section updates normally after lock expiry'
     );
   }
@@ -545,7 +545,7 @@ runTest('2.6: Global shortcut: Ctrl+K / Cmd+K toggles commandOpen', () => {
 });
 
 runTest('2.7: Command Palette ArrowUp / ArrowDown navigation and modular wrapping', () => {
-  const sectionsCount = 10;
+  const sectionsCount = 9;
 
   function handleKey(key, currentIndex, length) {
     if (key === 'ArrowDown') {
@@ -558,35 +558,35 @@ runTest('2.7: Command Palette ArrowUp / ArrowDown navigation and modular wrappin
 
   // Down from 0 -> 1
   assert.strictEqual(handleKey('ArrowDown', 0, sectionsCount), 1);
-  // Down from 9 (last) -> wraps to 0
+  // Down from 8 (last) -> wraps to 0
   assert.strictEqual(
-    handleKey('ArrowDown', 9, sectionsCount),
+    handleKey('ArrowDown', 8, sectionsCount),
     0,
     'ArrowDown at end must wrap to index 0'
   );
 
   // Up from 1 -> 0
   assert.strictEqual(handleKey('ArrowUp', 1, sectionsCount), 0);
-  // Up from 0 -> wraps to 9
+  // Up from 0 -> wraps to 8
   assert.strictEqual(
     handleKey('ArrowUp', 0, sectionsCount),
-    9,
-    'ArrowUp at index 0 must wrap to index 9'
+    8,
+    'ArrowUp at index 0 must wrap to index 8'
   );
 });
 
 runTest(
-  '2.8: Command Palette search filtering accounts for all 10 sections and search fields',
+  '2.8: Command Palette search filtering accounts for all 9 sections and search fields',
   () => {
     // Extract ALL_PAGE_SECTIONS from Navigation.tsx
     assert(navCode.includes('ALL_PAGE_SECTIONS: SectionMeta[] = ['));
-    for (const id of ALL_10_SECTIONS) {
+    for (const id of ALL_9_SECTIONS) {
       assert(navCode.includes(`id: '${id}'`), `ALL_PAGE_SECTIONS must include section '${id}'`);
     }
 
     // Filter simulation logic (from Navigation.tsx:202-212)
     function filterSections(query) {
-      const sections = ALL_10_SECTIONS.map((id) => ({
+      const sections = ALL_9_SECTIONS.map((id) => ({
         id,
         label: id.charAt(0).toUpperCase() + id.slice(1),
         category: 'General',
@@ -604,7 +604,7 @@ runTest(
       );
     }
 
-    assert.strictEqual(filterSections('').length, 10, 'Empty query returns all 10 sections');
+    assert.strictEqual(filterSections('').length, 9, 'Empty query returns all 9 sections');
     assert.strictEqual(filterSections('proj').length, 1, 'Query "proj" returns projects');
     assert.strictEqual(filterSections('proj')[0].id, 'projects');
     assert.strictEqual(filterSections('zzzzzzzz').length, 0, 'Unmatched query returns empty array');
@@ -742,11 +742,9 @@ runTest('4.1: SectionDivider correctly exported from src/components/ui/index.ts'
 
 runTest('4.2: Page.tsx integrates all SectionDividers with non-colliding variants', () => {
   const dividerInstances = pageCode.match(/<SectionDivider[\s\S]*?\/>/g) || [];
-  assert.strictEqual(dividerInstances.length, 7, 'page.tsx must contain exactly 7 SectionDividers');
+  assert.strictEqual(dividerInstances.length, 6, 'page.tsx must contain exactly 6 SectionDividers');
 
   // Verify each transition variant
-  assert(pageCode.includes('variant="wave"'), 'Must have wave divider');
-  assert(pageCode.includes('inverted'), 'Must have inverted wave divider');
   assert(pageCode.includes('variant="glow"'), 'Must have glow beam divider');
   assert(pageCode.includes('variant="angle"'), 'Must have angle divider');
   assert(pageCode.includes('variant="curve"'), 'Must have curve divider');

@@ -31,7 +31,7 @@ export const DEFAULT_PROFILE: CMSProfile = {
 };
 
 export const DEFAULT_PROJECTS: CMSProject[] = defaultProjects.map((p, idx) => ({
-  id: p.id,
+  id: `00000000-0000-0000-0001-${String(idx + 1).padStart(12, '0')}`,
   slug: p.id,
   title: p.title,
   tagline: p.description,
@@ -51,7 +51,7 @@ export const DEFAULT_PROJECTS: CMSProject[] = defaultProjects.map((p, idx) => ({
 }));
 
 export const DEFAULT_EXPERIENCE: CMSExperience[] = defaultExperience.map((e, idx) => ({
-  id: e.id,
+  id: `00000000-0000-0000-0002-${String(idx + 1).padStart(12, '0')}`,
   company: e.company,
   role: e.role,
   period: e.period,
@@ -65,7 +65,7 @@ export const DEFAULT_EXPERIENCE: CMSExperience[] = defaultExperience.map((e, idx
 
 export const DEFAULT_EDUCATION: CMSEducation[] = [
   {
-    id: 'edu-polytechnic',
+    id: '00000000-0000-0000-0003-000000000001',
     institution: 'Dr. Y.C. James Yen Govt Polytechnic',
     degree: 'Diploma in Computer Engineering',
     period: '2023 - 2026',
@@ -86,7 +86,7 @@ export const DEFAULT_EDUCATION: CMSEducation[] = [
 ];
 
 export const DEFAULT_SKILLS: CMSSkill[] = defaultSkills.map((s, idx) => ({
-  id: `skill-${s.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`,
+  id: `00000000-0000-0000-0004-${String(idx + 1).padStart(12, '0')}`,
   name: s.name,
   category: s.category,
   proficiency: s.proficiency,
@@ -100,7 +100,7 @@ export const DEFAULT_SKILLS: CMSSkill[] = defaultSkills.map((s, idx) => ({
 
 export const DEFAULT_ACHIEVEMENTS: CMSAchievement[] = [
   {
-    id: 'ach-1',
+    id: '00000000-0000-0000-0005-000000000001',
     title: '1st Prize — Regional Technical Innovation',
     issuer: 'Regional Technical Hackathon',
     date: '2025',
@@ -112,7 +112,7 @@ export const DEFAULT_ACHIEVEMENTS: CMSAchievement[] = [
     is_published: true,
   },
   {
-    id: 'ach-2',
+    id: '00000000-0000-0000-0005-000000000002',
     title: '96% Academic Aggregate Score',
     issuer: 'State Board of Technical Education',
     date: '2023 - 2026',
@@ -124,7 +124,7 @@ export const DEFAULT_ACHIEVEMENTS: CMSAchievement[] = [
     is_published: true,
   },
   {
-    id: 'ach-3',
+    id: '00000000-0000-0000-0005-000000000003',
     title: 'AI Developer / Intern @ Sithafal Technologies',
     issuer: 'Sithafal Technologies, Tirupati',
     date: '2024 - Present',
@@ -136,7 +136,7 @@ export const DEFAULT_ACHIEVEMENTS: CMSAchievement[] = [
     is_published: true,
   },
   {
-    id: 'ach-4',
+    id: '00000000-0000-0000-0005-000000000004',
     title: 'Docker Production Containerization',
     issuer: 'DevOps & System Architecture',
     date: '2024',
@@ -148,7 +148,7 @@ export const DEFAULT_ACHIEVEMENTS: CMSAchievement[] = [
     is_published: true,
   },
   {
-    id: 'ach-5',
+    id: '00000000-0000-0000-0005-000000000005',
     title: 'Cross-Platform Mobile with Capacitor',
     issuer: 'Mobile Engineering',
     date: '2025',
@@ -160,7 +160,7 @@ export const DEFAULT_ACHIEVEMENTS: CMSAchievement[] = [
     is_published: true,
   },
   {
-    id: 'ach-6',
+    id: '00000000-0000-0000-0005-000000000006',
     title: 'Cybersecurity & Ethical Defense',
     issuer: 'Security Foundation',
     date: '2024',
@@ -216,7 +216,9 @@ export async function getPortfolioContent(): Promise<AllPortfolioContent> {
     ]);
 
     return {
-      profile: (profileRes?.data as CMSProfile) || DEFAULT_PROFILE,
+      profile: profileRes?.data
+        ? ({ ...DEFAULT_PROFILE, ...profileRes.data } as CMSProfile)
+        : DEFAULT_PROFILE,
       projects:
         projectsRes?.data && projectsRes.data.length > 0
           ? (projectsRes.data as CMSProject[])

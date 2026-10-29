@@ -89,7 +89,6 @@ console.log('\n--- MODULE 2: Section ID Contract & Layout Alignment ---');
 
 const EXPECTED_SECTIONS = [
   'hero',
-  'paths',
   'about',
   'experience',
   'education',
@@ -100,7 +99,7 @@ const EXPECTED_SECTIONS = [
   'contact',
 ];
 
-runTest('Contract: Navigation defines all 10 required page sections', () => {
+runTest('Contract: Navigation defines all 9 required page sections', () => {
   for (const id of EXPECTED_SECTIONS) {
     assert(
       navigationCode.includes(`id: '${id}'`),

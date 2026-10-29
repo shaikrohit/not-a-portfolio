@@ -172,9 +172,10 @@ VALUES (
 )
 ON CONFLICT (id) DO NOTHING;
 
-INSERT INTO cms_projects (slug, title, tagline, long_description, problem_solved, architecture_notes, tech_stack, github_url, live_url, stars_count, forks_count, commits_count, is_featured, sort_order, is_published)
+INSERT INTO cms_projects (id, slug, title, tagline, long_description, problem_solved, architecture_notes, tech_stack, github_url, live_url, stars_count, forks_count, commits_count, is_featured, sort_order, is_published)
 VALUES
 (
+  '00000000-0000-0000-0001-000000000001',
   'carbon-sphere',
   'CarbonSphere',
   'Interactive Carbon Footprint Tracker & Awareness Platform',
@@ -188,6 +189,7 @@ VALUES
   true, 1, true
 ),
 (
+  '00000000-0000-0000-0001-000000000002',
   'smart-fifa',
   'Smart FIFA 2026 Stadiums',
   'GenAI-enabled stadium operations & fan experience platform',
@@ -201,6 +203,7 @@ VALUES
   true, 2, true
 ),
 (
+  '00000000-0000-0000-0001-000000000003',
   'election-guide',
   'Election Guide AI',
   'Intelligent AI assistant simplifying democratic voting workflows',
@@ -214,6 +217,7 @@ VALUES
   true, 3, true
 ),
 (
+  '00000000-0000-0000-0001-000000000004',
   'green-route',
   'GreenRoute',
   'Python backend for eco-friendly route planning & carbon reduction',
@@ -227,6 +231,7 @@ VALUES
   false, 4, true
 ),
 (
+  '00000000-0000-0000-0001-000000000005',
   'bhumi-darpan',
   'Bhumi Darpan',
   'Land information and spatial records accessibility web application',
@@ -240,6 +245,7 @@ VALUES
   false, 5, true
 ),
 (
+  '00000000-0000-0000-0001-000000000006',
   'not-a-portfolio',
   'Not A Portfolio',
   'Interactive conversation-driven digital identity experience',
@@ -252,11 +258,12 @@ VALUES
   15, 4, 85,
   true, 6, true
 )
-ON CONFLICT (slug) DO NOTHING;
+ON CONFLICT (id) DO NOTHING;
 
-INSERT INTO cms_experience (company, role, period, location, description, achievements, tech_used, sort_order, is_published)
+INSERT INTO cms_experience (id, company, role, period, location, description, achievements, tech_used, sort_order, is_published)
 VALUES
 (
+  '00000000-0000-0000-0002-000000000001',
   'Sithafal Technologies, Tirupati',
   'AI Developer / Intern',
   '2024 - Present',
@@ -272,6 +279,7 @@ VALUES
   true
 ),
 (
+  '00000000-0000-0000-0002-000000000002',
   'Dr. Y.C. James Yen Govt Polytechnic',
   'Computer Engineering Student',
   '2023 - 2026',
@@ -285,11 +293,13 @@ VALUES
   ARRAY['C', 'Java', 'Python', 'Web Technologies', 'Linux', 'Computer Networks'],
   2,
   true
-);
+)
+ON CONFLICT (id) DO NOTHING;
 
-INSERT INTO cms_education (institution, degree, period, location, grade, coursework, honors, sort_order, is_published)
+INSERT INTO cms_education (id, institution, degree, period, location, grade, coursework, honors, sort_order, is_published)
 VALUES
 (
+  '00000000-0000-0000-0003-000000000001',
   'Dr. Y.C. James Yen Govt Polytechnic',
   'Diploma in Computer Engineering',
   '2023 - 2026',
@@ -306,74 +316,87 @@ VALUES
   ARRAY['Top percentile academic distinction', 'State Board of Technical Education Honors'],
   1,
   true
-);
+)
+ON CONFLICT (id) DO NOTHING;
 
-INSERT INTO cms_skills (name, category, proficiency, years_experience, icon_identifier, reasoning, business_outcome, sort_order, is_published)
+INSERT INTO cms_skills (id, name, category, proficiency, years_experience, icon_identifier, reasoning, business_outcome, sort_order, is_published)
 VALUES
 (
+  '00000000-0000-0000-0004-000000000001',
   'React', 'framework', 'expert', 2, 'react',
   'Component-driven architecture with React 19 concurrent features enables fluid, declarative UI development.',
   'Built modern SPAs, interactive dashboards, and mobile web views with sub-second time-to-interactive.',
   1, true
 ),
 (
+  '00000000-0000-0000-0004-000000000002',
   'JavaScript / TypeScript', 'language', 'expert', 2, 'typescript',
   'Strict static typing eliminates runtime bugs and guarantees self-documenting codebases for confident refactoring.',
   'Drastically reduced type-related defects and improved maintainability across projects.',
   2, true
 ),
 (
+  '00000000-0000-0000-0004-000000000003',
   'Docker', 'tool', 'proficient', 1, 'docker',
   'Standardizes reproducible environments and enables lightweight multi-stage image optimization with Nginx reverse proxying.',
   'Containerized CarbonSphere with multi-stage builds, minimizing production footprint and simplifying deployments.',
   3, true
 ),
 (
+  '00000000-0000-0000-0004-000000000004',
   'Next.js', 'framework', 'proficient', 1, 'nextjs',
   'Hybrid static and server rendering, file-based routing, and built-in image/font optimization for top Core Web Vitals.',
   'Engineered not-a-portfolio achieving 95+ Lighthouse scores with dynamic route segregation.',
   4, true
 ),
 (
+  '00000000-0000-0000-0004-000000000005',
   'Tailwind CSS', 'tool', 'expert', 2, 'tailwind',
   'Token-based utility framework facilitating consistent design systems, dark/light themes, and minimal CSS bundle sizes.',
   'Created polished glassmorphism and bento grid systems while keeping stylesheet overhead under 15KB.',
   5, true
 ),
 (
+  '00000000-0000-0000-0004-000000000006',
   'Python & Flask', 'language', 'proficient', 2, 'python',
   'Versatile language with clean syntax for backend services, algorithmic calculations, and data processing.',
   'Developed GreenRoute backend engine computing low-emission transit routes with SQLite persistence.',
   6, true
 ),
 (
+  '00000000-0000-0000-0004-000000000007',
   'GenAI & LLMs', 'concept', 'proficient', 1, 'ai',
   'Integrating large language models and prompt engineering into interactive frontends for domain-specific automation.',
   'Shipped AI assistants in Smart FIFA 2026 and Election Guide AI providing context-aware recommendations.',
   7, true
 ),
 (
+  '00000000-0000-0000-0004-000000000008',
   'Capacitor', 'tool', 'proficient', 1, 'capacitor',
   'Cross-platform runtime bridging modern React web applications into native Android/iOS mobile experiences.',
   'Successfully packaged responsive web applications into cross-platform mobile distributions.',
   8, true
 ),
 (
+  '00000000-0000-0000-0004-000000000009',
   'Supabase & PostgreSQL', 'tool', 'proficient', 1, 'supabase',
   'Reliable relational database with real-time subscriptions, Row-Level Security, and instant REST APIs.',
   'Implemented real-time trivia leaderboard with live ranking synchronizations.',
   9, true
 ),
 (
+  '00000000-0000-0000-0004-000000000010',
   'Git & Linux', 'tool', 'proficient', 2, 'git',
   'Command-line proficiency, branch management, shell scripting, and automated CI/CD workflows.',
   'Maintained 17+ repositories with clean commit history, automated linting, and deploy actions.',
   10, true
-);
+)
+ON CONFLICT (id) DO NOTHING;
 
-INSERT INTO cms_achievements (title, issuer, date, badge, description, verification_url, sort_order, is_published)
+INSERT INTO cms_achievements (id, title, issuer, date, badge, description, verification_url, sort_order, is_published)
 VALUES
 (
+  '00000000-0000-0000-0005-000000000001',
   '1st Prize — Regional Technical Innovation',
   'Regional Technical Hackathon',
   '2025',
@@ -383,6 +406,7 @@ VALUES
   1, true
 ),
 (
+  '00000000-0000-0000-0005-000000000002',
   '96% Academic Aggregate Score',
   'State Board of Technical Education',
   '2023 - 2026',
@@ -392,6 +416,7 @@ VALUES
   2, true
 ),
 (
+  '00000000-0000-0000-0005-000000000003',
   'AI Developer / Intern @ Sithafal Technologies',
   'Sithafal Technologies, Tirupati',
   '2024 - Present',
@@ -401,6 +426,7 @@ VALUES
   3, true
 ),
 (
+  '00000000-0000-0000-0005-000000000004',
   'Docker Production Containerization',
   'DevOps & System Architecture',
   '2024',
@@ -410,6 +436,7 @@ VALUES
   4, true
 ),
 (
+  '00000000-0000-0000-0005-000000000005',
   'Cross-Platform Mobile with Capacitor',
   'Mobile Engineering',
   '2025',
@@ -419,6 +446,7 @@ VALUES
   5, true
 ),
 (
+  '00000000-0000-0000-0005-000000000006',
   'Cybersecurity & Ethical Defense',
   'Security Foundation',
   '2024',
@@ -426,4 +454,5 @@ VALUES
   'Practical expertise in penetration testing, network protocols, input sanitization, and OWASP top security best practices.',
   NULL,
   6, true
-);
+)
+ON CONFLICT (id) DO NOTHING;

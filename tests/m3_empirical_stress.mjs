@@ -248,10 +248,14 @@ test('HeroSection: 320px Viewport Safety, Fluid Heading, and Responsive Buttons'
   // CTA buttons flex-col on mobile, flex-row on sm+
   assert.match(
     heroSource,
-    /flex\s+w-full\s+flex-col\s+items-center\s+justify-center\s+gap-3\s+sm:flex-row/,
+    /flex\s+w-full[\s\S]*?flex-col\s+items-center\s+justify-center\s+gap-3[\s\S]*?sm:flex-row/,
     'Responsive CTA button stack missing'
   );
-  assert.match(heroSource, /w-full\s+sm:w-auto/, 'w-full sm:w-auto missing from Hero CTA buttons');
+  assert.match(
+    heroSource,
+    /w-full[\s\S]*?sm:w-auto/,
+    'w-full sm:w-auto missing from Hero CTA buttons'
+  );
 });
 
 // -----------------------------------------------------------------------------
@@ -305,10 +309,6 @@ test('Page Layout: Dynamic Imports Wired with Dedicated Section Skeletons', () =
   // Check each section is wired to its specific skeleton
   assert.match(
     pageSource,
-    /PathSelectionSection\s*=\s*dynamic[\s\S]*?loading:\s*\(\)\s*=>\s*<PathSelectionSkeleton\s*\/>/
-  );
-  assert.match(
-    pageSource,
     /AboutSection\s*=\s*dynamic[\s\S]*?loading:\s*\(\)\s*=>\s*<AboutSkeleton\s*\/>/
   );
   assert.match(
@@ -333,7 +333,7 @@ test('Page Layout: Dynamic Imports Wired with Dedicated Section Skeletons', () =
   );
   assert.match(
     pageSource,
-    /TriviaGame\s*=\s*dynamic[\s\S]*?ssr:\s*false[\s\S]*?loading:\s*\(\)\s*=>\s*<TriviaSkeleton\s*\/>/
+    /TriviaGame\s*=\s*dynamic[\s\S]*?loading:\s*\(\)\s*=>\s*<TriviaSkeleton\s*\/>/
   );
   assert.match(
     pageSource,

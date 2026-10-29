@@ -78,6 +78,31 @@ export function ProjectsSection({ projects }: ProjectsSectionProps = {}) {
     enhanceWithGitHub();
   }, []);
 
+  useEffect(() => {
+    if (projects && projects.length > 0) {
+      setProjectList(
+        projects.map((cp) => ({
+          id: cp.slug || cp.id,
+          title: cp.title,
+          description: cp.tagline,
+          longDescription: cp.long_description,
+          problemSolved: cp.problem_solved,
+          architectureNotes: cp.architecture_notes,
+          techStack: cp.tech_stack,
+          githubUrl: cp.github_url,
+          liveUrl: cp.live_url || undefined,
+          featured: cp.is_featured,
+          visibleTo: ['developer', 'recruiter', 'student', 'explorer'],
+          metrics: {
+            stars: cp.stars_count,
+            forks: cp.forks_count,
+            commits: cp.commits_count,
+          },
+        }))
+      );
+    }
+  }, [projects]);
+
   const filterTabs = [
     { id: 'all', label: 'All Projects' },
     { id: 'featured', label: 'Featured' },

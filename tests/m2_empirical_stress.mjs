@@ -55,7 +55,6 @@ console.log('--- MODULE 1: useActiveSection Hook Boundary Conditions & Mutex ---
 
 const ALL_SECTION_IDS = [
   'hero',
-  'paths',
   'about',
   'experience',
   'education',
@@ -300,11 +299,11 @@ test('Command Palette: Global Keyboard Shortcuts (Ctrl+K / Cmd+K and Escape)', (
   // Check ArrowDown / ArrowUp navigation with modulo wraparound
   assert.match(
     navSource,
-    /setSelectedSearchIndex\(\(prev\)\s*=>\s*\(prev\s*\+\s*1\)\s*%\s*filteredSections\.length\)/
+    /setSelectedSearchIndex\(\s*\(prev\)\s*=>\s*\(prev\s*\+\s*1\)\s*%\s*filteredSections\.length\s*\)/
   );
   assert.match(
     navSource,
-    /setSelectedSearchIndex\(\(prev\)\s*=>\s*\(prev\s*-\s*1\s*\+\s*filteredSections\.length\)\s*%\s*filteredSections\.length\)/
+    /setSelectedSearchIndex\(\s*\(prev\)\s*=>\s*\(prev\s*-\s*1\s*\+\s*filteredSections\.length\)\s*%\s*filteredSections\.length\s*\)/
   );
 });
 
@@ -356,7 +355,7 @@ test('SectionDivider: SVG preserveAspectRatio="none" and non-scaling-stroke', ()
 
 test('SectionDivider: Horizontal Overflow Protection (Zero Overflow Invariant)', () => {
   // Container must have overflow-hidden, w-full, select-none, pointer-events-none
-  assert.match(dividerSource, /relative\s+w-full\s+overflow-hidden/);
+  assert.match(dividerSource, /relative[\s\S]*?w-full[\s\S]*?overflow-hidden/);
   assert.match(dividerSource, /pointer-events-none/);
 });
 
@@ -391,7 +390,6 @@ const pageSource = fs.readFileSync('src/app/page.tsx', 'utf8');
 
 const sectionFiles = {
   hero: 'src/components/sections/HeroSection.tsx',
-  paths: 'src/components/sections/PathSelectionSection.tsx',
   about: 'src/components/sections/AboutSection.tsx',
   experience: 'src/components/sections/ExperienceSection.tsx',
   education: 'src/components/sections/EducationSection.tsx',
@@ -402,7 +400,7 @@ const sectionFiles = {
   contact: 'src/components/sections/ContactSection.tsx',
 };
 
-test('Section ID Verification: All 10 IDs correspond to actual files with matching id attributes', () => {
+test('Section ID Verification: All 9 IDs correspond to actual files with matching id attributes', () => {
   for (const [id, filePath] of Object.entries(sectionFiles)) {
     assert.ok(fs.existsSync(filePath), `File does not exist: ${filePath}`);
     const content = fs.readFileSync(filePath, 'utf8');
@@ -411,10 +409,9 @@ test('Section ID Verification: All 10 IDs correspond to actual files with matchi
   }
 });
 
-test('Page Layout: All 10 sections are included in app/page.tsx in correct sequence', () => {
+test('Page Layout: All 9 sections are included in app/page.tsx in correct sequence', () => {
   const expectedComponentSequence = [
     'HeroSection',
-    'PathSelectionSection',
     'AboutSection',
     'ExperienceSection',
     'EducationSection',
@@ -442,7 +439,6 @@ test('SectionDivider Placement: Alternating dividers placed between major sectio
   );
 
   // Check specific variants used
-  assert.ok(pageSource.includes('variant="wave"'));
   assert.ok(pageSource.includes('variant="glow"'));
   assert.ok(pageSource.includes('variant="angle"'));
   assert.ok(pageSource.includes('variant="curve"'));

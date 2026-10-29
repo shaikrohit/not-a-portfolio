@@ -25,6 +25,17 @@ export function HeroSection({ profile }: HeroSectionProps = {}) {
     linkedin_url: defaultProfile.linkedin,
     resume_url: defaultProfile.resumeUrl,
   };
+  const fullName = activeProfile.full_name || defaultProfile.name;
+  const nameParts = fullName.trim().split(/\s+/);
+  const highlightWord = nameParts.length > 1 ? nameParts[nameParts.length - 1] : nameParts[0];
+
+  const rawTagline =
+    activeProfile.headline || activeProfile.professional_title || defaultProfile.tagline;
+  const taglineItems = rawTagline
+    .split('•')
+    .map((s) => s.trim())
+    .filter(Boolean);
+
   const { scrollY } = useScroll();
   const opacity = useTransform(scrollY, [0, 450], [1, 0]);
   const y = useTransform(scrollY, [0, 450], [0, 100]);
@@ -67,7 +78,7 @@ export function HeroSection({ profile }: HeroSectionProps = {}) {
         {/* H1 Heading with Fluid Typography clamp() */}
         <div className="mb-6">
           <h1 className="font-serif text-[clamp(2.5rem,7vw+0.75rem,5.75rem)] font-bold leading-[1.08] tracking-tight text-[var(--text-primary)]">
-            <TextReveal text="Shaik Rohit" highlightText="Rohit" delay={0.2} />
+            <TextReveal text={fullName} highlightText={highlightWord} delay={0.2} />
           </h1>
         </div>
 
@@ -79,13 +90,12 @@ export function HeroSection({ profile }: HeroSectionProps = {}) {
           className="mb-6 flex flex-wrap items-center justify-center gap-1.5 text-[clamp(0.875rem,1.8vw+0.5rem,1.375rem)] font-medium text-blue-600 dark:text-blue-400 sm:gap-2"
         >
           <Terminal className="h-4 w-4 shrink-0 text-blue-500 sm:h-5 sm:w-5" />
-          <span>Frontend Developer</span>
-          <span className="text-neutral-400 dark:text-neutral-600">•</span>
-          <span>React</span>
-          <span className="text-neutral-400 dark:text-neutral-600">•</span>
-          <span>Docker</span>
-          <span className="text-neutral-400 dark:text-neutral-600">•</span>
-          <span>Modern Web Applications</span>
+          {taglineItems.map((item, idx) => (
+            <React.Fragment key={idx}>
+              {idx > 0 && <span className="text-neutral-400 dark:text-neutral-600">•</span>}
+              <span>{item}</span>
+            </React.Fragment>
+          ))}
         </motion.div>
 
         {/* Responsive Fluid Bio Description */}
@@ -95,15 +105,21 @@ export function HeroSection({ profile }: HeroSectionProps = {}) {
           transition={{ delay: 0.65, duration: 0.7 }}
           className="mx-auto mb-10 max-w-2xl px-2 text-[clamp(0.9375rem,1vw+0.5rem,1.125rem)] leading-relaxed text-[var(--text-secondary)] sm:mb-12 sm:px-0"
         >
-          Computer Engineering student at{' '}
-          <strong className="font-semibold text-[var(--text-primary)]">
-            Dr. Y.C. James Yen Govt Polytechnic (96% Distinction)
-          </strong>{' '}
-          and AI Developer / Intern at{' '}
-          <strong className="font-semibold text-[var(--text-primary)]">
-            Sithafal Technologies, Tirupati
-          </strong>
-          . Building scalable, containerized web applications and intelligent interfaces.
+          {activeProfile.bio ? (
+            activeProfile.bio.split('\n\n')[0]
+          ) : (
+            <>
+              Computer Engineering student at{' '}
+              <strong className="font-semibold text-[var(--text-primary)]">
+                Dr. Y.C. James Yen Govt Polytechnic (96% Distinction)
+              </strong>{' '}
+              and AI Developer / Intern at{' '}
+              <strong className="font-semibold text-[var(--text-primary)]">
+                Sithafal Technologies, Tirupati
+              </strong>
+              . Building scalable, containerized web applications and intelligent interfaces.
+            </>
+          )}
         </motion.p>
 
         {/* Responsive Touch-Safe Magnetic CTA Buttons */}
@@ -111,7 +127,7 @@ export function HeroSection({ profile }: HeroSectionProps = {}) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.6 }}
-          className="mx-auto flex w-full max-w-md flex-col items-center justify-center gap-3 sm:max-w-none sm:flex-row sm:gap-4"
+          className="mx-auto flex w-full flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4"
         >
           <MagneticButton
             onClick={() => scrollTo('projects')}
@@ -128,7 +144,7 @@ export function HeroSection({ profile }: HeroSectionProps = {}) {
           <MagneticButton
             onClick={() => scrollTo('about')}
             className="group w-full rounded-xl border border-[var(--border-light)] bg-[var(--surface-card)] px-6 py-3.5 font-semibold text-[var(--text-primary)] backdrop-blur-md transition-all duration-300 hover:border-blue-500/40 hover:bg-[var(--surface-elevated)] sm:w-auto sm:px-8 sm:py-4"
-            aria-label="About Shaik Rohit"
+            aria-label={`About ${fullName}`}
           >
             <span className="flex items-center justify-center gap-2">
               About Journey
@@ -139,7 +155,7 @@ export function HeroSection({ profile }: HeroSectionProps = {}) {
           <MagneticButton
             onClick={() => scrollTo('contact')}
             className="group w-full rounded-xl border border-transparent px-5 py-3 font-medium text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)] sm:w-auto sm:px-6 sm:py-4"
-            aria-label="Contact Shaik Rohit"
+            aria-label={`Contact ${fullName}`}
           >
             <span className="flex items-center justify-center gap-2">
               <Mail className="h-4 w-4 text-blue-500" />

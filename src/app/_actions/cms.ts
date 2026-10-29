@@ -30,7 +30,9 @@ function getAdminSupabaseClient() {
     process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (!supabaseUrl || !supabaseKey) return null;
-  return createClient(supabaseUrl, supabaseKey);
+  return createClient(supabaseUrl, supabaseKey, {
+    auth: { persistSession: false },
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -159,6 +161,15 @@ export async function publishDraftAction(section: string) {
         updated_at: new Date().toISOString(),
       });
     } else if (section === 'projects' && Array.isArray(draftData)) {
+      const draftIds = draftData.map((d: any) => d.id).filter(Boolean);
+      if (draftIds.length > 0) {
+        await supabase
+          .from('cms_projects')
+          .delete()
+          .not('id', 'in', `(${draftIds.join(',')})`);
+      } else {
+        await supabase.from('cms_projects').delete().gte('sort_order', 0);
+      }
       for (const item of draftData) {
         await supabase.from('cms_projects').upsert({
           ...item,
@@ -166,6 +177,15 @@ export async function publishDraftAction(section: string) {
         });
       }
     } else if (section === 'experience' && Array.isArray(draftData)) {
+      const draftIds = draftData.map((d: any) => d.id).filter(Boolean);
+      if (draftIds.length > 0) {
+        await supabase
+          .from('cms_experience')
+          .delete()
+          .not('id', 'in', `(${draftIds.join(',')})`);
+      } else {
+        await supabase.from('cms_experience').delete().gte('sort_order', 0);
+      }
       for (const item of draftData) {
         await supabase.from('cms_experience').upsert({
           ...item,
@@ -173,6 +193,15 @@ export async function publishDraftAction(section: string) {
         });
       }
     } else if (section === 'education' && Array.isArray(draftData)) {
+      const draftIds = draftData.map((d: any) => d.id).filter(Boolean);
+      if (draftIds.length > 0) {
+        await supabase
+          .from('cms_education')
+          .delete()
+          .not('id', 'in', `(${draftIds.join(',')})`);
+      } else {
+        await supabase.from('cms_education').delete().gte('sort_order', 0);
+      }
       for (const item of draftData) {
         await supabase.from('cms_education').upsert({
           ...item,
@@ -180,6 +209,15 @@ export async function publishDraftAction(section: string) {
         });
       }
     } else if (section === 'skills' && Array.isArray(draftData)) {
+      const draftIds = draftData.map((d: any) => d.id).filter(Boolean);
+      if (draftIds.length > 0) {
+        await supabase
+          .from('cms_skills')
+          .delete()
+          .not('id', 'in', `(${draftIds.join(',')})`);
+      } else {
+        await supabase.from('cms_skills').delete().gte('sort_order', 0);
+      }
       for (const item of draftData) {
         await supabase.from('cms_skills').upsert({
           ...item,
@@ -187,6 +225,15 @@ export async function publishDraftAction(section: string) {
         });
       }
     } else if (section === 'achievements' && Array.isArray(draftData)) {
+      const draftIds = draftData.map((d: any) => d.id).filter(Boolean);
+      if (draftIds.length > 0) {
+        await supabase
+          .from('cms_achievements')
+          .delete()
+          .not('id', 'in', `(${draftIds.join(',')})`);
+      } else {
+        await supabase.from('cms_achievements').delete().gte('sort_order', 0);
+      }
       for (const item of draftData) {
         await supabase.from('cms_achievements').upsert({
           ...item,
@@ -553,43 +600,33 @@ export async function emergencyResetToDefaultsAction(section?: string) {
     }
 
     if (!section || section === 'all' || section === 'projects') {
-      await supabase.from('cms_projects').delete().neq('slug', '');
-      for (const p of DEFAULT_PROJECTS) {
-        await supabase.from('cms_projects').insert(p);
-      }
+      await supabase.from('cms_projects').delete().gte('sort_order', 0);
+      await supabase.from('cms_projects').insert(DEFAULT_PROJECTS);
     }
 
     if (!section || section === 'all' || section === 'experience') {
-      await supabase.from('cms_experience').delete().neq('company', '');
-      for (const e of DEFAULT_EXPERIENCE) {
-        await supabase.from('cms_experience').insert(e);
-      }
+      await supabase.from('cms_experience').delete().gte('sort_order', 0);
+      await supabase.from('cms_experience').insert(DEFAULT_EXPERIENCE);
     }
 
     if (!section || section === 'all' || section === 'education') {
-      await supabase.from('cms_education').delete().neq('institution', '');
-      for (const ed of DEFAULT_EDUCATION) {
-        await supabase.from('cms_education').insert(ed);
-      }
+      await supabase.from('cms_education').delete().gte('sort_order', 0);
+      await supabase.from('cms_education').insert(DEFAULT_EDUCATION);
     }
 
     if (!section || section === 'all' || section === 'skills') {
-      await supabase.from('cms_skills').delete().neq('name', '');
-      for (const s of DEFAULT_SKILLS) {
-        await supabase.from('cms_skills').insert(s);
-      }
+      await supabase.from('cms_skills').delete().gte('sort_order', 0);
+      await supabase.from('cms_skills').insert(DEFAULT_SKILLS);
     }
 
     if (!section || section === 'all' || section === 'achievements') {
-      await supabase.from('cms_achievements').delete().neq('title', '');
-      for (const a of DEFAULT_ACHIEVEMENTS) {
-        await supabase.from('cms_achievements').insert(a);
-      }
+      await supabase.from('cms_achievements').delete().gte('sort_order', 0);
+      await supabase.from('cms_achievements').insert(DEFAULT_ACHIEVEMENTS);
     }
 
     // Clear drafts
     if (!section || section === 'all') {
-      await supabase.from('cms_content_drafts').delete().neq('section', '');
+      await supabase.from('cms_content_drafts').delete().gte('updated_at', '1970-01-01');
     } else {
       await supabase.from('cms_content_drafts').delete().eq('section', section);
     }
