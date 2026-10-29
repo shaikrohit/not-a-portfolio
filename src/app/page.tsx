@@ -1,14 +1,3 @@
-'use client';
-
-/**
- * ============================================================================
- * SHAIK ROHIT - PROFESSIONAL PORTFOLIO
- * ============================================================================
- *
- * Modular, Accessible, and High-Performance Portfolio Orchestrator.
- * Designed with a focus on Full Stack Development, React, Docker, and AI.
- */
-
 import React from 'react';
 import dynamic from 'next/dynamic';
 
@@ -24,7 +13,6 @@ import { SectionDivider } from '@/components/ui/SectionDivider';
 // Hero is rendered eagerly for optimal LCP
 import { HeroSection } from '@/components/sections/HeroSection';
 import {
-  PathSelectionSkeleton,
   AboutSkeleton,
   ExperienceSkeleton,
   EducationSkeleton,
@@ -34,15 +22,9 @@ import {
   TriviaSkeleton,
   ContactSkeleton,
 } from '@/components/ui/SectionSkeletons';
+import { getPortfolioContent } from '@/lib/cms/getContent';
 
 // Dynamically import sections below the fold with tailored loading skeletons
-const PathSelectionSection = dynamic(
-  () =>
-    import('@/components/sections/PathSelectionSection').then((mod) => mod.PathSelectionSection),
-  {
-    loading: () => <PathSelectionSkeleton />,
-  }
-);
 const AboutSection = dynamic(
   () => import('@/components/sections/AboutSection').then((mod) => mod.AboutSection),
   { loading: () => <AboutSkeleton /> }
@@ -69,14 +51,16 @@ const SkillsSection = dynamic(
 );
 const TriviaGame = dynamic(
   () => import('@/components/sections/TriviaGame').then((mod) => mod.TriviaGame),
-  { ssr: false, loading: () => <TriviaSkeleton /> }
+  { loading: () => <TriviaSkeleton /> }
 );
 const ContactSection = dynamic(
   () => import('@/components/sections/ContactSection').then((mod) => mod.ContactSection),
   { loading: () => <ContactSkeleton /> }
 );
 
-export default function HomePage() {
+export default async function HomePage() {
+  const content = await getPortfolioContent();
+
   return (
     <SmoothScroll>
       <main className="relative min-h-screen bg-[var(--surface-base)] text-[var(--text-primary)] antialiased transition-colors duration-300 selection:bg-blue-600 selection:text-white">
@@ -88,45 +72,26 @@ export default function HomePage() {
         {/* Global Floating Navigation */}
         <Navigation />
 
-        {/* Phase 2: Hero Section Revolution */}
-        <HeroSection />
+        {/* Phase 2: Hero Section */}
+        <HeroSection profile={content.profile} />
 
-        {/* Seamless Wave Transition: Hero -> PathSelection */}
-        <SectionDivider
-          variant="wave"
-          fromColor="transparent"
-          toColor="var(--surface-elevated)"
-          className="opacity-40"
-          height="h-12 md:h-16 lg:h-20"
-        />
-
-        {/* Tailored Journeys */}
-        <PathSelectionSection />
-
-        {/* Seamless Inverted Wave Transition: PathSelection -> About */}
-        <SectionDivider
-          variant="wave"
-          inverted
-          fromColor="transparent"
-          toColor="var(--surface-elevated)"
-          className="opacity-40"
-          height="h-12 md:h-16 lg:h-20"
-        />
+        {/* Seamless Luminous Transition: Hero -> About (Unified Flow) */}
+        <SectionDivider variant="glow" glowColor="rgba(59, 130, 246, 0.4)" height="h-8 md:h-12" />
 
         {/* Phase 3: About Me Bento Grid */}
-        <AboutSection />
+        <AboutSection profile={content.profile} />
 
         {/* Luminous Chapter Beam: About -> Experience */}
         <SectionDivider variant="glow" glowColor="rgba(59, 130, 246, 0.35)" height="h-8 md:h-12" />
 
         {/* Phase 6: Experience & Career Track */}
-        <ExperienceSection />
+        <ExperienceSection experience={content.experience} />
 
         {/* Phase 6: Education & Coursework */}
-        <EducationSection />
+        <EducationSection education={content.education} />
 
         {/* Phase 6: Honors & Achievements */}
-        <AchievementsSection />
+        <AchievementsSection achievements={content.achievements} />
 
         {/* Architectural Diagonal Slice: Achievements -> Projects */}
         <SectionDivider
@@ -140,10 +105,10 @@ export default function HomePage() {
         />
 
         {/* Phase 5: Projects Showcase with 3D Tilt */}
-        <ProjectsSection />
+        <ProjectsSection projects={content.projects} />
 
         {/* Phase 4: Skills & Technical Expertise */}
-        <SkillsSection />
+        <SkillsSection skills={content.skills} />
 
         {/* Gamified Purple Arc Transition: Skills -> Trivia */}
         <SectionDivider

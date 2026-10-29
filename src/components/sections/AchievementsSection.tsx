@@ -11,9 +11,24 @@ import {
   ShieldCheck,
   CheckCircle2,
 } from 'lucide-react';
+import type { CMSAchievement } from '@/types/cms';
 
-export function AchievementsSection() {
-  const achievements = [
+interface AchievementsSectionProps {
+  achievements?: CMSAchievement[];
+}
+
+export function AchievementsSection({ achievements }: AchievementsSectionProps = {}) {
+  const iconList = [Trophy, Target, Briefcase, Boxes, Smartphone, ShieldCheck];
+  const colorList = [
+    'from-amber-500 to-yellow-500',
+    'from-emerald-500 to-teal-500',
+    'from-blue-500 to-indigo-500',
+    'from-cyan-500 to-blue-500',
+    'from-purple-500 to-pink-500',
+    'from-red-500 to-rose-500',
+  ];
+
+  const defaultAchievements = [
     {
       icon: Trophy,
       color: 'from-amber-500 to-yellow-500',
@@ -64,6 +79,18 @@ export function AchievementsSection() {
     },
   ];
 
+  const activeAchievements =
+    achievements && achievements.length > 0
+      ? achievements.map((a, idx) => ({
+          icon: iconList[idx % iconList.length] || Trophy,
+          color: colorList[idx % colorList.length] || 'from-amber-500 to-yellow-500',
+          badge: a.badge || 'Verified Achievement',
+          title: a.title,
+          description: a.description,
+          verificationUrl: a.verification_url,
+        }))
+      : defaultAchievements;
+
   return (
     <section id="achievements" className="relative px-4 py-20 sm:px-6 sm:py-24 md:py-32">
       <div className="mx-auto max-w-6xl">
@@ -87,7 +114,7 @@ export function AchievementsSection() {
         </motion.div>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {achievements.map((item, index) => (
+          {activeAchievements.map((item, index) => (
             <motion.article
               key={item.title}
               initial={{ opacity: 0, y: 25 }}

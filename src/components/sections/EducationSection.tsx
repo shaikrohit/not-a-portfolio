@@ -4,16 +4,31 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { GraduationCap, Award, BookOpen, Calendar, MapPin, CheckCircle2 } from 'lucide-react';
 import { AnimatedCounter } from '@/components/ui/AnimatedCounter';
+import type { CMSEducation } from '@/types/cms';
 
-export function EducationSection() {
-  const coursework = [
-    'Data Structures & Algorithms',
-    'Object-Oriented Programming (Java / C++)',
-    'Computer Networks & Protocols',
-    'Operating Systems & Linux Shell',
-    'Database Management & SQL',
-    'Cybersecurity & Network Defense',
-  ];
+interface EducationSectionProps {
+  education?: CMSEducation[];
+}
+
+export function EducationSection({ education }: EducationSectionProps = {}) {
+  const activeEdu = education?.[0] || {
+    institution: 'Dr. Y.C. James Yen Govt Polytechnic',
+    degree: 'Diploma in Computer Engineering',
+    period: '2023 - 2026',
+    location: 'Kuppam, Andhra Pradesh, India',
+    grade: '96%',
+    coursework: [
+      'Data Structures & Algorithms',
+      'Object-Oriented Programming (Java / C++)',
+      'Computer Networks & Protocols',
+      'Operating Systems & Linux Shell',
+      'Database Management & SQL',
+      'Cybersecurity & Network Defense',
+    ],
+  };
+
+  const coursework = activeEdu.coursework || [];
+  const gradeNumber = parseInt(activeEdu.grade?.replace(/[^0-9]/g, '') || '96', 10);
 
   return (
     <section id="education" className="relative px-4 py-20 sm:px-6 sm:py-24 md:py-32">
@@ -52,17 +67,20 @@ export function EducationSection() {
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
-                    Dr. Y.C. James Yen Govt Polytechnic
+                    {activeEdu.institution}
                   </h3>
                   <p className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
-                    <MapPin className="h-3.5 w-3.5 text-blue-500" /> Kuppam, Andhra Pradesh, India
+                    <MapPin className="h-3.5 w-3.5 text-blue-500" />{' '}
+                    {activeEdu.location || 'Kuppam, Andhra Pradesh, India'}
                   </p>
                 </div>
               </div>
 
               <div className="mb-6 inline-flex items-center gap-2 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-base)] px-4 py-2 text-sm font-semibold text-[var(--text-primary)]">
                 <Calendar className="h-4 w-4 text-blue-500" />
-                <span>Diploma in Computer Engineering (2023 - 2026)</span>
+                <span>
+                  {activeEdu.degree} ({activeEdu.period})
+                </span>
               </div>
 
               <p className="text-base leading-relaxed text-[var(--text-secondary)]">
@@ -95,7 +113,7 @@ export function EducationSection() {
             <div className="flex flex-col items-center justify-center rounded-2xl border border-emerald-500/20 bg-gradient-to-b from-emerald-500/10 via-emerald-500/5 to-transparent p-8 text-center lg:h-full">
               <Award className="h-10 w-10 text-emerald-500" />
               <div className="mt-4 text-5xl font-extrabold tracking-tight text-[var(--text-primary)] md:text-6xl">
-                <AnimatedCounter value={96} suffix="%" />
+                <AnimatedCounter value={gradeNumber} suffix="%" />
               </div>
               <p className="mt-1 text-sm font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
                 Aggregate Score

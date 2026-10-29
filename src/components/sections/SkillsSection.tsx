@@ -5,13 +5,30 @@ import { motion } from 'framer-motion';
 import { CheckCircle2, ArrowUpRight } from 'lucide-react';
 import { techStack } from '@/content/config';
 import type { Skill } from '@/types';
+import type { CMSSkill } from '@/types/cms';
 import { SkillDetailPanel } from '@/components/skills/SkillDetailPanel';
 import { SkillOrbit } from '@/components/skills/SkillOrbit';
 
-export function SkillsSection() {
+interface SkillsSectionProps {
+  skills?: CMSSkill[];
+}
+
+export function SkillsSection({ skills }: SkillsSectionProps = {}) {
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'grid' | 'orbit'>('grid');
+
+  const activeSkills: Skill[] =
+    skills && skills.length > 0
+      ? skills.map((cs) => ({
+          name: cs.name,
+          category: cs.category,
+          proficiency: cs.proficiency,
+          yearsUsed: cs.years_experience,
+          reasoning: cs.reasoning || '',
+          businessOutcome: cs.business_outcome || '',
+        }))
+      : techStack;
 
   const categories = [
     { id: 'all', label: 'All Technologies' },
@@ -20,7 +37,7 @@ export function SkillsSection() {
     { id: 'devops', label: 'DevOps & Systems' },
   ];
 
-  const filteredSkills = techStack.filter((skill) => {
+  const filteredSkills = activeSkills.filter((skill) => {
     if (activeCategory === 'all') return true;
     if (activeCategory === 'frontend') {
       return (

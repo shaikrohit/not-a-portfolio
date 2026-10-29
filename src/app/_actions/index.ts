@@ -11,3 +11,5 @@ export {
   submitContactMessage,
   getPublicAnalytics,
 } from './analytics';
+
+export * from './cms';

@@ -4,8 +4,25 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Briefcase, Calendar, CheckCircle2 } from 'lucide-react';
 import { experience as verifiedExperience } from '@/content/config';
+import type { CMSExperience } from '@/types/cms';
 
-export function ExperienceSection() {
+interface ExperienceSectionProps {
+  experience?: CMSExperience[];
+}
+
+export function ExperienceSection({ experience }: ExperienceSectionProps = {}) {
+  const activeExperience =
+    experience && experience.length > 0
+      ? experience.map((e) => ({
+          id: e.id,
+          role: e.role,
+          company: e.company,
+          period: e.period,
+          description: e.description,
+          achievements: e.achievements || [],
+          techUsed: e.tech_used || [],
+        }))
+      : verifiedExperience;
   return (
     <section id="experience" className="relative px-4 py-20 sm:px-6 sm:py-28 md:py-36">
       <div className="mx-auto max-w-5xl">
@@ -38,7 +55,7 @@ export function ExperienceSection() {
           />
 
           <div className="space-y-12">
-            {verifiedExperience.map((exp, index) => {
+            {activeExperience.map((exp, index) => {
               const isCurrent = exp.period.toLowerCase().includes('present');
 
               return (

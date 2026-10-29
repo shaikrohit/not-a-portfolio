@@ -9,7 +9,6 @@ import {
   Search,
   ChevronRight,
   Sparkles,
-  Compass,
   User,
   Briefcase,
   GraduationCap,
@@ -43,14 +42,6 @@ export const ALL_PAGE_SECTIONS: SectionMeta[] = [
     description: 'Interactive 3D particle sphere & introduction',
     category: 'Overview',
     icon: Sparkles,
-  },
-  {
-    id: 'paths',
-    label: 'Journeys',
-    shortLabel: 'Paths',
-    description: 'Tailored persona paths (Recruiter, Engineer, Explorer)',
-    category: 'Overview',
-    icon: Compass,
   },
   {
     id: 'about',

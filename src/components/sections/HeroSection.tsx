@@ -6,9 +6,25 @@ import { ArrowRight, Mail, Github, Linkedin, Sparkles, Terminal } from 'lucide-r
 import { HeroScene } from '@/components/hero/HeroScene';
 import { MagneticButton } from '@/components/ui/MagneticButton';
 import { TextReveal } from '@/components/hero/TextReveal';
-import { profile } from '@/content/config';
+import { profile as defaultProfile } from '@/content/config';
+import type { CMSProfile } from '@/types/cms';
 
-export function HeroSection() {
+interface HeroSectionProps {
+  profile?: CMSProfile;
+}
+
+export function HeroSection({ profile }: HeroSectionProps = {}) {
+  const activeProfile = profile || {
+    full_name: defaultProfile.name,
+    professional_title: defaultProfile.title,
+    headline: defaultProfile.tagline,
+    location: defaultProfile.location,
+    bio: '',
+    email: defaultProfile.email,
+    github_url: defaultProfile.github,
+    linkedin_url: defaultProfile.linkedin,
+    resume_url: defaultProfile.resumeUrl,
+  };
   const { scrollY } = useScroll();
   const opacity = useTransform(scrollY, [0, 450], [1, 0]);
   const y = useTransform(scrollY, [0, 450], [0, 100]);
@@ -140,9 +156,21 @@ export function HeroSection() {
           className="mt-12 flex items-center justify-center gap-3 sm:mt-14 sm:gap-4"
         >
           {[
-            { icon: Github, href: profile.github, label: 'GitHub Profile (17+ Repos)' },
-            { icon: Linkedin, href: profile.linkedin, label: 'LinkedIn Profile' },
-            { icon: Mail, href: `mailto:${profile.email}`, label: 'Direct Email' },
+            {
+              icon: Github,
+              href: activeProfile.github_url || defaultProfile.github,
+              label: 'GitHub Profile (17+ Repos)',
+            },
+            {
+              icon: Linkedin,
+              href: activeProfile.linkedin_url || defaultProfile.linkedin,
+              label: 'LinkedIn Profile',
+            },
+            {
+              icon: Mail,
+              href: `mailto:${activeProfile.email || defaultProfile.email}`,
+              label: 'Direct Email',
+            },
           ].map((item) => (
             <motion.a
               key={item.label}
@@ -168,7 +196,7 @@ export function HeroSection() {
         className="absolute bottom-6 left-1/2 -translate-x-1/2 sm:bottom-8"
       >
         <button
-          onClick={() => scrollTo('paths')}
+          onClick={() => scrollTo('about')}
           className="group flex flex-col items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)] transition-colors hover:text-blue-500"
           aria-label="Scroll to explore"
         >

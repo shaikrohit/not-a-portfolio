@@ -15,13 +15,28 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { AnimatedCounter } from '@/components/ui/AnimatedCounter';
-import { useVisitorStore } from '@/store';
-import { profile } from '@/content/config';
+import { profile as defaultProfile } from '@/content/config';
 import { getGitHubStats } from '@/app/_actions/github';
+import type { CMSProfile } from '@/types/cms';
 
-export function AboutSection() {
-  const { visitorType } = useVisitorStore();
+interface AboutSectionProps {
+  profile?: CMSProfile;
+}
+
+export function AboutSection({ profile }: AboutSectionProps = {}) {
   const [repoCount, setRepoCount] = useState<number>(17);
+
+  const activeProfile = profile || {
+    full_name: defaultProfile.name,
+    professional_title: defaultProfile.title,
+    headline: defaultProfile.tagline,
+    location: defaultProfile.location,
+    bio: defaultProfile.introduction.developer,
+    email: defaultProfile.email,
+    github_url: defaultProfile.github,
+    linkedin_url: defaultProfile.linkedin,
+    resume_url: defaultProfile.resumeUrl,
+  };
 
   useEffect(() => {
     async function fetchStats() {
@@ -39,9 +54,9 @@ export function AboutSection() {
   }, []);
 
   const activeIntroduction =
-    visitorType && profile.introduction[visitorType]
-      ? profile.introduction[visitorType]
-      : profile.introduction.developer;
+    activeProfile.bio && activeProfile.bio.trim().length > 0
+      ? activeProfile.bio
+      : defaultProfile.introduction.developer;
 
   return (
     <section id="about" className="relative px-4 py-20 sm:px-6 sm:py-28 md:py-36">
@@ -88,9 +103,11 @@ export function AboutSection() {
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-[var(--text-primary)]">Shaik Rohit</h3>
+                    <h3 className="text-xl font-bold text-[var(--text-primary)]">
+                      {activeProfile.full_name || 'Shaik Rohit'}
+                    </h3>
                     <p className="text-sm font-medium text-blue-600 dark:text-blue-400">
-                      Full Stack & AI Developer
+                      {activeProfile.professional_title || 'Full Stack & AI Developer'}
                     </p>
                   </div>
                 </div>
@@ -102,12 +119,10 @@ export function AboutSection() {
                 </div>
               </div>
 
-              {/* Persona Tag Indicator */}
+              {/* Verified Engineering Profile Badge */}
               <div className="mt-8 flex items-center gap-2 border-t border-[var(--border-subtle)] pt-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">
                 <Code2 className="h-4 w-4 text-blue-500" />
-                <span>
-                  Tailored for: {visitorType ? visitorType.toUpperCase() : 'DEVELOPER'} JOURNEY
-                </span>
+                <span>Verified Engineering Profile</span>
               </div>
             </div>
           </motion.div>
@@ -127,7 +142,9 @@ export function AboutSection() {
               <h3 className="mb-1 text-sm font-semibold uppercase tracking-wider text-[var(--text-muted)]">
                 Location & Origin
               </h3>
-              <p className="text-xl font-bold text-[var(--text-primary)]">Kuppam, India</p>
+              <p className="text-xl font-bold text-[var(--text-primary)]">
+                {activeProfile.location || 'Kuppam, India'}
+              </p>
               <p className="mt-2 text-sm text-[var(--text-secondary)]">
                 Andhra Pradesh, India (UTC+5:30)
               </p>
@@ -306,7 +323,7 @@ export function AboutSection() {
 
             <div className="flex w-full flex-col gap-3 sm:flex-row">
               <motion.a
-                href={profile.resumeUrl}
+                href={activeProfile.resume_url || defaultProfile.resumeUrl}
                 download="Shaik_Rohit_Resume.pdf"
                 className="group flex flex-1 items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-3.5 font-semibold text-white shadow-lg shadow-blue-500/25 transition-all hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"
                 whileHover={{ scale: 1.02 }}
@@ -318,7 +335,7 @@ export function AboutSection() {
               </motion.a>
 
               <motion.a
-                href={profile.linkedin}
+                href={activeProfile.linkedin_url || defaultProfile.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-[var(--border-light)] bg-[var(--surface-base)] px-6 py-3.5 font-semibold text-[var(--text-primary)] transition-all hover:border-blue-500/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900"

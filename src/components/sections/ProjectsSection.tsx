@@ -5,14 +5,42 @@ import { motion } from 'framer-motion';
 import { Github, ExternalLink, Star, ArrowRight, Sparkles, FolderGit2 } from 'lucide-react';
 import { projects as verifiedProjects } from '@/content/config';
 import type { Project } from '@/types';
+import type { CMSProject } from '@/types/cms';
 import { TiltCard } from '@/components/ui/TiltCard';
 import { ProjectModal } from '@/components/projects/ProjectModal';
 import { getGitHubProjects } from '@/app/_actions/github';
 
-export function ProjectsSection() {
+interface ProjectsSectionProps {
+  projects?: CMSProject[];
+}
+
+export function ProjectsSection({ projects }: ProjectsSectionProps = {}) {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeFilter, setActiveFilter] = useState<string>('all');
-  const [projectList, setProjectList] = useState<Project[]>(verifiedProjects);
+
+  const initialProjects: Project[] =
+    projects && projects.length > 0
+      ? projects.map((cp) => ({
+          id: cp.slug || cp.id,
+          title: cp.title,
+          description: cp.tagline,
+          longDescription: cp.long_description,
+          problemSolved: cp.problem_solved,
+          architectureNotes: cp.architecture_notes,
+          techStack: cp.tech_stack,
+          githubUrl: cp.github_url,
+          liveUrl: cp.live_url || undefined,
+          featured: cp.is_featured,
+          visibleTo: ['developer', 'recruiter', 'student', 'explorer'],
+          metrics: {
+            stars: cp.stars_count,
+            forks: cp.forks_count,
+            commits: cp.commits_count,
+          },
+        }))
+      : verifiedProjects;
+
+  const [projectList, setProjectList] = useState<Project[]>(initialProjects);
 
   useEffect(() => {
     // Merge live GitHub star counts into verified projects if available
