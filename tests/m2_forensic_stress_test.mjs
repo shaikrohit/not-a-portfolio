@@ -35,35 +35,74 @@ function test(name, fn) {
 // ---------------------------------------------------------------------------
 test('globals.css: --border-* tokens are genuine CSS color declarations', () => {
   const content = readFileSync(resolve('src/styles/globals.css'), 'utf-8');
-  
+
   // Must NOT contain shorthand '1px solid ...'
-  assert(!content.match(/--border-subtle:\s*1px\s+solid/i), 'Must not use shorthand in --border-subtle');
-  assert(!content.match(/--border-light:\s*1px\s+solid/i), 'Must not use shorthand in --border-light');
-  assert(!content.match(/--border-accent:\s*1px\s+solid/i), 'Must not use shorthand in --border-accent');
+  assert(
+    !content.match(/--border-subtle:\s*1px\s+solid/i),
+    'Must not use shorthand in --border-subtle'
+  );
+  assert(
+    !content.match(/--border-light:\s*1px\s+solid/i),
+    'Must not use shorthand in --border-light'
+  );
+  assert(
+    !content.match(/--border-accent:\s*1px\s+solid/i),
+    'Must not use shorthand in --border-accent'
+  );
 
   // Must declare valid color values
-  assert(content.includes('--border-subtle: rgba(0, 0, 0, 0.08);'), '--border-subtle must be valid rgba color');
-  assert(content.includes('--border-light: rgba(0, 0, 0, 0.14);'), '--border-light must be valid rgba color');
-  assert(content.includes('--border-accent: rgba(66, 133, 244, 0.2);'), '--border-accent must be valid rgba color');
+  assert(
+    content.includes('--border-subtle: rgba(0, 0, 0, 0.08);'),
+    '--border-subtle must be valid rgba color'
+  );
+  assert(
+    content.includes('--border-light: rgba(0, 0, 0, 0.14);'),
+    '--border-light must be valid rgba color'
+  );
+  assert(
+    content.includes('--border-accent: rgba(66, 133, 244, 0.2);'),
+    '--border-accent must be valid rgba color'
+  );
 });
 
 test('theme.css: dark mode --border-* tokens are genuine CSS color declarations', () => {
   const content = readFileSync(resolve('src/styles/theme.css'), 'utf-8');
 
-  assert(!content.match(/--border-subtle:\s*1px\s+solid/i), 'Dark mode must not use shorthand in --border-subtle');
-  assert(!content.match(/--border-light:\s*1px\s+solid/i), 'Dark mode must not use shorthand in --border-light');
-  assert(!content.match(/--border-accent:\s*1px\s+solid/i), 'Dark mode must not use shorthand in --border-accent');
+  assert(
+    !content.match(/--border-subtle:\s*1px\s+solid/i),
+    'Dark mode must not use shorthand in --border-subtle'
+  );
+  assert(
+    !content.match(/--border-light:\s*1px\s+solid/i),
+    'Dark mode must not use shorthand in --border-light'
+  );
+  assert(
+    !content.match(/--border-accent:\s*1px\s+solid/i),
+    'Dark mode must not use shorthand in --border-accent'
+  );
 
-  assert(content.includes('--border-subtle: rgba(255, 255, 255, 0.08);'), 'Dark --border-subtle must be valid rgba color');
-  assert(content.includes('--border-light: rgba(255, 255, 255, 0.14);'), 'Dark --border-light must be valid rgba color');
-  assert(content.includes('--border-accent: rgba(59, 130, 246, 0.35);'), 'Dark --border-accent must be valid rgba color');
+  assert(
+    content.includes('--border-subtle: rgba(255, 255, 255, 0.08);'),
+    'Dark --border-subtle must be valid rgba color'
+  );
+  assert(
+    content.includes('--border-light: rgba(255, 255, 255, 0.14);'),
+    'Dark --border-light must be valid rgba color'
+  );
+  assert(
+    content.includes('--border-accent: rgba(59, 130, 246, 0.35);'),
+    'Dark --border-accent must be valid rgba color'
+  );
 });
 
 test('globals.css: View Transitions & reduced-motion guards', () => {
   const content = readFileSync(resolve('src/styles/globals.css'), 'utf-8');
   assert(content.includes('::view-transition-old(root)'), 'Includes ::view-transition-old');
   assert(content.includes('::view-transition-new(root)'), 'Includes ::view-transition-new');
-  assert(content.includes('@media (prefers-reduced-motion: reduce)'), 'Includes prefers-reduced-motion guard');
+  assert(
+    content.includes('@media (prefers-reduced-motion: reduce)'),
+    'Includes prefers-reduced-motion guard'
+  );
 });
 
 // ---------------------------------------------------------------------------
@@ -95,7 +134,9 @@ test('FOUT Script: Empirical simulation under dark mode', () => {
         remove: (c) => classList.delete(c),
         contains: (c) => classList.has(c),
       },
-      setAttribute: (k, v) => { attributes[k] = v; },
+      setAttribute: (k, v) => {
+        attributes[k] = v;
+      },
     },
     getElementById: (id) => (id === 'theme-color-meta' ? meta : null),
     querySelector: () => meta,
@@ -137,7 +178,9 @@ test('FOUT Script: Empirical simulation under light mode', () => {
         remove: (c) => classList.delete(c),
         contains: (c) => classList.has(c),
       },
-      setAttribute: (k, v) => { attributes[k] = v; },
+      setAttribute: (k, v) => {
+        attributes[k] = v;
+      },
     },
     getElementById: () => meta,
     querySelector: () => meta,
@@ -173,7 +216,9 @@ test('FOUT Script: System preference fallback when no storage', () => {
         add: (c) => classList.add(c),
         remove: (c) => classList.delete(c),
       },
-      setAttribute: (k, v) => { attributes[k] = v; },
+      setAttribute: (k, v) => {
+        attributes[k] = v;
+      },
     },
     getElementById: () => meta,
     querySelector: () => meta,
@@ -196,16 +241,23 @@ test('FOUT Script: System preference fallback when no storage', () => {
 });
 
 test('FOUT Script: SecurityError resilience (cookies blocked / storage disabled)', () => {
-  const fakeDocument = { documentElement: { classList: { add: () => {}, remove: () => {} }, setAttribute: () => {} } };
+  const fakeDocument = {
+    documentElement: { classList: { add: () => {}, remove: () => {} }, setAttribute: () => {} },
+  };
   const fakeWindow = { matchMedia: () => ({ matches: false }) };
   const fakeLocalStorage = {
-    getItem: () => { throw new Error('SecurityError: Access is denied for this document'); },
+    getItem: () => {
+      throw new Error('SecurityError: Access is denied for this document');
+    },
   };
 
   const scriptCode = `(function(){try{var s=localStorage.getItem('theme-storage');var m='system';if(s){var p=JSON.parse(s);m=(p&&p.state&&p.state.mode)||p.mode||s;}var isDark=m==='dark'||(m!=='light'&&window.matchMedia('(prefers-color-scheme: dark)').matches);var el=document.documentElement;if(isDark){el.classList.add('dark');el.classList.remove('light');el.setAttribute('data-theme','dark');}else{el.classList.remove('dark');el.classList.add('light');el.setAttribute('data-theme','light');}var meta=document.getElementById('theme-color-meta')||document.querySelector('meta[name="theme-color"]');if(meta){meta.setAttribute('content',isDark?'#07090e':'#ffffff');}}catch(e){}})();`;
 
   const fn = new Function('document', 'window', 'localStorage', scriptCode);
-  assert.doesNotThrow(() => fn(fakeDocument, fakeWindow, fakeLocalStorage), 'Must not throw if storage fails');
+  assert.doesNotThrow(
+    () => fn(fakeDocument, fakeWindow, fakeLocalStorage),
+    'Must not throw if storage fails'
+  );
 });
 
 // ---------------------------------------------------------------------------
@@ -234,16 +286,28 @@ test('Navigation.tsx: Implements mobile drawer accessibility and scroll lock', (
   const content = readFileSync(resolve('src/components/layout/Navigation.tsx'), 'utf-8');
   assert(content.includes('role="dialog"'), 'Mobile drawer must declare role="dialog"');
   assert(content.includes('aria-modal="true"'), 'Mobile drawer must declare aria-modal="true"');
-  assert(content.includes('aria-controls="mobile-nav-drawer"'), 'Trigger button must declare aria-controls');
-  assert(content.includes('aria-expanded={mobileOpen}'), 'Trigger button must declare aria-expanded');
-  assert(content.includes('document.body.style.overflow = \'hidden\''), 'Must lock body scroll');
-  assert(content.includes('document.body.style.paddingRight'), 'Must compensate scrollbar width to prevent layout shift');
+  assert(
+    content.includes('aria-controls="mobile-nav-drawer"'),
+    'Trigger button must declare aria-controls'
+  );
+  assert(
+    content.includes('aria-expanded={mobileOpen}'),
+    'Trigger button must declare aria-expanded'
+  );
+  assert(content.includes("document.body.style.overflow = 'hidden'"), 'Must lock body scroll');
+  assert(
+    content.includes('document.body.style.paddingRight'),
+    'Must compensate scrollbar width to prevent layout shift'
+  );
   assert(content.includes("e.key === 'Escape'"), 'Must handle Escape key dismissal');
 });
 
 test('Navigation.tsx: Implements Command Palette with search and keyboard navigation', () => {
   const content = readFileSync(resolve('src/components/layout/Navigation.tsx'), 'utf-8');
-  assert(content.includes('(e.metaKey || e.ctrlKey) && e.key.toLowerCase() === \'k\''), 'Must bind Ctrl+K / Cmd+K');
+  assert(
+    content.includes("(e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k'"),
+    'Must bind Ctrl+K / Cmd+K'
+  );
   assert(content.includes("e.key === 'ArrowDown'"), 'Must handle ArrowDown in search results');
   assert(content.includes("e.key === 'ArrowUp'"), 'Must handle ArrowUp in search results');
   assert(content.includes("e.key === 'Enter'"), 'Must handle Enter selection in search results');
@@ -256,8 +320,14 @@ test('Navigation.tsx: Implements Command Palette with search and keyboard naviga
 test('useActiveSection.ts: Implements robust IntersectionObserver + MutationObserver', () => {
   const content = readFileSync(resolve('src/hooks/useActiveSection.ts'), 'utf-8');
   assert(content.includes('new IntersectionObserver'), 'Must use native IntersectionObserver');
-  assert(content.includes('new MutationObserver'), 'Must use MutationObserver to observe dynamic imports');
-  assert(content.includes('isClickScrollingRef'), 'Must use mutex lock during programmatic smooth scroll');
+  assert(
+    content.includes('new MutationObserver'),
+    'Must use MutationObserver to observe dynamic imports'
+  );
+  assert(
+    content.includes('isClickScrollingRef'),
+    'Must use mutex lock during programmatic smooth scroll'
+  );
   assert(content.includes('scrollY <= 50'), 'Top boundary must clamp to hero');
   assert(content.includes('docHeight - 50'), 'Bottom boundary must clamp to contact');
   assert(content.includes('rootMargin'), 'Configurable rootMargin reading focus window');
@@ -275,7 +345,10 @@ test('SectionDivider.tsx: Implements all visual silhouettes with responsive SVG'
   assert(content.includes("'glow'"), 'Supports glow variant');
   assert(content.includes("'gradient'"), 'Supports gradient variant');
   assert(content.includes('preserveAspectRatio="none"'), 'SVG must use preserveAspectRatio="none"');
-  assert(content.includes('vectorEffect="non-scaling-stroke"'), 'Strokes must use vectorEffect="non-scaling-stroke"');
+  assert(
+    content.includes('vectorEffect="non-scaling-stroke"'),
+    'Strokes must use vectorEffect="non-scaling-stroke"'
+  );
   assert(content.includes('-my-px'), 'Must include subpixel seam mitigation');
 });
 
@@ -285,14 +358,23 @@ test('SectionDivider.tsx: Implements all visual silhouettes with responsive SVG'
 test('MorphingBackground.tsx: Dynamic background with surface-base CSS variables', () => {
   const content = readFileSync(resolve('src/components/layout/MorphingBackground.tsx'), 'utf-8');
   assert(content.includes('bg-[var(--surface-base)]'), 'Must use var(--surface-base)');
-  assert(!content.includes('bg-white absolute inset-0'), 'Must NOT have hardcoded opaque white background');
+  assert(
+    !content.includes('bg-white absolute inset-0'),
+    'Must NOT have hardcoded opaque white background'
+  );
 });
 
 test('store/index.ts: Theme store implements View Transitions & meta theme-color sync', () => {
   const content = readFileSync(resolve('src/store/index.ts'), 'utf-8');
   assert(content.includes('startViewTransition'), 'Leverages modern startViewTransition');
-  assert(content.includes('prefers-reduced-motion'), 'Guards view transitions against prefers-reduced-motion');
-  assert(content.includes('metaThemeColor.setAttribute(\'content\''), 'Synchronizes meta theme-color in browser chrome');
+  assert(
+    content.includes('prefers-reduced-motion'),
+    'Guards view transitions against prefers-reduced-motion'
+  );
+  assert(
+    content.includes("metaThemeColor.setAttribute('content'"),
+    'Synchronizes meta theme-color in browser chrome'
+  );
   assert(content.includes("name: 'theme-storage'"), 'Persists under theme-storage in localStorage');
 });
 
@@ -302,7 +384,10 @@ test('store/index.ts: Theme store implements View Transitions & meta theme-color
 test('page.tsx: Seamlessly positions SectionDivider between page sections', () => {
   const content = readFileSync(resolve('src/app/page.tsx'), 'utf-8');
   const dividerOccurrences = (content.match(/<SectionDivider/g) || []).length;
-  assert(dividerOccurrences >= 5, `Expected at least 5 SectionDividers across page, found ${dividerOccurrences}`);
+  assert(
+    dividerOccurrences >= 5,
+    `Expected at least 5 SectionDividers across page, found ${dividerOccurrences}`
+  );
   assert(content.includes('<Navigation />'), 'Navigation component rendered');
   assert(content.includes('<MorphingBackground />'), 'MorphingBackground component rendered');
 });

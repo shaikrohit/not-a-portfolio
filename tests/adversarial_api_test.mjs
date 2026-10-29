@@ -691,13 +691,15 @@ async function runTests() {
 
       if (pass) {
         passedCount++;
-        console.log(`[PASS] ${tc.id} (${tc.category}): ${tc.description} [HTTP ${status}] (${elapsedMs}ms)`);
+        console.log(
+          `[PASS] ${tc.id} (${tc.category}): ${tc.description} [HTTP ${status}] (${elapsedMs}ms)`
+        );
       } else {
         failedCount++;
         console.error(
           `[FAIL] ${tc.id} (${tc.category}): ${tc.description}\n` +
-          `       Reason: ${failureReason}\n` +
-          `       Response: HTTP ${status} -> ${rawText.slice(0, 200)}`
+            `       Reason: ${failureReason}\n` +
+            `       Response: HTTP ${status} -> ${rawText.slice(0, 200)}`
         );
       }
 
@@ -730,7 +732,9 @@ async function runTests() {
   }
 
   console.log('\n=========================================');
-  console.log(`EMPIRICAL RESULTS: ${passedCount} PASSED, ${failedCount} FAILED (Total: ${testCases.length})`);
+  console.log(
+    `EMPIRICAL RESULTS: ${passedCount} PASSED, ${failedCount} FAILED (Total: ${testCases.length})`
+  );
   console.log('=========================================');
 
   if (failedCount > 0) {

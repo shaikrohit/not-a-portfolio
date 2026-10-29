@@ -144,29 +144,17 @@ test('Name Validation - Combining Marks (Indic / Devanagari / NFD) and Smart Pun
   // Contains combining marks: \u094B (vowel sign o), \u093F (vowel sign i), \u0947 (vowel sign e)
   const devanagariName = 'रोहित शेख';
   const resultHindi = validateField('name', devanagariName);
-  assert.strictEqual(
-    resultHindi,
-    undefined,
-    'Devanagari name must be accepted'
-  );
+  assert.strictEqual(resultHindi, undefined, 'Devanagari name must be accepted');
 
   // Decomposed NFD Unicode Latin ("René" formatted as 'e' + \u0301 combining acute accent)
   const nfdRene = 'Rene\u0301';
   const resultNfd = validateField('name', nfdRene);
-  assert.strictEqual(
-    resultNfd,
-    undefined,
-    'NFD decomposed name must be accepted'
-  );
+  assert.strictEqual(resultNfd, undefined, 'NFD decomposed name must be accepted');
 
   // iOS / macOS Smart Punctuation curly apostrophe: U+2019
   const smartApostropheName = 'O\u2019Connor';
   const resultSmart = validateField('name', smartApostropheName);
-  assert.strictEqual(
-    resultSmart,
-    undefined,
-    'Smart apostrophe must be accepted'
-  );
+  assert.strictEqual(resultSmart, undefined, 'Smart apostrophe must be accepted');
 });
 
 test('Name Validation - Invalid Characters Rejected (Numbers, Scripts, Special Symbols)', () => {
@@ -250,7 +238,10 @@ test('Email Validation - RFC Length Boundaries (254 vs 255 chars)', () => {
 test('Message Validation - Boundary: Empty, whitespace, < 10 chars', () => {
   assert.strictEqual(validateField('message', ''), 'Message is required.');
   assert.strictEqual(validateField('message', '         '), 'Message is required.'); // 9 spaces trimmed to empty
-  assert.strictEqual(validateField('message', '123456789'), 'Message must be at least 10 characters.');
+  assert.strictEqual(
+    validateField('message', '123456789'),
+    'Message must be at least 10 characters.'
+  );
 });
 
 test('Message Validation - Boundary: 10 chars, Multi-line, 5000 chars, 5001 chars', () => {
@@ -258,7 +249,8 @@ test('Message Validation - Boundary: 10 chars, Multi-line, 5000 chars, 5001 char
   assert.strictEqual(validateField('message', '1234567890'), undefined);
 
   // Multi-line formatting with tabs and newlines
-  const multiLine = 'Hello Rohit,\n\nI am impressed with your portfolio.\n\tLet us connect!\n\nBest regards,\nAlex';
+  const multiLine =
+    'Hello Rohit,\n\nI am impressed with your portfolio.\n\tLet us connect!\n\nBest regards,\nAlex';
   assert.strictEqual(validateField('message', multiLine), undefined);
 
   // 5000 chars
@@ -338,7 +330,9 @@ test('Error Recovery - Real-Time Error Clearance on User Input Correction', () =
   assert.strictEqual(errors.message, undefined, 'Message error must clear');
 
   // Final check: all errors cleared
-  const activeErrors = Object.fromEntries(Object.entries(errors).filter(([_, v]) => v !== undefined));
+  const activeErrors = Object.fromEntries(
+    Object.entries(errors).filter(([_, v]) => v !== undefined)
+  );
   assert.deepStrictEqual(activeErrors, {}, 'No remaining errors after correction');
 });
 
@@ -398,7 +392,11 @@ test('Orbital Nodes - Exact Cardinal Angles and Quad-Symmetric Spacing', () => {
   for (let i = 0; i < sorted.length; i++) {
     const next = sorted[(i + 1) % sorted.length];
     const diff = (next - sorted[i] + 360) % 360;
-    assert.strictEqual(diff, 90, `Spacing between adjacent nodes must be exactly 90 degrees, got ${diff}`);
+    assert.strictEqual(
+      diff,
+      90,
+      `Spacing between adjacent nodes must be exactly 90 degrees, got ${diff}`
+    );
   }
 });
 
@@ -485,7 +483,10 @@ test('Orbital Geometry - Complete Counter-Rotation Cancellation Proof (Orientati
 
       // In identity matrix, a = 1, c = 0, b = 0, d = 1
       const isIdentity =
-        Math.abs(a - 1) < 1e-10 && Math.abs(d - 1) < 1e-10 && Math.abs(c) < 1e-10 && Math.abs(b) < 1e-10;
+        Math.abs(a - 1) < 1e-10 &&
+        Math.abs(d - 1) < 1e-10 &&
+        Math.abs(c) < 1e-10 &&
+        Math.abs(b) < 1e-10;
 
       // Compute actual orientation angle
       const orientationDeg = (Math.atan2(b, a) * 180) / Math.PI;
@@ -541,7 +542,10 @@ test('CSS Prefers-Reduced-Motion Media Query Rule', () => {
 // -----------------------------------------------------------------------------
 console.log('\n--- MODULE 5: Clipboard API Resilience in ContactInfoCards ---');
 
-const contactInfoCardsSource = fs.readFileSync('src/components/contact/ContactInfoCards.tsx', 'utf8');
+const contactInfoCardsSource = fs.readFileSync(
+  'src/components/contact/ContactInfoCards.tsx',
+  'utf8'
+);
 
 test('Clipboard Copy - Graceful Failure when navigator.clipboard.writeText rejects', async () => {
   let copiedState = false;
@@ -592,7 +596,11 @@ test('Clipboard Copy - Graceful Failure when navigator.clipboard is undefined', 
 
   // Should not throw an uncaught exception
   await handleCopyEmail(mockNavigator);
-  assert.strictEqual(copiedState, false, 'copied state must safely remain false when clipboard is undefined');
+  assert.strictEqual(
+    copiedState,
+    false,
+    'copied state must safely remain false when clipboard is undefined'
+  );
 });
 
 test('Clipboard Copy - Success State when navigator.clipboard.writeText succeeds', async () => {
@@ -621,7 +629,11 @@ test('Clipboard Copy - Success State when navigator.clipboard.writeText succeeds
 
   await handleCopyEmail(mockNavigator);
   assert.strictEqual(copiedState, true, 'copied state must be true on success');
-  assert.strictEqual(copiedText, 'shaik.rohit.official@gmail.com', 'Copied text must match profile email');
+  assert.strictEqual(
+    copiedText,
+    'shaik.rohit.official@gmail.com',
+    'Copied text must match profile email'
+  );
 });
 
 test('ContactInfoCards - Verified Mailto Fallback Link Present', () => {
@@ -629,7 +641,10 @@ test('ContactInfoCards - Verified Mailto Fallback Link Present', () => {
     contactInfoCardsSource.includes('href={`mailto:${profile.email}`}'),
     'Mailto link must be present as a fallback for users who cannot or do not use clipboard'
   );
-  assert(contactInfoCardsSource.includes('aria-live="polite"'), 'Screen reader live announcement must be present');
+  assert(
+    contactInfoCardsSource.includes('aria-live="polite"'),
+    'Screen reader live announcement must be present'
+  );
 });
 
 // -----------------------------------------------------------------------------

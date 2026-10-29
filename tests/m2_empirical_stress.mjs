@@ -135,11 +135,7 @@ test('Top Boundary: scrollY <= 50 deterministically activates hero', () => {
   for (const y of topValues) {
     harness.activeSection = 'experience';
     harness.handleScroll(y, 800, 10000);
-    assert.strictEqual(
-      harness.activeSection,
-      'hero',
-      `Failed to activate hero at scrollY=${y}`
-    );
+    assert.strictEqual(harness.activeSection, 'hero', `Failed to activate hero at scrollY=${y}`);
   }
 });
 
@@ -215,30 +211,33 @@ test('Scrolled State: isScrolled activates when scrollY > scrolledThreshold (def
 });
 
 // 1.4 Programmatic Click Lock (800ms Mutex)
-await testAsync('Programmatic Click Lock: Suppresses scroll and observer overrides for 800ms', async () => {
-  const harness = new ActiveSectionHarness(ALL_SECTION_IDS);
+await testAsync(
+  'Programmatic Click Lock: Suppresses scroll and observer overrides for 800ms',
+  async () => {
+    const harness = new ActiveSectionHarness(ALL_SECTION_IDS);
 
-  // Click on 'skills'
-  harness.scrollToSection('skills');
-  assert.strictEqual(harness.activeSection, 'skills');
-  assert.strictEqual(harness.isClickScrolling, true);
+    // Click on 'skills'
+    harness.scrollToSection('skills');
+    assert.strictEqual(harness.activeSection, 'skills');
+    assert.strictEqual(harness.isClickScrolling, true);
 
-  // During click scroll: scroll event should be ignored
-  harness.handleScroll(0, 800, 10000); // would otherwise force 'hero'
-  assert.strictEqual(harness.activeSection, 'skills', 'Top boundary breached lock!');
+    // During click scroll: scroll event should be ignored
+    harness.handleScroll(0, 800, 10000); // would otherwise force 'hero'
+    assert.strictEqual(harness.activeSection, 'skills', 'Top boundary breached lock!');
 
-  // During click scroll: intersection entries should be ignored
-  harness.handleIntersection([{ id: 'about', isIntersecting: true }]);
-  assert.strictEqual(harness.activeSection, 'skills', 'Intersection breached lock!');
+    // During click scroll: intersection entries should be ignored
+    harness.handleIntersection([{ id: 'about', isIntersecting: true }]);
+    assert.strictEqual(harness.activeSection, 'skills', 'Intersection breached lock!');
 
-  // Wait 850ms for lock release
-  await new Promise((r) => setTimeout(r, 850));
-  assert.strictEqual(harness.isClickScrolling, false, 'Lock failed to release after 800ms');
+    // Wait 850ms for lock release
+    await new Promise((r) => setTimeout(r, 850));
+    assert.strictEqual(harness.isClickScrolling, false, 'Lock failed to release after 800ms');
 
-  // Now intersection should work again
-  harness.handleIntersection([{ id: 'about', isIntersecting: true }]);
-  assert.strictEqual(harness.activeSection, 'about', 'Intersection failed after lock release');
-});
+    // Now intersection should work again
+    harness.handleIntersection([{ id: 'about', isIntersecting: true }]);
+    assert.strictEqual(harness.activeSection, 'about', 'Intersection failed after lock release');
+  }
+);
 
 // 1.5 Intersection Priority Order Invariant
 test('IntersectionObserver Invariant: Chooses first visible section in document sequence', () => {
@@ -292,19 +291,34 @@ test('Mobile Drawer: Body Scroll Lock with Layout Shift (Scrollbar Width) Compen
 
 test('Command Palette: Global Keyboard Shortcuts (Ctrl+K / Cmd+K and Escape)', () => {
   // Check Ctrl+K / Cmd+K binding
-  assert.match(navSource, /\(e\.metaKey\s*\|\|\s*e\.ctrlKey\)\s*&&\s*e\.key\.toLowerCase\(\)\s*===\s*['"]k['"]/);
+  assert.match(
+    navSource,
+    /\(e\.metaKey\s*\|\|\s*e\.ctrlKey\)\s*&&\s*e\.key\.toLowerCase\(\)\s*===\s*['"]k['"]/
+  );
   // Check Escape dismissal
   assert.match(navSource, /e\.key\s*===\s*['"]Escape['"]/);
   // Check ArrowDown / ArrowUp navigation with modulo wraparound
-  assert.match(navSource, /setSelectedSearchIndex\(\(prev\)\s*=>\s*\(prev\s*\+\s*1\)\s*%\s*filteredSections\.length\)/);
-  assert.match(navSource, /setSelectedSearchIndex\(\(prev\)\s*=>\s*\(prev\s*-\s*1\s*\+\s*filteredSections\.length\)\s*%\s*filteredSections\.length\)/);
+  assert.match(
+    navSource,
+    /setSelectedSearchIndex\(\(prev\)\s*=>\s*\(prev\s*\+\s*1\)\s*%\s*filteredSections\.length\)/
+  );
+  assert.match(
+    navSource,
+    /setSelectedSearchIndex\(\(prev\)\s*=>\s*\(prev\s*-\s*1\s*\+\s*filteredSections\.length\)\s*%\s*filteredSections\.length\)/
+  );
 });
 
 test('Navigation: Backdrop Scrim and Outside Click Dismissal', () => {
   // Scrim click closes mobileOpen
-  assert.match(navSource, /key=["']drawer-scrim["'][\s\S]*?onClick=\{\(\)\s*=>\s*setMobileOpen\(false\)\}/);
+  assert.match(
+    navSource,
+    /key=["']drawer-scrim["'][\s\S]*?onClick=\{\(\)\s*=>\s*setMobileOpen\(false\)\}/
+  );
   // Scrim click closes commandOpen
-  assert.match(navSource, /key=["']command-scrim["'][\s\S]*?onClick=\{\(\)\s*=>\s*setCommandOpen\(false\)\}/);
+  assert.match(
+    navSource,
+    /key=["']command-scrim["'][\s\S]*?onClick=\{\(\)\s*=>\s*setCommandOpen\(false\)\}/
+  );
 });
 
 // -----------------------------------------------------------------------------
@@ -317,10 +331,7 @@ const dividerSource = fs.readFileSync('src/components/ui/SectionDivider.tsx', 'u
 test('SectionDivider: Supported Variants Coverage', () => {
   const expectedVariants = ['wave', 'curve', 'angle', 'slant', 'glow', 'gradient'];
   for (const v of expectedVariants) {
-    assert.ok(
-      dividerSource.includes(`'${v}'`),
-      `Missing variant '${v}' in SectionDivider.tsx`
-    );
+    assert.ok(dividerSource.includes(`'${v}'`), `Missing variant '${v}' in SectionDivider.tsx`);
   }
 });
 
@@ -340,11 +351,7 @@ test('SectionDivider: SVG preserveAspectRatio="none" and non-scaling-stroke', ()
   );
 
   // Subpixel seam protection (-my-px)
-  assert.match(
-    dividerSource,
-    /-my-px/,
-    '-my-px missing from SectionDivider container'
-  );
+  assert.match(dividerSource, /-my-px/, '-my-px missing from SectionDivider container');
 });
 
 test('SectionDivider: Horizontal Overflow Protection (Zero Overflow Invariant)', () => {
@@ -400,11 +407,7 @@ test('Section ID Verification: All 10 IDs correspond to actual files with matchi
     assert.ok(fs.existsSync(filePath), `File does not exist: ${filePath}`);
     const content = fs.readFileSync(filePath, 'utf8');
     const regex = new RegExp(`id=['"]${id}['"]`);
-    assert.match(
-      content,
-      regex,
-      `Section file ${filePath} does not define id="${id}"`
-    );
+    assert.match(content, regex, `Section file ${filePath} does not define id="${id}"`);
   }
 });
 
@@ -425,14 +428,8 @@ test('Page Layout: All 10 sections are included in app/page.tsx in correct seque
   let lastIndex = -1;
   for (const compName of expectedComponentSequence) {
     const idx = pageSource.indexOf(`<${compName}`);
-    assert.ok(
-      idx !== -1,
-      `Component <${compName} /> not rendered in app/page.tsx`
-    );
-    assert.ok(
-      idx > lastIndex,
-      `Component <${compName} /> is out of sequence in app/page.tsx`
-    );
+    assert.ok(idx !== -1, `Component <${compName} /> not rendered in app/page.tsx`);
+    assert.ok(idx > lastIndex, `Component <${compName} /> is out of sequence in app/page.tsx`);
     lastIndex = idx;
   }
 });

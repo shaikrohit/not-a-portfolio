@@ -112,7 +112,11 @@ console.log('--- SECTION 1: CRLF Injection Neutralization ---');
     email: 'alice@example.com',
     message: 'Testing CRLF-only name rejection.',
   });
-  if (res.status === 400 && res.json?.success === false && res.json?.error?.includes('Name must be at least')) {
+  if (
+    res.status === 400 &&
+    res.json?.success === false &&
+    res.json?.error?.includes('Name must be at least')
+  ) {
     pass('CRLF-1.4: Name of solely CRLF/whitespace cleanly rejected with HTTP 400');
   } else {
     fail('CRLF-1.4: CRLF-only name', `Status ${res.status}`, res.rawText);
@@ -126,7 +130,11 @@ console.log('--- SECTION 1: CRLF Injection Neutralization ---');
     email: 'victim@example.com\r\nBcc: evil@attacker.com',
     message: 'Testing CRLF injection in email field.',
   });
-  if (res.status === 400 && res.json?.success === false && res.json?.error?.includes('valid email')) {
+  if (
+    res.status === 400 &&
+    res.json?.success === false &&
+    res.json?.error?.includes('valid email')
+  ) {
     pass('CRLF-1.5: CRLF injection inside email rejected with HTTP 400');
   } else {
     fail('CRLF-1.5: CRLF in email', `Status ${res.status}`, res.rawText);
@@ -324,13 +332,31 @@ console.log('\n--- SECTION 4: Schema Fallback Logic & Protocol Hardening ---');
 {
   const res1 = await request({ name: 'A', email: 'a@b.com', message: 'Hello 1234567890' });
   const res2 = await request({ name: 'Al', email: 'a@b.com', message: 'Hello 1234567890' });
-  const res100 = await request({ name: 'A'.repeat(100), email: 'a@b.com', message: 'Hello 1234567890' });
-  const res101 = await request({ name: 'A'.repeat(101), email: 'a@b.com', message: 'Hello 1234567890' });
+  const res100 = await request({
+    name: 'A'.repeat(100),
+    email: 'a@b.com',
+    message: 'Hello 1234567890',
+  });
+  const res101 = await request({
+    name: 'A'.repeat(101),
+    email: 'a@b.com',
+    message: 'Hello 1234567890',
+  });
 
-  if (res1.status === 400 && res2.status === 200 && res100.status === 200 && res101.status === 400) {
-    pass('BOUND-4.5: Name boundaries (1 char -> 400, 2 chars -> 200, 100 -> 200, 101 -> 400) verified');
+  if (
+    res1.status === 400 &&
+    res2.status === 200 &&
+    res100.status === 200 &&
+    res101.status === 400
+  ) {
+    pass(
+      'BOUND-4.5: Name boundaries (1 char -> 400, 2 chars -> 200, 100 -> 200, 101 -> 400) verified'
+    );
   } else {
-    fail('BOUND-4.5: Name boundaries', `1:${res1.status}, 2:${res2.status}, 100:${res100.status}, 101:${res101.status}`);
+    fail(
+      'BOUND-4.5: Name boundaries',
+      `1:${res1.status}, 2:${res2.status}, 100:${res100.status}, 101:${res101.status}`
+    );
   }
 }
 

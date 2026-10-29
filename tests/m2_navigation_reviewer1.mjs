@@ -228,44 +228,48 @@ runTest('Hook Logic: Bottom boundary scroll reaches docHeight - 50 activates con
   assert.strictEqual(sim.activeSection, 'contact');
 });
 
-runTest('Hook Logic: First intersecting section in document sequence deterministically wins', () => {
-  const sim = new ActiveSectionSimulation(EXPECTED_SECTIONS);
-  // Both 'experience' and 'education' intersect
-  sim.handleIntersection([
-    { id: 'education', isIntersecting: true },
-    { id: 'experience', isIntersecting: true },
-    { id: 'hero', isIntersecting: false },
-  ]);
-  // In sequence: hero -> paths -> about -> experience -> education
-  // 'experience' comes before 'education', so it must win
-  assert.strictEqual(sim.activeSection, 'experience');
-});
+runTest(
+  'Hook Logic: First intersecting section in document sequence deterministically wins',
+  () => {
+    const sim = new ActiveSectionSimulation(EXPECTED_SECTIONS);
+    // Both 'experience' and 'education' intersect
+    sim.handleIntersection([
+      { id: 'education', isIntersecting: true },
+      { id: 'experience', isIntersecting: true },
+      { id: 'hero', isIntersecting: false },
+    ]);
+    // In sequence: hero -> paths -> about -> experience -> education
+    // 'experience' comes before 'education', so it must win
+    assert.strictEqual(sim.activeSection, 'experience');
+  }
+);
 
-runTest('Hook Logic: Smooth scroll click lock suppresses observer overrides during transition', async () => {
-  const sim = new ActiveSectionSimulation(EXPECTED_SECTIONS);
-  // User clicks 'contact'
-  sim.scrollToSection('contact', 100);
-  assert.strictEqual(sim.activeSection, 'contact');
-  assert.strictEqual(sim.isClickScrolling, true);
+runTest(
+  'Hook Logic: Smooth scroll click lock suppresses observer overrides during transition',
+  async () => {
+    const sim = new ActiveSectionSimulation(EXPECTED_SECTIONS);
+    // User clicks 'contact'
+    sim.scrollToSection('contact', 100);
+    assert.strictEqual(sim.activeSection, 'contact');
+    assert.strictEqual(sim.isClickScrolling, true);
 
-  // While scrolling, page passes through 'about' and 'projects'
-  sim.handleIntersection([
-    { id: 'about', isIntersecting: true },
-    { id: 'contact', isIntersecting: false },
-  ]);
-  // Because isClickScrolling is true, activeSection must remain 'contact'
-  assert.strictEqual(sim.activeSection, 'contact');
+    // While scrolling, page passes through 'about' and 'projects'
+    sim.handleIntersection([
+      { id: 'about', isIntersecting: true },
+      { id: 'contact', isIntersecting: false },
+    ]);
+    // Because isClickScrolling is true, activeSection must remain 'contact'
+    assert.strictEqual(sim.activeSection, 'contact');
 
-  // Wait for lock to expire
-  await new Promise((r) => setTimeout(r, 120));
-  assert.strictEqual(sim.isClickScrolling, false);
+    // Wait for lock to expire
+    await new Promise((r) => setTimeout(r, 120));
+    assert.strictEqual(sim.isClickScrolling, false);
 
-  // Now observer can update
-  sim.handleIntersection([
-    { id: 'projects', isIntersecting: true },
-  ]);
-  assert.strictEqual(sim.activeSection, 'projects');
-});
+    // Now observer can update
+    sim.handleIntersection([{ id: 'projects', isIntersecting: true }]);
+    assert.strictEqual(sim.activeSection, 'projects');
+  }
+);
 
 // ----------------------------------------------------------------------------
 // MODULE 4: COMMAND PALETTE FILTERING & KEYBOARD STRESS TESTS
@@ -273,16 +277,76 @@ runTest('Hook Logic: Smooth scroll click lock suppresses observer overrides duri
 console.log('\n--- MODULE 4: Command Palette Filtering & Keyboard Stress ---');
 
 const ALL_PAGE_SECTIONS_FIXTURE = [
-  { id: 'hero', label: 'Home', shortLabel: 'Home', description: 'Interactive 3D particle sphere & introduction', category: 'Overview' },
-  { id: 'paths', label: 'Journeys', shortLabel: 'Paths', description: 'Tailored persona paths (Recruiter, Engineer, Explorer)', category: 'Overview' },
-  { id: 'about', label: 'About', shortLabel: 'About', description: 'Bio, core philosophy & interactive bento grid', category: 'Profile' },
-  { id: 'experience', label: 'Experience', shortLabel: 'Experience', description: 'Career history, engineering leadership & impact', category: 'Experience' },
-  { id: 'education', label: 'Education', shortLabel: 'Education', description: 'Academic background, coursework & certifications', category: 'Experience' },
-  { id: 'achievements', label: 'Achievements', shortLabel: 'Honors', description: 'Hackathon victories, awards & recognitions', category: 'Experience' },
-  { id: 'projects', label: 'Projects', shortLabel: 'Projects', description: 'Production systems, full-stack apps & AI tools', category: 'Work' },
-  { id: 'skills', label: 'Skills', shortLabel: 'Skills', description: 'Interactive 3D skill sphere & technology radar', category: 'Work' },
-  { id: 'trivia', label: 'Trivia', shortLabel: 'Trivia', description: 'Interactive developer quiz & challenge', category: 'Interactive' },
-  { id: 'contact', label: 'Contact', shortLabel: 'Contact', description: 'Direct message form & social profile orbit', category: 'Connect' },
+  {
+    id: 'hero',
+    label: 'Home',
+    shortLabel: 'Home',
+    description: 'Interactive 3D particle sphere & introduction',
+    category: 'Overview',
+  },
+  {
+    id: 'paths',
+    label: 'Journeys',
+    shortLabel: 'Paths',
+    description: 'Tailored persona paths (Recruiter, Engineer, Explorer)',
+    category: 'Overview',
+  },
+  {
+    id: 'about',
+    label: 'About',
+    shortLabel: 'About',
+    description: 'Bio, core philosophy & interactive bento grid',
+    category: 'Profile',
+  },
+  {
+    id: 'experience',
+    label: 'Experience',
+    shortLabel: 'Experience',
+    description: 'Career history, engineering leadership & impact',
+    category: 'Experience',
+  },
+  {
+    id: 'education',
+    label: 'Education',
+    shortLabel: 'Education',
+    description: 'Academic background, coursework & certifications',
+    category: 'Experience',
+  },
+  {
+    id: 'achievements',
+    label: 'Achievements',
+    shortLabel: 'Honors',
+    description: 'Hackathon victories, awards & recognitions',
+    category: 'Experience',
+  },
+  {
+    id: 'projects',
+    label: 'Projects',
+    shortLabel: 'Projects',
+    description: 'Production systems, full-stack apps & AI tools',
+    category: 'Work',
+  },
+  {
+    id: 'skills',
+    label: 'Skills',
+    shortLabel: 'Skills',
+    description: 'Interactive 3D skill sphere & technology radar',
+    category: 'Work',
+  },
+  {
+    id: 'trivia',
+    label: 'Trivia',
+    shortLabel: 'Trivia',
+    description: 'Interactive developer quiz & challenge',
+    category: 'Interactive',
+  },
+  {
+    id: 'contact',
+    label: 'Contact',
+    shortLabel: 'Contact',
+    description: 'Direct message form & social profile orbit',
+    category: 'Connect',
+  },
 ];
 
 function filterSections(query) {
@@ -400,7 +464,7 @@ runTest('a11y: Command palette has role="dialog" and aria-modal="true"', () => {
 
 runTest('a11y: Active navigation indicators use aria-current', () => {
   assert(
-    navigationCode.includes('aria-current={isActive ? \'true\' : undefined}'),
+    navigationCode.includes("aria-current={isActive ? 'true' : undefined}"),
     'Active nav button must declare aria-current when active'
   );
 });
@@ -431,7 +495,9 @@ runTest('Layout: Framer Motion animated activeNavIndicator layoutId is present',
 // SUMMARY
 // ----------------------------------------------------------------------------
 console.log('\n================================================================');
-console.log(`TEST SUMMARY: ${passedTests} PASSED, ${failedTests} FAILED out of ${totalTests} tests`);
+console.log(
+  `TEST SUMMARY: ${passedTests} PASSED, ${failedTests} FAILED out of ${totalTests} tests`
+);
 console.log('================================================================');
 
 if (failedTests > 0) {

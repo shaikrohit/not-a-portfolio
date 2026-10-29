@@ -230,36 +230,51 @@ test('FOUT Script: Direct object format { mode: "light" } resolves light', () =>
 });
 
 // 1.7 Defect Confirmation: Raw string storage expression evaluation
-testDefect('FOUT Script Defect Oracle: Storage containing raw string "dark" fails strict equality check', () => {
-  const env = createMockDOMEnvironment({
-    storageValue: '"dark"',
-    systemDark: false,
-  });
-  vm.runInNewContext(inlineScriptCode, env.sandbox);
-  const state = env.getState();
-  // Due to operator precedence in: m = (p && p.state && p.state.mode) || p.mode || s
-  // When p is a string ("dark"), p.state is undefined, p.mode is undefined, so it evaluates to s ('"dark"').
-  // Because m === '"dark"' !== 'dark', isDark evaluates to false on system light, failing to apply .dark class.
-  assert.strictEqual(state.hasDarkClass, false, 'Confirms defect: fails to resolve dark due to serialized quote retention');
-  RESULTS.warnings.push({
-    item: 'Raw String In Storage Retains Quotes',
-    details: 'If localStorage contains serialized string \'"dark"\', expression evaluates to raw s with quotes (\'"dark"\') instead of p (\'dark\'), falling back to system preference.',
-  });
-});
-
-testDefect('FOUT Script Defect Oracle: Storage containing unquoted raw string "dark" throws SyntaxError into catch block', () => {
-  const env = createMockDOMEnvironment({
-    storageValue: 'dark', // unquoted raw string
-    systemDark: true,
-  });
-  // Does not throw unhandled exception to outside caller
-  assert.doesNotThrow(() => {
+testDefect(
+  'FOUT Script Defect Oracle: Storage containing raw string "dark" fails strict equality check',
+  () => {
+    const env = createMockDOMEnvironment({
+      storageValue: '"dark"',
+      systemDark: false,
+    });
     vm.runInNewContext(inlineScriptCode, env.sandbox);
-  });
-  const state = env.getState();
-  // But because JSON.parse('dark') throws SyntaxError, it aborts try block, leaving <html> without .dark class
-  assert.strictEqual(state.hasDarkClass, false, 'Confirms defect: unquoted raw string causes early exit in catch block');
-});
+    const state = env.getState();
+    // Due to operator precedence in: m = (p && p.state && p.state.mode) || p.mode || s
+    // When p is a string ("dark"), p.state is undefined, p.mode is undefined, so it evaluates to s ('"dark"').
+    // Because m === '"dark"' !== 'dark', isDark evaluates to false on system light, failing to apply .dark class.
+    assert.strictEqual(
+      state.hasDarkClass,
+      false,
+      'Confirms defect: fails to resolve dark due to serialized quote retention'
+    );
+    RESULTS.warnings.push({
+      item: 'Raw String In Storage Retains Quotes',
+      details:
+        "If localStorage contains serialized string '\"dark\"', expression evaluates to raw s with quotes ('\"dark\"') instead of p ('dark'), falling back to system preference.",
+    });
+  }
+);
+
+testDefect(
+  'FOUT Script Defect Oracle: Storage containing unquoted raw string "dark" throws SyntaxError into catch block',
+  () => {
+    const env = createMockDOMEnvironment({
+      storageValue: 'dark', // unquoted raw string
+      systemDark: true,
+    });
+    // Does not throw unhandled exception to outside caller
+    assert.doesNotThrow(() => {
+      vm.runInNewContext(inlineScriptCode, env.sandbox);
+    });
+    const state = env.getState();
+    // But because JSON.parse('dark') throws SyntaxError, it aborts try block, leaving <html> without .dark class
+    assert.strictEqual(
+      state.hasDarkClass,
+      false,
+      'Confirms defect: unquoted raw string causes early exit in catch block'
+    );
+  }
+);
 
 // 1.9 Empty storage (null) with system dark
 test('FOUT Script: Empty storage defaults to system dark when OS prefers dark', () => {
@@ -467,9 +482,18 @@ test('globals.css: Light mode border tokens are valid <color> values without sho
   const lightVal = lightMatch[1].trim();
   const accentVal = accentMatch[1].trim();
 
-  assert(!containsBorderShorthand(subtleVal), `--border-subtle must not contain shorthand (got: ${subtleVal})`);
-  assert(!containsBorderShorthand(lightVal), `--border-light must not contain shorthand (got: ${lightVal})`);
-  assert(!containsBorderShorthand(accentVal), `--border-accent must not contain shorthand (got: ${accentVal})`);
+  assert(
+    !containsBorderShorthand(subtleVal),
+    `--border-subtle must not contain shorthand (got: ${subtleVal})`
+  );
+  assert(
+    !containsBorderShorthand(lightVal),
+    `--border-light must not contain shorthand (got: ${lightVal})`
+  );
+  assert(
+    !containsBorderShorthand(accentVal),
+    `--border-accent must not contain shorthand (got: ${accentVal})`
+  );
 
   assert(isValidColor(subtleVal), `--border-subtle must be a valid <color> (got: ${subtleVal})`);
   assert(isValidColor(lightVal), `--border-light must be a valid <color> (got: ${lightVal})`);
@@ -490,13 +514,28 @@ test('theme.css: Dark mode border tokens are valid <color> values without shorth
   const lightVal = lightMatch[1].trim();
   const accentVal = accentMatch[1].trim();
 
-  assert(!containsBorderShorthand(subtleVal), `Dark --border-subtle must not contain shorthand (got: ${subtleVal})`);
-  assert(!containsBorderShorthand(lightVal), `Dark --border-light must not contain shorthand (got: ${lightVal})`);
-  assert(!containsBorderShorthand(accentVal), `Dark --border-accent must not contain shorthand (got: ${accentVal})`);
+  assert(
+    !containsBorderShorthand(subtleVal),
+    `Dark --border-subtle must not contain shorthand (got: ${subtleVal})`
+  );
+  assert(
+    !containsBorderShorthand(lightVal),
+    `Dark --border-light must not contain shorthand (got: ${lightVal})`
+  );
+  assert(
+    !containsBorderShorthand(accentVal),
+    `Dark --border-accent must not contain shorthand (got: ${accentVal})`
+  );
 
-  assert(isValidColor(subtleVal), `Dark --border-subtle must be a valid <color> (got: ${subtleVal})`);
+  assert(
+    isValidColor(subtleVal),
+    `Dark --border-subtle must be a valid <color> (got: ${subtleVal})`
+  );
   assert(isValidColor(lightVal), `Dark --border-light must be a valid <color> (got: ${lightVal})`);
-  assert(isValidColor(accentVal), `Dark --border-accent must be a valid <color> (got: ${accentVal})`);
+  assert(
+    isValidColor(accentVal),
+    `Dark --border-accent must be a valid <color> (got: ${accentVal})`
+  );
 });
 
 // 3.3 Utility class definitions in globals.css (.glass, .glass-strong, .card-base)
@@ -544,7 +583,9 @@ test('Codebase Scan: All border-[var(--border-*)] usages in src/ are syntactical
     }
   }
 
-  console.log(`  Found ${count} Tailwind border-[var(--border-*)] classes across ${tsxFiles.length} files.`);
+  console.log(
+    `  Found ${count} Tailwind border-[var(--border-*)] classes across ${tsxFiles.length} files.`
+  );
   assert(count > 0, 'Should find border-[var(--border-*)] occurrences');
 });
 
@@ -635,7 +676,7 @@ test('useThemeStore.toggleMode: Guarded by startViewTransition in document', () 
 
 test('useThemeStore.toggleMode: Guarded by prefers-reduced-motion: reduce', () => {
   assert(
-    storeSource.includes("(prefers-reduced-motion: reduce)"),
+    storeSource.includes('(prefers-reduced-motion: reduce)'),
     'toggleMode must check for prefers-reduced-motion: reduce'
   );
 });

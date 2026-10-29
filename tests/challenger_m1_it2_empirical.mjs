@@ -15,7 +15,7 @@ import assert from 'node:assert';
 const RESULTS = {
   passed: 0,
   failed: 0,
-  tests: []
+  tests: [],
 };
 
 function test(name, fn) {
@@ -119,7 +119,7 @@ const INDIC_TEST_VECTORS = [
   { name: 'أَحْمَد', script: 'Arabic (Ahmad with fatha, sukun)' },
 
   // Hebrew with Niqqud (combining points)
-  { name: 'יִצְחָק', script: 'Hebrew (Yitzhak with hirik, dagesh, kamatz)' }
+  { name: 'יִצְחָק', script: 'Hebrew (Yitzhak with hirik, dagesh, kamatz)' },
 ];
 
 for (const vector of INDIC_TEST_VECTORS) {
@@ -149,7 +149,7 @@ const NFD_TEST_VECTORS = [
   { name: 'Tra\u0300\u0302n', desc: 'Trần (a + combining grave U+0300 + circumflex U+0302)' },
   { name: 'Søren Kierkegaard'.normalize('NFD'), desc: 'Søren Kierkegaard normalized to NFD' },
   { name: 'Chloë Sevigny'.normalize('NFD'), desc: 'Chloë Sevigny normalized to NFD' },
-  { name: 'Éléonore d\'Aquitaine'.normalize('NFD'), desc: 'Éléonore d\'Aquitaine normalized to NFD' },
+  { name: "Éléonore d'Aquitaine".normalize('NFD'), desc: "Éléonore d'Aquitaine normalized to NFD" },
 ];
 
 for (const vector of NFD_TEST_VECTORS) {
@@ -172,14 +172,14 @@ const SMART_PUNCTUATION_VECTORS = [
   { name: 'O\u2019Connor', desc: 'iOS/macOS Typographic curly apostrophe U+2019 (O’Connor)' },
   { name: 'D\u2019Angelo', desc: 'Typographic curly apostrophe U+2019 (D’Angelo)' },
   { name: 'O`Connor', desc: 'Backtick / grave accent U+0060 (O`Connor)' },
-  { name: "O'Connor", desc: 'ASCII straight apostrophe U+0027 (O\'Connor)' },
+  { name: "O'Connor", desc: "ASCII straight apostrophe U+0027 (O'Connor)" },
   { name: 'Jean-Luc Picard', desc: 'Hyphen-separated name' },
   { name: 'Mary-Kate Olsen', desc: 'Hyphen-separated name' },
   { name: 'Dr. J. H. Watson', desc: 'Period-abbreviated name' },
   { name: 'A. B. de Villiers', desc: 'Multiple initials with periods and lowercase particles' },
   { name: 'Al-Khwarizmi', desc: 'Arabic hyphenated patronymic' },
   { name: 'René O’Connor', desc: 'Combined NFC accent + smart apostrophe' },
-  { name: 'Rene\u0301 O\u2019Connor', desc: 'Combined NFD decomposed accent + smart apostrophe' }
+  { name: 'Rene\u0301 O\u2019Connor', desc: 'Combined NFD decomposed accent + smart apostrophe' },
 ];
 
 for (const vector of SMART_PUNCTUATION_VECTORS) {
@@ -254,7 +254,7 @@ const SECURITY_REJECTION_VECTORS = [
   { name: 'question?mark', reason: 'Question mark' },
   { name: 'exclamation!point', reason: 'Exclamation mark' },
   { name: 'ampersand&and', reason: 'Ampersand' },
-  { name: 'double"quotes"', reason: 'Double quotes' }
+  { name: 'double"quotes"', reason: 'Double quotes' },
 ];
 
 for (const vector of SECURITY_REJECTION_VECTORS) {
@@ -278,22 +278,30 @@ const socialOrbitSource = fs.readFileSync('src/components/contact/SocialOrbit.ts
 // 1. Verify CSS variables and media query thresholds in SocialOrbit.tsx
 test('Orbital Geometry - CSS Variables & Media Queries in SocialOrbit.tsx', () => {
   // Mobile base distance (< 360px)
-  const baseMatch = socialOrbitSource.match(/\.social-orbit-container\s*\{[\s\S]*?--orbit-distance:\s*(-?\d+px);/);
+  const baseMatch = socialOrbitSource.match(
+    /\.social-orbit-container\s*\{[\s\S]*?--orbit-distance:\s*(-?\d+px);/
+  );
   assert(baseMatch, 'Must find base .social-orbit-container definition');
   assert.strictEqual(baseMatch[1], '-95px', 'Base orbit distance for <360px screens must be -95px');
 
   // 360px query
-  const query360Match = socialOrbitSource.match(/@media\s*\(\s*min-width:\s*360px\s*\)\s*\{[\s\S]*?--orbit-distance:\s*(-?\d+px);/);
+  const query360Match = socialOrbitSource.match(
+    /@media\s*\(\s*min-width:\s*360px\s*\)\s*\{[\s\S]*?--orbit-distance:\s*(-?\d+px);/
+  );
   assert(query360Match, 'Must find min-width: 360px query');
   assert.strictEqual(query360Match[1], '-110px', 'Orbit distance at 360px must be -110px');
 
   // 480px query
-  const query480Match = socialOrbitSource.match(/@media\s*\(\s*min-width:\s*480px\s*\)\s*\{[\s\S]*?--orbit-distance:\s*(-?\d+px);/);
+  const query480Match = socialOrbitSource.match(
+    /@media\s*\(\s*min-width:\s*480px\s*\)\s*\{[\s\S]*?--orbit-distance:\s*(-?\d+px);/
+  );
   assert(query480Match, 'Must find min-width: 480px query');
   assert.strictEqual(query480Match[1], '-130px', 'Orbit distance at 480px must be -130px');
 
   // 640px query
-  const query640Match = socialOrbitSource.match(/@media\s*\(\s*min-width:\s*640px\s*\)\s*\{[\s\S]*?--orbit-distance:\s*(-?\d+px);/);
+  const query640Match = socialOrbitSource.match(
+    /@media\s*\(\s*min-width:\s*640px\s*\)\s*\{[\s\S]*?--orbit-distance:\s*(-?\d+px);/
+  );
   assert(query640Match, 'Must find min-width: 640px query');
   assert.strictEqual(query640Match[1], '-150px', 'Orbit distance at 640px must be -150px');
 });
@@ -304,7 +312,7 @@ test('Orbital Geometry - Central Avatar Core Sizing on Mobile', () => {
   assert(coreAvatarMatch, 'Center avatar must scale to h-16 w-16 on mobile screens');
 });
 
-test('Orbital Geometry - Mathematical Collision & Clearance Proof at 6 O\'Clock (<360px Viewport)', () => {
+test("Orbital Geometry - Mathematical Collision & Clearance Proof at 6 O'Clock (<360px Viewport)", () => {
   // Viewport width = 320px (minimum supported mobile breakpoint)
   const viewportWidth = 320;
   const orbitDistance = 95; // px from center
@@ -351,7 +359,7 @@ test('Orbital Geometry - Mathematical Collision & Clearance Proof at 6 O\'Clock 
   );
 });
 
-test('Orbital Geometry - Mathematical Clipping Clearance Proof at 3 & 9 O\'Clock (<360px Viewport)', () => {
+test("Orbital Geometry - Mathematical Clipping Clearance Proof at 3 & 9 O'Clock (<360px Viewport)", () => {
   // Viewport width = 320px
   const viewportWidth = 320;
   const cardPadding = 16; // p-4 = 1rem = 16px
@@ -405,7 +413,9 @@ test('Orbital Geometry - Mathematical Clipping Clearance Proof at 3 & 9 O\'Clock
 // SUMMARY
 // -----------------------------------------------------------------------------
 console.log('\n==================================================================');
-console.log(`CHALLENGER EMPIRICAL RESULTS: ${RESULTS.passed} PASSED, ${RESULTS.failed} FAILED out of ${RESULTS.tests.length} tests`);
+console.log(
+  `CHALLENGER EMPIRICAL RESULTS: ${RESULTS.passed} PASSED, ${RESULTS.failed} FAILED out of ${RESULTS.tests.length} tests`
+);
 console.log('==================================================================');
 
 if (RESULTS.failed > 0) {

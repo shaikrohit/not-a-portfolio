@@ -57,7 +57,12 @@ function test(name, fn) {
   } catch (err) {
     SUITE.counts.failed++;
     SUITE.domainCounts[SUITE.currentDomain].failed++;
-    SUITE.failures.push({ domain: SUITE.currentDomain, name, error: err.message, stack: err.stack });
+    SUITE.failures.push({
+      domain: SUITE.currentDomain,
+      name,
+      error: err.message,
+      stack: err.stack,
+    });
     console.error(`  [FAIL] ${name}\n         Error: ${err.message}`);
   }
 }
@@ -73,7 +78,12 @@ async function testAsync(name, fn) {
   } catch (err) {
     SUITE.counts.failed++;
     SUITE.domainCounts[SUITE.currentDomain].failed++;
-    SUITE.failures.push({ domain: SUITE.currentDomain, name, error: err.message, stack: err.stack });
+    SUITE.failures.push({
+      domain: SUITE.currentDomain,
+      name,
+      error: err.message,
+      stack: err.stack,
+    });
     console.error(`  [FAIL] ${name}\n         Error: ${err.message}`);
   }
 }
@@ -142,7 +152,10 @@ const globalsCss = fs.readFileSync('src/styles/globals.css', 'utf8');
 const themeCss = fs.readFileSync('src/styles/theme.css', 'utf8');
 const useActiveSectionSource = fs.readFileSync('src/hooks/useActiveSection.ts', 'utf8');
 const useMediaQuerySource = fs.readFileSync('src/hooks/useMediaQuery.ts', 'utf8');
-const usePrefersReducedMotionSource = fs.readFileSync('src/hooks/usePrefersReducedMotion.ts', 'utf8');
+const usePrefersReducedMotionSource = fs.readFileSync(
+  'src/hooks/usePrefersReducedMotion.ts',
+  'utf8'
+);
 const tiltCardSource = fs.readFileSync('src/components/ui/TiltCard.tsx', 'utf8');
 const magneticButtonSource = fs.readFileSync('src/components/ui/MagneticButton.tsx', 'utf8');
 const heroSceneSource = fs.readFileSync('src/components/hero/HeroScene.tsx', 'utf8');
@@ -160,80 +173,100 @@ console.log('===================================================================
 domain('DOMAIN 1: Contact API & Form Adversarial Hardening');
 
 // 1.1 Malformed Payloads & Hostile Data Types
-await testAsync('D1-01: API rejects non-object nested payload { name: { nested: "val" } } with HTTP 400', async () => {
-  const req = new Request('http://localhost/api/contact', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      name: { nested: 'injected object' },
-      email: 'valid@example.com',
-      message: 'Valid message content exceeding ten chars.',
-    }),
-  });
-  const res = await contactApiPost(req);
-  assert.strictEqual(res.status, 400);
-  const data = await res.json();
-  assert.match(data.error, /Name must be at least 2 characters/);
-});
-
-await testAsync('D1-02: API rejects numeric payload fields { name: 12345, message: 99999 } with HTTP 400', async () => {
-  const req = new Request('http://localhost/api/contact', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      name: 12345,
-      email: 'valid@example.com',
-      message: 99999,
-    }),
-  });
-  const res = await contactApiPost(req);
-  assert.strictEqual(res.status, 400);
-});
-
-await testAsync('D1-03: API rejects explicit null fields { name: null, email: null, message: null } with HTTP 400', async () => {
-  const req = new Request('http://localhost/api/contact', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      name: null,
-      email: null,
-      message: null,
-    }),
-  });
-  const res = await contactApiPost(req);
-  assert.strictEqual(res.status, 400);
-  const data = await res.json();
-  assert.strictEqual(data.success, false);
-});
-
-await testAsync('D1-04: API rejects whitespace-only strings for name, email, and message with HTTP 400', async () => {
-  const payloads = [
-    { name: '   \t  \n  ', email: 'valid@example.com', message: 'Valid message body exceeding ten chars.' },
-    { name: 'John Doe', email: '    \n\t  ', message: 'Valid message body exceeding ten chars.' },
-    { name: 'John Doe', email: 'valid@example.com', message: '   \r\n\t   ' },
-  ];
-  for (const body of payloads) {
+await testAsync(
+  'D1-01: API rejects non-object nested payload { name: { nested: "val" } } with HTTP 400',
+  async () => {
     const req = new Request('http://localhost/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
+      body: JSON.stringify({
+        name: { nested: 'injected object' },
+        email: 'valid@example.com',
+        message: 'Valid message content exceeding ten chars.',
+      }),
     });
     const res = await contactApiPost(req);
-    assert.strictEqual(res.status, 400, `Expected 400 for payload: ${JSON.stringify(body)}`);
+    assert.strictEqual(res.status, 400);
+    const data = await res.json();
+    assert.match(data.error, /Name must be at least 2 characters/);
   }
-});
+);
+
+await testAsync(
+  'D1-02: API rejects numeric payload fields { name: 12345, message: 99999 } with HTTP 400',
+  async () => {
+    const req = new Request('http://localhost/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: 12345,
+        email: 'valid@example.com',
+        message: 99999,
+      }),
+    });
+    const res = await contactApiPost(req);
+    assert.strictEqual(res.status, 400);
+  }
+);
+
+await testAsync(
+  'D1-03: API rejects explicit null fields { name: null, email: null, message: null } with HTTP 400',
+  async () => {
+    const req = new Request('http://localhost/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: null,
+        email: null,
+        message: null,
+      }),
+    });
+    const res = await contactApiPost(req);
+    assert.strictEqual(res.status, 400);
+    const data = await res.json();
+    assert.strictEqual(data.success, false);
+  }
+);
+
+await testAsync(
+  'D1-04: API rejects whitespace-only strings for name, email, and message with HTTP 400',
+  async () => {
+    const payloads = [
+      {
+        name: '   \t  \n  ',
+        email: 'valid@example.com',
+        message: 'Valid message body exceeding ten chars.',
+      },
+      { name: 'John Doe', email: '    \n\t  ', message: 'Valid message body exceeding ten chars.' },
+      { name: 'John Doe', email: 'valid@example.com', message: '   \r\n\t   ' },
+    ];
+    for (const body of payloads) {
+      const req = new Request('http://localhost/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      const res = await contactApiPost(req);
+      assert.strictEqual(res.status, 400, `Expected 400 for payload: ${JSON.stringify(body)}`);
+    }
+  }
+);
 
 // 1.2 SQL Injection Token Hardening
 test('D1-05: Client validateField rejects SQL injection syntax tokens with operators and symbols', () => {
   const sqlInjectionsWithSyntax = [
     "1' OR '1'='1",
     "'; DROP TABLE visitor_messages; --",
-    "UNION SELECT null, username, password FROM users --",
+    'UNION SELECT null, username, password FROM users --',
     "x'; EXEC xp_cmdshell('dir'); --",
   ];
   for (const sql of sqlInjectionsWithSyntax) {
     const err = validateField('name', sql);
-    assert.strictEqual(err, 'Name contains invalid characters.', `SQL injection token must be rejected: ${sql}`);
+    assert.strictEqual(
+      err,
+      'Name contains invalid characters.',
+      `SQL injection token must be rejected: ${sql}`
+    );
   }
 });
 
@@ -247,35 +280,42 @@ test('D1-06: White-box analysis of name regex allows letter/hyphen comment seque
   assert.match(contactRouteSource, /\.replace\(\/\[\\r\\n\]\+\/g,\s*' '\)/);
 });
 
-await testAsync('D1-07: API route safely processes SQL injection tokens via parameterized queries without server crash', async () => {
-  const req = new Request('http://localhost/api/contact', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      name: "Robert'); DROP TABLE visitor_messages;--",
-      email: 'bobby.tables@example.com',
-      message: 'Exploiting potential unescaped SQL parameterization.',
-      visitorType: 'developer',
-    }),
-  });
-  const res = await contactApiPost(req);
-  // Route treats parameter as parameterized string without database syntax error or 500
-  assert.strictEqual(res.status, 200);
-  const data = await res.json();
-  assert.strictEqual(data.success, true);
-});
+await testAsync(
+  'D1-07: API route safely processes SQL injection tokens via parameterized queries without server crash',
+  async () => {
+    const req = new Request('http://localhost/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: "Robert'); DROP TABLE visitor_messages;--",
+        email: 'bobby.tables@example.com',
+        message: 'Exploiting potential unescaped SQL parameterization.',
+        visitorType: 'developer',
+      }),
+    });
+    const res = await contactApiPost(req);
+    // Route treats parameter as parameterized string without database syntax error or 500
+    assert.strictEqual(res.status, 200);
+    const data = await res.json();
+    assert.strictEqual(data.success, true);
+  }
+);
 
 // 1.3 XSS Script Injection Sanitization
 test('D1-08: Client validateField rejects XSS script payloads in name', () => {
   const xssPayloads = [
     "<script>alert('xss')</script>",
-    "<img src=x onerror=alert(1)>",
+    '<img src=x onerror=alert(1)>',
     "<svg/onload=alert('pwn')>",
-    "javascript:alert(1)",
+    'javascript:alert(1)',
   ];
   for (const xss of xssPayloads) {
     const err = validateField('name', xss);
-    assert.strictEqual(err, 'Name contains invalid characters.', `XSS token must be rejected: ${xss}`);
+    assert.strictEqual(
+      err,
+      'Name contains invalid characters.',
+      `XSS token must be rejected: ${xss}`
+    );
   }
 });
 
@@ -302,53 +342,62 @@ test('D1-09: API escapeHtml function neutralizes all HTML injection vectors', ()
 });
 
 // 1.4 Extremely Long Strings & Off-By-One Boundary Testing
-await testAsync('D1-10: API route rejects oversized name (10,000 chars) with HTTP 400', async () => {
-  const req = new Request('http://localhost/api/contact', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      name: 'A'.repeat(10000),
-      email: 'test@example.com',
-      message: 'Valid message body exceeding ten chars.',
-    }),
-  });
-  const res = await contactApiPost(req);
-  assert.strictEqual(res.status, 400);
-  const data = await res.json();
-  assert.strictEqual(data.error, 'Name must not exceed 100 characters.');
-});
+await testAsync(
+  'D1-10: API route rejects oversized name (10,000 chars) with HTTP 400',
+  async () => {
+    const req = new Request('http://localhost/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: 'A'.repeat(10000),
+        email: 'test@example.com',
+        message: 'Valid message body exceeding ten chars.',
+      }),
+    });
+    const res = await contactApiPost(req);
+    assert.strictEqual(res.status, 400);
+    const data = await res.json();
+    assert.strictEqual(data.error, 'Name must not exceed 100 characters.');
+  }
+);
 
-await testAsync('D1-11: API route rejects oversized email (10,000 chars) with HTTP 400', async () => {
-  const req = new Request('http://localhost/api/contact', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      name: 'Valid Name',
-      email: `${'a'.repeat(9990)}@example.com`,
-      message: 'Valid message body exceeding ten chars.',
-    }),
-  });
-  const res = await contactApiPost(req);
-  assert.strictEqual(res.status, 400);
-  const data = await res.json();
-  assert.strictEqual(data.error, 'Email address must not exceed 254 characters.');
-});
+await testAsync(
+  'D1-11: API route rejects oversized email (10,000 chars) with HTTP 400',
+  async () => {
+    const req = new Request('http://localhost/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: 'Valid Name',
+        email: `${'a'.repeat(9990)}@example.com`,
+        message: 'Valid message body exceeding ten chars.',
+      }),
+    });
+    const res = await contactApiPost(req);
+    assert.strictEqual(res.status, 400);
+    const data = await res.json();
+    assert.strictEqual(data.error, 'Email address must not exceed 254 characters.');
+  }
+);
 
-await testAsync('D1-12: API route rejects oversized message (100,000 chars) with HTTP 400', async () => {
-  const req = new Request('http://localhost/api/contact', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      name: 'Valid Name',
-      email: 'test@example.com',
-      message: 'M'.repeat(100000),
-    }),
-  });
-  const res = await contactApiPost(req);
-  assert.strictEqual(res.status, 400);
-  const data = await res.json();
-  assert.strictEqual(data.error, 'Message must not exceed 5000 characters.');
-});
+await testAsync(
+  'D1-12: API route rejects oversized message (100,000 chars) with HTTP 400',
+  async () => {
+    const req = new Request('http://localhost/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: 'Valid Name',
+        email: 'test@example.com',
+        message: 'M'.repeat(100000),
+      }),
+    });
+    const res = await contactApiPost(req);
+    assert.strictEqual(res.status, 400);
+    const data = await res.json();
+    assert.strictEqual(data.error, 'Message must not exceed 5000 characters.');
+  }
+);
 
 // 1.5 International Emails & Complex RFC Validations
 test('D1-13: Client and API validation handles international and sub-addressed emails', () => {
@@ -363,11 +412,11 @@ test('D1-13: Client and API validation handles international and sub-addressed e
   }
 
   const invalidEmails = [
-    'user@domain',          // missing TLD extension (ContactForm enforces min 2 chars after dot)
-    'user@domain.',         // trailing dot
-    '@domain.com',          // missing local part
-    'user domain.com',      // space in middle
-    'user@dom@ain.com',     // double @ symbol
+    'user@domain', // missing TLD extension (ContactForm enforces min 2 chars after dot)
+    'user@domain.', // trailing dot
+    '@domain.com', // missing local part
+    'user domain.com', // space in middle
+    'user@dom@ain.com', // double @ symbol
   ];
   for (const email of invalidEmails) {
     assert.ok(validateField('email', email) !== undefined, `Invalid email accepted: ${email}`);
@@ -375,121 +424,139 @@ test('D1-13: Client and API validation handles international and sub-addressed e
 });
 
 // 1.6 Rate-Limiting & External Error Resilience Simulation
-await testAsync('D1-14: API route survives unexpected Supabase client exception without process crash', async () => {
-  const failingSupabaseModule = transpileAndEval('src/app/api/contact/route.ts', {
-    '@supabase/supabase-js': {
-      createClient: () => ({
-        from: () => ({
-          insert: () => {
-            throw new Error('Supabase cluster connection timeout: 504 Gateway');
-          },
+await testAsync(
+  'D1-14: API route survives unexpected Supabase client exception without process crash',
+  async () => {
+    const failingSupabaseModule = transpileAndEval('src/app/api/contact/route.ts', {
+      '@supabase/supabase-js': {
+        createClient: () => ({
+          from: () => ({
+            insert: () => {
+              throw new Error('Supabase cluster connection timeout: 504 Gateway');
+            },
+          }),
         }),
-      }),
-    },
-  });
-
-  const origUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const origKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://fake-project.supabase.co';
-  process.env.SUPABASE_SERVICE_ROLE_KEY = 'fake-key';
-
-  try {
-    const req = new Request('http://localhost/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: 'Resilience Tester',
-        email: 'resilience@example.com',
-        message: 'Testing exception handling during database insertion.',
-        visitorType: 'developer',
-      }),
+      },
     });
-    const res = await failingSupabaseModule.POST(req);
-    assert.ok(res.status === 200 || res.status === 500, `Expected safe HTTP response status, got: ${res.status}`);
-  } finally {
-    if (origUrl === undefined) delete process.env.NEXT_PUBLIC_SUPABASE_URL;
-    else process.env.NEXT_PUBLIC_SUPABASE_URL = origUrl;
 
-    if (origKey === undefined) delete process.env.SUPABASE_SERVICE_ROLE_KEY;
-    else process.env.SUPABASE_SERVICE_ROLE_KEY = origKey;
+    const origUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const origKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    process.env.NEXT_PUBLIC_SUPABASE_URL = 'https://fake-project.supabase.co';
+    process.env.SUPABASE_SERVICE_ROLE_KEY = 'fake-key';
+
+    try {
+      const req = new Request('http://localhost/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: 'Resilience Tester',
+          email: 'resilience@example.com',
+          message: 'Testing exception handling during database insertion.',
+          visitorType: 'developer',
+        }),
+      });
+      const res = await failingSupabaseModule.POST(req);
+      assert.ok(
+        res.status === 200 || res.status === 500,
+        `Expected safe HTTP response status, got: ${res.status}`
+      );
+    } finally {
+      if (origUrl === undefined) delete process.env.NEXT_PUBLIC_SUPABASE_URL;
+      else process.env.NEXT_PUBLIC_SUPABASE_URL = origUrl;
+
+      if (origKey === undefined) delete process.env.SUPABASE_SERVICE_ROLE_KEY;
+      else process.env.SUPABASE_SERVICE_ROLE_KEY = origKey;
+    }
   }
-});
+);
 
-await testAsync('D1-15: API route handles Resend HTTP network failure without unhandled rejection', async () => {
-  const origFetch = globalThis.fetch;
-  const origKey = process.env.RESEND_API_KEY;
-  const origSbUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const origSbKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+await testAsync(
+  'D1-15: API route handles Resend HTTP network failure without unhandled rejection',
+  async () => {
+    const origFetch = globalThis.fetch;
+    const origKey = process.env.RESEND_API_KEY;
+    const origSbUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const origSbKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-  delete process.env.NEXT_PUBLIC_SUPABASE_URL;
-  delete process.env.SUPABASE_SERVICE_ROLE_KEY;
-  process.env.RESEND_API_KEY = 're_test_dummy_key_123';
+    delete process.env.NEXT_PUBLIC_SUPABASE_URL;
+    delete process.env.SUPABASE_SERVICE_ROLE_KEY;
+    process.env.RESEND_API_KEY = 're_test_dummy_key_123';
 
-  // Mock global fetch to simulate a network socket reset
-  globalThis.fetch = async () => {
-    throw new TypeError('fetch failed: ECONNRESET');
-  };
+    // Mock global fetch to simulate a network socket reset
+    globalThis.fetch = async () => {
+      throw new TypeError('fetch failed: ECONNRESET');
+    };
 
-  try {
-    const req = new Request('http://localhost/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: 'Network Tester',
-        email: 'network@example.com',
-        message: 'Testing network failure during Resend dispatch.',
-        visitorType: 'recruiter',
-      }),
-    });
-    const res = await contactApiPost(req);
-    // When resendAttempted is true and fails, delivery evaluation returns 500
-    assert.strictEqual(res.status, 500);
-    const data = await res.json();
-    assert.strictEqual(data.success, false);
-    assert.strictEqual(data.error, 'Unable to deliver your message at this time. Please contact directly via email.');
-  } finally {
-    globalThis.fetch = origFetch;
-    if (origKey === undefined) delete process.env.RESEND_API_KEY;
-    else process.env.RESEND_API_KEY = origKey;
-    if (origSbUrl !== undefined) process.env.NEXT_PUBLIC_SUPABASE_URL = origSbUrl;
-    if (origSbKey !== undefined) process.env.SUPABASE_SERVICE_ROLE_KEY = origSbKey;
+    try {
+      const req = new Request('http://localhost/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: 'Network Tester',
+          email: 'network@example.com',
+          message: 'Testing network failure during Resend dispatch.',
+          visitorType: 'recruiter',
+        }),
+      });
+      const res = await contactApiPost(req);
+      // When resendAttempted is true and fails, delivery evaluation returns 500
+      assert.strictEqual(res.status, 500);
+      const data = await res.json();
+      assert.strictEqual(data.success, false);
+      assert.strictEqual(
+        data.error,
+        'Unable to deliver your message at this time. Please contact directly via email.'
+      );
+    } finally {
+      globalThis.fetch = origFetch;
+      if (origKey === undefined) delete process.env.RESEND_API_KEY;
+      else process.env.RESEND_API_KEY = origKey;
+      if (origSbUrl !== undefined) process.env.NEXT_PUBLIC_SUPABASE_URL = origSbUrl;
+      if (origSbKey !== undefined) process.env.SUPABASE_SERVICE_ROLE_KEY = origSbKey;
+    }
   }
-});
+);
 
-await testAsync('D1-16: Strict production mode returns HTTP 503 when all delivery providers are unconfigured', async () => {
-  const origNodeEnv = process.env.NODE_ENV;
-  const origReqDelivery = process.env.REQUIRE_DELIVERY_IN_PROD;
-  const origSbUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const origResendKey = process.env.RESEND_API_KEY;
+await testAsync(
+  'D1-16: Strict production mode returns HTTP 503 when all delivery providers are unconfigured',
+  async () => {
+    const origNodeEnv = process.env.NODE_ENV;
+    const origReqDelivery = process.env.REQUIRE_DELIVERY_IN_PROD;
+    const origSbUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const origResendKey = process.env.RESEND_API_KEY;
 
-  delete process.env.NEXT_PUBLIC_SUPABASE_URL;
-  delete process.env.SUPABASE_SERVICE_ROLE_KEY;
-  delete process.env.RESEND_API_KEY;
-  process.env.NODE_ENV = 'production';
-  process.env.REQUIRE_DELIVERY_IN_PROD = 'true';
+    delete process.env.NEXT_PUBLIC_SUPABASE_URL;
+    delete process.env.SUPABASE_SERVICE_ROLE_KEY;
+    delete process.env.RESEND_API_KEY;
+    process.env.NODE_ENV = 'production';
+    process.env.REQUIRE_DELIVERY_IN_PROD = 'true';
 
-  try {
-    const req = new Request('http://localhost/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: 'Prod Monitor',
-        email: 'monitor@example.com',
-        message: 'Testing production delivery configuration check.',
-      }),
-    });
-    const res = await contactApiPost(req);
-    assert.strictEqual(res.status, 503);
-    const data = await res.json();
-    assert.strictEqual(data.error, 'Contact services are temporarily unavailable. Please contact directly via email.');
-  } finally {
-    process.env.NODE_ENV = origNodeEnv;
-    if (origReqDelivery === undefined) delete process.env.REQUIRE_DELIVERY_IN_PROD;
-    else process.env.REQUIRE_DELIVERY_IN_PROD = origReqDelivery;
-    if (origSbUrl) process.env.NEXT_PUBLIC_SUPABASE_URL = origSbUrl;
-    if (origResendKey) process.env.RESEND_API_KEY = origResendKey;
+    try {
+      const req = new Request('http://localhost/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: 'Prod Monitor',
+          email: 'monitor@example.com',
+          message: 'Testing production delivery configuration check.',
+        }),
+      });
+      const res = await contactApiPost(req);
+      assert.strictEqual(res.status, 503);
+      const data = await res.json();
+      assert.strictEqual(
+        data.error,
+        'Contact services are temporarily unavailable. Please contact directly via email.'
+      );
+    } finally {
+      process.env.NODE_ENV = origNodeEnv;
+      if (origReqDelivery === undefined) delete process.env.REQUIRE_DELIVERY_IN_PROD;
+      else process.env.REQUIRE_DELIVERY_IN_PROD = origReqDelivery;
+      if (origSbUrl) process.env.NEXT_PUBLIC_SUPABASE_URL = origSbUrl;
+      if (origResendKey) process.env.RESEND_API_KEY = origResendKey;
+    }
   }
-});
+);
 
 // ============================================================================
 // DOMAIN 2: NAVIGATION & THEME SYSTEM ADVERSARIAL HARDENING
@@ -536,7 +603,10 @@ test('D2-02: Corrupted or hostile localStorage values default gracefully without
     } catch {
       mode = 'system';
     }
-    assert.ok(['light', 'dark', 'system'].includes(mode), `Must default safely for payload: ${raw}`);
+    assert.ok(
+      ['light', 'dark', 'system'].includes(mode),
+      `Must default safely for payload: ${raw}`
+    );
   }
 });
 
@@ -575,8 +645,16 @@ test('D2-03: Drawer scroll lock correctly engages and completely restores on unm
   cleanup();
 
   // Assert completely restored state
-  assert.strictEqual(mockBody.style.overflow, originalOverflow, 'Body overflow must be restored to original');
-  assert.strictEqual(mockBody.style.paddingRight, originalPaddingRight, 'Body padding must be restored to original');
+  assert.strictEqual(
+    mockBody.style.overflow,
+    originalOverflow,
+    'Body overflow must be restored to original'
+  );
+  assert.strictEqual(
+    mockBody.style.paddingRight,
+    originalPaddingRight,
+    'Body padding must be restored to original'
+  );
 });
 
 test('D2-04: Concurrent drawer and command palette state transitions do not leak scroll lock', () => {
@@ -639,7 +717,11 @@ test('D2-05: Click scroll mutex locks activeSection updates for 800ms', () => {
 
   // During scrolling, viewport passes over 'about' and 'skills'
   onIntersection('about');
-  assert.strictEqual(activeSection, 'contact', 'Active section must NOT be overridden by intermediate section during click scroll');
+  assert.strictEqual(
+    activeSection,
+    'contact',
+    'Active section must NOT be overridden by intermediate section during click scroll'
+  );
 
   onIntersection('skills');
   assert.strictEqual(activeSection, 'contact', 'Active section must stay locked on target section');
@@ -649,7 +731,18 @@ test('D2-05: Click scroll mutex locks activeSection updates for 800ms', () => {
 });
 
 test('D2-06: Deterministic section resolution respects page sequence when multiple sections intersect', () => {
-  const sectionIds = ['hero', 'paths', 'about', 'experience', 'education', 'achievements', 'projects', 'skills', 'trivia', 'contact'];
+  const sectionIds = [
+    'hero',
+    'paths',
+    'about',
+    'experience',
+    'education',
+    'achievements',
+    'projects',
+    'skills',
+    'trivia',
+    'contact',
+  ];
   const visibleMap = new Map();
 
   // Multiple sections simultaneously report visible in viewport (e.g. tablet landscape)
@@ -767,7 +860,10 @@ test('D3-04: TiltCard source completely disables 3D perspective and glare on coa
 });
 
 test('D3-05: MagneticButton source disables magnetic physics on touch devices', () => {
-  assert.match(magneticButtonSource, /const isCoarsePointer = useMediaQuery\('\(pointer: coarse\)'\);/);
+  assert.match(
+    magneticButtonSource,
+    /const isCoarsePointer = useMediaQuery\('\(pointer: coarse\)'\);/
+  );
   assert.match(magneticButtonSource, /const isHoverNone = useMediaQuery\('\(hover: none\)'\);/);
   assert.match(
     magneticButtonSource,
@@ -846,13 +942,22 @@ test('D4-01: HeroScene halts render loop when scrolled offscreen and resumes whe
 test('D4-02: SkillOrbit halts render loop when scrolled offscreen', () => {
   assert.match(skillOrbitSource, /const observer = new IntersectionObserver/);
   assert.match(skillOrbitSource, /isVisible = entry\.isIntersecting;/);
-  assert.match(skillOrbitSource, /if \(isVisible\) \{\s*startLoop\(\);\s*\} else \{\s*stopLoop\(\);\s*\}/);
+  assert.match(
+    skillOrbitSource,
+    /if \(isVisible\) \{\s*startLoop\(\);\s*\} else \{\s*stopLoop\(\);\s*\}/
+  );
 });
 
 // 4.2 Content Visibility Auto State Change
 test('D4-03: Both canvas components observe contentvisibilityautostatechange for offscreen containment', () => {
-  assert.match(heroSceneSource, /containerEl\.addEventListener\('contentvisibilityautostatechange', handleVisibilityState\);/);
-  assert.match(skillOrbitSource, /containerEl\.addEventListener\('contentvisibilityautostatechange', handleVisibilityState\);/);
+  assert.match(
+    heroSceneSource,
+    /containerEl\.addEventListener\('contentvisibilityautostatechange', handleVisibilityState\);/
+  );
+  assert.match(
+    skillOrbitSource,
+    /containerEl\.addEventListener\('contentvisibilityautostatechange', handleVisibilityState\);/
+  );
 });
 
 // 4.3 Canvas Dimension Bounds & Division-By-Zero Protection
@@ -890,7 +995,10 @@ test('D4-06: HeroScene cleanup function removes all event listeners and disconne
   assert.match(heroSceneSource, /window\.removeEventListener\('resize', resize\);/);
   assert.match(heroSceneSource, /window\.removeEventListener\('scroll', updateRect\);/);
   assert.match(heroSceneSource, /window\.removeEventListener\('mousemove', handleMouseMove\);/);
-  assert.match(heroSceneSource, /containerEl\.removeEventListener\('contentvisibilityautostatechange', handleVisibilityState\);/);
+  assert.match(
+    heroSceneSource,
+    /containerEl\.removeEventListener\('contentvisibilityautostatechange', handleVisibilityState\);/
+  );
   assert.match(heroSceneSource, /observer\.disconnect\(\);/);
   assert.match(heroSceneSource, /cancelAnimationFrame\(animationFrameId\);/);
   assert.match(heroSceneSource, /clearTimeout\(initTimer\);/);
@@ -898,7 +1006,10 @@ test('D4-06: HeroScene cleanup function removes all event listeners and disconne
 
 test('D4-07: SkillOrbit cleanup function removes all event listeners and disconnects observer', () => {
   assert.match(skillOrbitSource, /window\.removeEventListener\('resize', resize\);/);
-  assert.match(skillOrbitSource, /containerEl\.removeEventListener\('contentvisibilityautostatechange', handleVisibilityState\);/);
+  assert.match(
+    skillOrbitSource,
+    /containerEl\.removeEventListener\('contentvisibilityautostatechange', handleVisibilityState\);/
+  );
   assert.match(skillOrbitSource, /observer\.disconnect\(\);/);
   assert.match(skillOrbitSource, /cancelAnimationFrame\(animId\);/);
 });
@@ -915,11 +1026,15 @@ console.log('---------------------------------------------|-------|--------|----
 for (const [dom, stats] of Object.entries(SUITE.domainCounts)) {
   const domName = dom.length > 44 ? dom.slice(0, 41) + '...' : dom.padEnd(44);
   const status = stats.failed === 0 ? '✓ PASS' : '✗ FAIL';
-  console.log(`${domName} | ${String(stats.total).padEnd(5)} | ${String(stats.passed).padEnd(6)} | ${String(stats.failed).padEnd(6)} | ${status}`);
+  console.log(
+    `${domName} | ${String(stats.total).padEnd(5)} | ${String(stats.passed).padEnd(6)} | ${String(stats.failed).padEnd(6)} | ${status}`
+  );
 }
 console.log('---------------------------------------------|-------|--------|--------|-------');
 const totalStatus = SUITE.counts.failed === 0 ? '✓ 100% PASS' : '✗ FAILURES DETECTED';
-console.log(`GRAND TOTAL                                  | ${String(SUITE.counts.total).padEnd(5)} | ${String(SUITE.counts.passed).padEnd(6)} | ${String(SUITE.counts.failed).padEnd(6)} | ${totalStatus}`);
+console.log(
+  `GRAND TOTAL                                  | ${String(SUITE.counts.total).padEnd(5)} | ${String(SUITE.counts.passed).padEnd(6)} | ${String(SUITE.counts.failed).padEnd(6)} | ${totalStatus}`
+);
 console.log(`Total Elapsed Time: ${elapsed}s`);
 console.log('================================================================================\n');
 
@@ -927,6 +1042,8 @@ if (SUITE.counts.failed > 0) {
   console.error(`❌ ${SUITE.counts.failed} ADVERSARIAL HARDENING TESTS FAILED!`);
   process.exit(1);
 } else {
-  console.log(`🛡️ ALL ${SUITE.counts.total} ADVERSARIAL HARDENING TESTS PASSED WITH 100% SUCCESS RATE!`);
+  console.log(
+    `🛡️ ALL ${SUITE.counts.total} ADVERSARIAL HARDENING TESTS PASSED WITH 100% SUCCESS RATE!`
+  );
   process.exit(0);
 }

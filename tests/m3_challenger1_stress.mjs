@@ -80,18 +80,34 @@ console.log('--- FOCUS AREA 1: Touch Interaction & Coarse Pointer Simulation ---
 // 1.1 Source Code Inspection: TiltCard & MagneticButton Coarse Pointer Guards
 test('TC-1.1: TiltCard & MagneticButton incorporate coarse pointer & hover guards', () => {
   const tiltSource = fs.readFileSync('src/components/ui/TiltCard.tsx', 'utf8');
-  assert.ok(tiltSource.includes("useMediaQuery('(pointer: coarse)')"), 'TiltCard must query (pointer: coarse)');
-  assert.ok(tiltSource.includes("useMediaQuery('(hover: none)')"), 'TiltCard must query (hover: none)');
   assert.ok(
-    tiltSource.includes('isInteractiveTiltDisabled = prefersReducedMotion || isCoarsePointer || isHoverNone'),
+    tiltSource.includes("useMediaQuery('(pointer: coarse)')"),
+    'TiltCard must query (pointer: coarse)'
+  );
+  assert.ok(
+    tiltSource.includes("useMediaQuery('(hover: none)')"),
+    'TiltCard must query (hover: none)'
+  );
+  assert.ok(
+    tiltSource.includes(
+      'isInteractiveTiltDisabled = prefersReducedMotion || isCoarsePointer || isHoverNone'
+    ),
     'TiltCard isInteractiveTiltDisabled calculation missing or incorrect'
   );
 
   const magSource = fs.readFileSync('src/components/ui/MagneticButton.tsx', 'utf8');
-  assert.ok(magSource.includes("useMediaQuery('(pointer: coarse)')"), 'MagneticButton must query (pointer: coarse)');
-  assert.ok(magSource.includes("useMediaQuery('(hover: none)')"), 'MagneticButton must query (hover: none)');
   assert.ok(
-    magSource.includes('isMagneticDisabled = prefersReducedMotion || isCoarsePointer || isHoverNone'),
+    magSource.includes("useMediaQuery('(pointer: coarse)')"),
+    'MagneticButton must query (pointer: coarse)'
+  );
+  assert.ok(
+    magSource.includes("useMediaQuery('(hover: none)')"),
+    'MagneticButton must query (hover: none)'
+  );
+  assert.ok(
+    magSource.includes(
+      'isMagneticDisabled = prefersReducedMotion || isCoarsePointer || isHoverNone'
+    ),
     'MagneticButton isMagneticDisabled calculation missing or incorrect'
   );
 });
@@ -100,7 +116,13 @@ test('TC-1.1: TiltCard & MagneticButton incorporate coarse pointer & hover guard
 test('TC-1.2: TiltCard simulation under coarse pointer prevents stuck tilt & persistent glare', () => {
   // We model the TiltCard component's exact state machine
   class TiltCardSimulator {
-    constructor({ prefersReducedMotion = false, isCoarsePointer = false, isHoverNone = false, glare = true, maxTilt = 8 }) {
+    constructor({
+      prefersReducedMotion = false,
+      isCoarsePointer = false,
+      isHoverNone = false,
+      glare = true,
+      maxTilt = 8,
+    }) {
       this.prefersReducedMotion = prefersReducedMotion;
       this.isCoarsePointer = isCoarsePointer;
       this.isHoverNone = isHoverNone;
@@ -176,12 +198,32 @@ test('TC-1.2: TiltCard simulation under coarse pointer prevents stuck tilt & per
 
   // 1.2.1 Touch / Coarse pointer environment
   const touchCard = new TiltCardSimulator({ isCoarsePointer: true });
-  assert.strictEqual(touchCard.isInteractiveTiltDisabled, true, 'Tilt must be disabled for coarse pointer');
-  assert.strictEqual(touchCard.perspectiveStyle, undefined, 'Perspective must be undefined for coarse pointer');
-  assert.strictEqual(touchCard.transformStyle, undefined, 'transformStyle must be undefined for coarse pointer');
+  assert.strictEqual(
+    touchCard.isInteractiveTiltDisabled,
+    true,
+    'Tilt must be disabled for coarse pointer'
+  );
+  assert.strictEqual(
+    touchCard.perspectiveStyle,
+    undefined,
+    'Perspective must be undefined for coarse pointer'
+  );
+  assert.strictEqual(
+    touchCard.transformStyle,
+    undefined,
+    'transformStyle must be undefined for coarse pointer'
+  );
   assert.strictEqual(touchCard.isGlareRendered, false, 'Glare must NOT render on touch device');
-  assert.deepStrictEqual(touchCard.animateProps, { rotateX: 0, rotateY: 0 }, 'Animate must be zero tilt');
-  assert.deepStrictEqual(touchCard.transitionProps, { duration: 0 }, 'Transition must be duration 0 on touch');
+  assert.deepStrictEqual(
+    touchCard.animateProps,
+    { rotateX: 0, rotateY: 0 },
+    'Animate must be zero tilt'
+  );
+  assert.deepStrictEqual(
+    touchCard.transitionProps,
+    { duration: 0 },
+    'Transition must be duration 0 on touch'
+  );
 
   // Trigger simulated touch events / synthetic mouse events
   touchCard.handleMouseEnter();
@@ -198,16 +240,33 @@ test('TC-1.2: TiltCard simulation under coarse pointer prevents stuck tilt & per
 
   // Switch to coarse pointer (tablet mode activated)
   dynamicCard.isCoarsePointer = true;
-  assert.strictEqual(dynamicCard.isInteractiveTiltDisabled, true, 'Should instantly switch to disabled');
-  assert.deepStrictEqual(dynamicCard.animateProps, { rotateX: 0, rotateY: 0 }, 'Animate output must collapse to 0,0');
-  assert.deepStrictEqual(dynamicCard.transitionProps, { duration: 0 }, 'Transition must be duration 0 (instant zero latency)');
+  assert.strictEqual(
+    dynamicCard.isInteractiveTiltDisabled,
+    true,
+    'Should instantly switch to disabled'
+  );
+  assert.deepStrictEqual(
+    dynamicCard.animateProps,
+    { rotateX: 0, rotateY: 0 },
+    'Animate output must collapse to 0,0'
+  );
+  assert.deepStrictEqual(
+    dynamicCard.transitionProps,
+    { duration: 0 },
+    'Transition must be duration 0 (instant zero latency)'
+  );
   assert.strictEqual(dynamicCard.isGlareRendered, false, 'Glare element must immediately unmount');
 });
 
 // 1.3 MagneticButton Behavioral State Machine Simulation under Touch/Coarse Pointer
 test('TC-1.3: MagneticButton simulation under coarse pointer prevents stuck translation', () => {
   class MagneticButtonSimulator {
-    constructor({ prefersReducedMotion = false, isCoarsePointer = false, isHoverNone = false, strength = 25 }) {
+    constructor({
+      prefersReducedMotion = false,
+      isCoarsePointer = false,
+      isHoverNone = false,
+      strength = 25,
+    }) {
       this.prefersReducedMotion = prefersReducedMotion;
       this.isCoarsePointer = isCoarsePointer;
       this.isHoverNone = isHoverNone;
@@ -256,7 +315,11 @@ test('TC-1.3: MagneticButton simulation under coarse pointer prevents stuck tran
   assert.deepStrictEqual(touchBtn.transitionProps, { duration: 0 });
 
   touchBtn.handleMouseMove(400, 500);
-  assert.deepStrictEqual(touchBtn.position, { x: 0, y: 0 }, 'Position must not change on touch move');
+  assert.deepStrictEqual(
+    touchBtn.position,
+    { x: 0, y: 0 },
+    'Position must not change on touch move'
+  );
   assert.deepStrictEqual(touchBtn.animateProps, { x: 0, y: 0 });
 
   // Desktop -> Tablet switch
@@ -266,20 +329,37 @@ test('TC-1.3: MagneticButton simulation under coarse pointer prevents stuck tran
 
   // Switch to coarse pointer
   dynamicBtn.isCoarsePointer = true;
-  assert.deepStrictEqual(dynamicBtn.animateProps, { x: 0, y: 0 }, 'Animate output immediately snaps to 0,0');
-  assert.deepStrictEqual(dynamicBtn.transitionProps, { duration: 0 }, 'Transition duration collapses to 0');
+  assert.deepStrictEqual(
+    dynamicBtn.animateProps,
+    { x: 0, y: 0 },
+    'Animate output immediately snaps to 0,0'
+  );
+  assert.deepStrictEqual(
+    dynamicBtn.transitionProps,
+    { duration: 0 },
+    'Transition duration collapses to 0'
+  );
 });
 
 // 1.4 Unconstrained / Degenerate Coordinate Invariance
 test('TC-1.4: Extreme coordinate inputs (NaN, Infinity, negative) safely handled on mouse leave', () => {
   const tiltSource = fs.readFileSync('src/components/ui/TiltCard.tsx', 'utf8');
   assert.ok(tiltSource.includes('handleMouseLeave'), 'handleMouseLeave must exist in TiltCard');
-  assert.ok(tiltSource.includes('cancelAnimationFrame(rafRef.current)'), 'RAF must be canceled on leave in TiltCard');
+  assert.ok(
+    tiltSource.includes('cancelAnimationFrame(rafRef.current)'),
+    'RAF must be canceled on leave in TiltCard'
+  );
   assert.ok(tiltSource.includes('setTilt({ x: 0, y: 0 })'), 'Tilt must be zeroed on leave');
 
   const magSource = fs.readFileSync('src/components/ui/MagneticButton.tsx', 'utf8');
-  assert.ok(magSource.includes('handleMouseLeave'), 'handleMouseLeave must exist in MagneticButton');
-  assert.ok(magSource.includes('cancelAnimationFrame(rafRef.current)'), 'RAF must be canceled on leave in MagneticButton');
+  assert.ok(
+    magSource.includes('handleMouseLeave'),
+    'handleMouseLeave must exist in MagneticButton'
+  );
+  assert.ok(
+    magSource.includes('cancelAnimationFrame(rafRef.current)'),
+    'RAF must be canceled on leave in MagneticButton'
+  );
   assert.ok(magSource.includes('setPosition({ x: 0, y: 0 })'), 'Position must be zeroed on leave');
 });
 
@@ -288,10 +368,19 @@ test('TC-1.5: CSS @media (pointer: coarse) rules neutralize hover scaling & curs
   const premiumCss = fs.readFileSync('src/styles/premium.css', 'utf8');
   const rules = getMediaBlockContent(premiumCss, '@media (pointer: coarse), (hover: none)');
   assert.ok(rules, 'premium.css must declare @media (pointer: coarse), (hover: none)');
-  assert.ok(rules.includes('.cursor-glow'), 'Cursor glow must be targeted in coarse pointer media query');
-  assert.ok(rules.includes('display: none !important'), 'Cursor glow must have display: none !important');
+  assert.ok(
+    rules.includes('.cursor-glow'),
+    'Cursor glow must be targeted in coarse pointer media query'
+  );
+  assert.ok(
+    rules.includes('display: none !important'),
+    'Cursor glow must have display: none !important'
+  );
   assert.ok(rules.includes('.magnetic-button:hover'), 'Magnetic button hover must be targeted');
-  assert.ok(rules.includes('transform: none !important'), 'Magnetic button must have transform: none !important');
+  assert.ok(
+    rules.includes('transform: none !important'),
+    'Magnetic button must have transform: none !important'
+  );
 });
 
 // ============================================================================
@@ -326,7 +415,10 @@ test('TC-2.1: Mathematical verification of CSS clamp() curves across 320px, 360p
 
     assert.ok(headingPx >= 40, `Heading at ${vp.width}px (${headingPx}px) must be >= 40px minimum`);
     assert.ok(headingPx <= 92, `Heading at ${vp.width}px (${headingPx}px) must be <= 92px maximum`);
-    assert.ok(headingPx >= previousHeroHeadingPx, `Heading scale must be monotonic with viewport expansion`);
+    assert.ok(
+      headingPx >= previousHeroHeadingPx,
+      `Heading scale must be monotonic with viewport expansion`
+    );
     previousHeroHeadingPx = headingPx;
   }
 
@@ -358,7 +450,10 @@ test('TC-2.2: Ultra-mobile 320px boundary constraints prevent horizontal overflo
 
   const heroSource = fs.readFileSync('src/components/sections/HeroSection.tsx', 'utf8');
   // Status badge constraint
-  assert.ok(heroSource.includes('max-w-[94vw]'), 'Status badge must have max-w-[94vw] for narrow viewports');
+  assert.ok(
+    heroSource.includes('max-w-[94vw]'),
+    'Status badge must have max-w-[94vw] for narrow viewports'
+  );
   // CTA buttons flex container
   assert.ok(
     heroSource.includes('flex w-full flex-col items-center justify-center gap-3 sm:flex-row'),
@@ -367,7 +462,10 @@ test('TC-2.2: Ultra-mobile 320px boundary constraints prevent horizontal overflo
 
   // Social Orbit mobile constraint: under 360px width, max-w-[280px]
   const socialSource = fs.readFileSync('src/components/contact/SocialOrbit.tsx', 'utf8');
-  assert.ok(socialSource.includes('max-w-[280px]'), 'SocialOrbit must have max-w-[280px] fallback for < 360px screens');
+  assert.ok(
+    socialSource.includes('max-w-[280px]'),
+    'SocialOrbit must have max-w-[280px] fallback for < 360px screens'
+  );
 
   // Verify section horizontal padding rules: px-4 on mobile (= 16px each side)
   const sectionsToCheck = [
@@ -399,16 +497,28 @@ test('TC-2.2: Ultra-mobile 320px boundary constraints prevent horizontal overflo
 test('TC-2.3: Fluid typography utilities in premium.css match exact clamp contracts', () => {
   const premiumCss = fs.readFileSync('src/styles/premium.css', 'utf8');
   assert.ok(premiumCss.includes('.fluid-display {'), '.fluid-display must be defined');
-  assert.ok(premiumCss.includes('font-size: clamp(2.5rem, 7vw + 1rem, 6rem);'), '.fluid-display clamp syntax correct');
+  assert.ok(
+    premiumCss.includes('font-size: clamp(2.5rem, 7vw + 1rem, 6rem);'),
+    '.fluid-display clamp syntax correct'
+  );
 
   assert.ok(premiumCss.includes('.fluid-h1 {'), '.fluid-h1 must be defined');
-  assert.ok(premiumCss.includes('font-size: clamp(2.25rem, 5.5vw + 0.75rem, 5.5rem);'), '.fluid-h1 clamp syntax correct');
+  assert.ok(
+    premiumCss.includes('font-size: clamp(2.25rem, 5.5vw + 0.75rem, 5.5rem);'),
+    '.fluid-h1 clamp syntax correct'
+  );
 
   assert.ok(premiumCss.includes('.fluid-h2 {'), '.fluid-h2 must be defined');
-  assert.ok(premiumCss.includes('font-size: clamp(1.75rem, 3.5vw + 0.5rem, 3rem);'), '.fluid-h2 clamp syntax correct');
+  assert.ok(
+    premiumCss.includes('font-size: clamp(1.75rem, 3.5vw + 0.5rem, 3rem);'),
+    '.fluid-h2 clamp syntax correct'
+  );
 
   assert.ok(premiumCss.includes('.fluid-h3 {'), '.fluid-h3 must be defined');
-  assert.ok(premiumCss.includes('font-size: clamp(1.25rem, 2vw + 0.5rem, 1.875rem);'), '.fluid-h3 clamp syntax correct');
+  assert.ok(
+    premiumCss.includes('font-size: clamp(1.25rem, 2vw + 0.5rem, 1.875rem);'),
+    '.fluid-h3 clamp syntax correct'
+  );
 });
 
 // ============================================================================
@@ -419,11 +529,20 @@ console.log('\n--- FOCUS AREA 3: Prefers-Reduced-Motion Fallbacks ---');
 // 3.1 usePrefersReducedMotion Hook Architecture
 test('TC-3.1: usePrefersReducedMotion uses useMediaQuery with React 19 useSyncExternalStore', () => {
   const hookSource = fs.readFileSync('src/hooks/usePrefersReducedMotion.ts', 'utf8');
-  assert.ok(hookSource.includes("REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)'"), 'Must query prefers-reduced-motion');
-  assert.ok(hookSource.includes('useMediaQuery(REDUCED_MOTION_QUERY'), 'Must delegate to useMediaQuery');
+  assert.ok(
+    hookSource.includes("REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)'"),
+    'Must query prefers-reduced-motion'
+  );
+  assert.ok(
+    hookSource.includes('useMediaQuery(REDUCED_MOTION_QUERY'),
+    'Must delegate to useMediaQuery'
+  );
 
   const mediaSource = fs.readFileSync('src/hooks/useMediaQuery.ts', 'utf8');
-  assert.ok(mediaSource.includes('useSyncExternalStore'), 'Must use React 19 useSyncExternalStore for hydration safety');
+  assert.ok(
+    mediaSource.includes('useSyncExternalStore'),
+    'Must use React 19 useSyncExternalStore for hydration safety'
+  );
   assert.ok(mediaSource.includes('getSnapshot'), 'Must provide getSnapshot');
   assert.ok(mediaSource.includes('getServerSnapshot'), 'Must provide getServerSnapshot');
 });
@@ -434,26 +553,28 @@ test('TC-3.2: TiltCard and MagneticButton collapse with duration: 0 when reduced
   // TiltCard animate & transition
   assert.ok(
     tiltSource.includes('isInteractiveTiltDisabled\n            ? { rotateX: 0, rotateY: 0 }') ||
-    tiltSource.includes('isInteractiveTiltDisabled ? { rotateX: 0, rotateY: 0 }') ||
-    tiltSource.includes('rotateX: 0, rotateY: 0'),
+      tiltSource.includes('isInteractiveTiltDisabled ? { rotateX: 0, rotateY: 0 }') ||
+      tiltSource.includes('rotateX: 0, rotateY: 0'),
     'TiltCard must animate to 0,0 when disabled'
   );
   assert.ok(
     tiltSource.includes('isInteractiveTiltDisabled\n            ? { duration: 0 }') ||
-    tiltSource.includes('isInteractiveTiltDisabled ? { duration: 0 }') ||
-    tiltSource.includes('{ duration: 0 }'),
+      tiltSource.includes('isInteractiveTiltDisabled ? { duration: 0 }') ||
+      tiltSource.includes('{ duration: 0 }'),
     'TiltCard transition duration must be 0 for reduced motion'
   );
 
   const magSource = fs.readFileSync('src/components/ui/MagneticButton.tsx', 'utf8');
   assert.ok(
-    magSource.includes('animate={isMagneticDisabled ? { x: 0, y: 0 } : { x: position.x, y: position.y }}'),
+    magSource.includes(
+      'animate={isMagneticDisabled ? { x: 0, y: 0 } : { x: position.x, y: position.y }}'
+    ),
     'MagneticButton must animate to 0,0 when disabled'
   );
   assert.ok(
     magSource.includes('isMagneticDisabled\n          ? { duration: 0 }') ||
-    magSource.includes('isMagneticDisabled ? { duration: 0 }') ||
-    magSource.includes('{ duration: 0 }'),
+      magSource.includes('isMagneticDisabled ? { duration: 0 }') ||
+      magSource.includes('{ duration: 0 }'),
     'MagneticButton transition duration must be 0 for reduced motion'
   );
 });
@@ -461,12 +582,18 @@ test('TC-3.2: TiltCard and MagneticButton collapse with duration: 0 when reduced
 // 3.3 TextReveal Zero-Latency Reduced-Motion Presentation
 test('TC-3.3: TextReveal eliminates staggerChildren and 3D rotations on reduced motion', () => {
   const textRevealSource = fs.readFileSync('src/components/hero/TextReveal.tsx', 'utf8');
-  assert.ok(textRevealSource.includes('usePrefersReducedMotion'), 'TextReveal must use usePrefersReducedMotion');
+  assert.ok(
+    textRevealSource.includes('usePrefersReducedMotion'),
+    'TextReveal must use usePrefersReducedMotion'
+  );
   assert.ok(
     textRevealSource.includes('staggerChildren: prefersReducedMotion ? 0 : 0.04'),
     'staggerChildren must be 0 on reduced motion'
   );
-  assert.ok(textRevealSource.includes('charVariants = prefersReducedMotion'), 'charVariants must branch on prefersReducedMotion');
+  assert.ok(
+    textRevealSource.includes('charVariants = prefersReducedMotion'),
+    'charVariants must branch on prefersReducedMotion'
+  );
 
   // Verify that for reduced motion, charVariants does NOT use rotateX or y offset
   // Extract charVariants definition
@@ -474,7 +601,10 @@ test('TC-3.3: TextReveal eliminates staggerChildren and 3D rotations on reduced 
     textRevealSource.indexOf('const charVariants = prefersReducedMotion'),
     textRevealSource.indexOf('return (')
   );
-  assert.ok(charVariantsSnippet.includes('opacity: 1'), 'Reduced motion variant must animate opacity only');
+  assert.ok(
+    charVariantsSnippet.includes('opacity: 1'),
+    'Reduced motion variant must animate opacity only'
+  );
   assert.ok(
     charVariantsSnippet.includes('transition: { duration: 0.2 }'),
     'Reduced motion variant uses fast direct opacity'
@@ -486,22 +616,40 @@ test('TC-3.4: CSS reduced-motion rules force duration to 0.01ms and suppress bac
   const premiumCss = fs.readFileSync('src/styles/premium.css', 'utf8');
   const rules = getMediaBlockContent(premiumCss, '@media (prefers-reduced-motion: reduce)');
   assert.ok(rules, 'premium.css must declare @media (prefers-reduced-motion: reduce)');
-  assert.ok(rules.includes('animation-duration: 0.01ms !important'), 'Animations must be clamped to 0.01ms');
-  assert.ok(rules.includes('transition-duration: 0.01ms !important'), 'Transitions must be clamped to 0.01ms');
-  assert.ok(rules.includes('animation-iteration-count: 1 !important'), 'Iteration count must be clamped to 1');
+  assert.ok(
+    rules.includes('animation-duration: 0.01ms !important'),
+    'Animations must be clamped to 0.01ms'
+  );
+  assert.ok(
+    rules.includes('transition-duration: 0.01ms !important'),
+    'Transitions must be clamped to 0.01ms'
+  );
+  assert.ok(
+    rules.includes('animation-iteration-count: 1 !important'),
+    'Iteration count must be clamped to 1'
+  );
   assert.ok(rules.includes('.morph-blob'), 'Morphing background blobs must be hidden');
   assert.ok(rules.includes('.particle'), 'Floating particles must be hidden');
 
   const globalsCss = fs.readFileSync('src/styles/globals.css', 'utf8');
-  assert.ok(globalsCss.includes('@media (prefers-reduced-motion: reduce)'), 'globals.css must have reduced-motion guard');
+  assert.ok(
+    globalsCss.includes('@media (prefers-reduced-motion: reduce)'),
+    'globals.css must have reduced-motion guard'
+  );
   assert.ok(globalsCss.includes('::view-transition-group(*)'), 'View transitions group disabled');
-  assert.ok(globalsCss.includes('animation: none !important'), 'View transitions animation set to none');
+  assert.ok(
+    globalsCss.includes('animation: none !important'),
+    'View transitions animation set to none'
+  );
 });
 
 // 3.5 HeroSection Pulse Indicator Reduced-Motion Suppression
 test('TC-3.5: HeroSection ping animation is silenced with motion-reduce:hidden', () => {
   const heroSource = fs.readFileSync('src/components/sections/HeroSection.tsx', 'utf8');
-  assert.ok(heroSource.includes('motion-reduce:hidden'), 'Status badge ping effect must have motion-reduce:hidden');
+  assert.ok(
+    heroSource.includes('motion-reduce:hidden'),
+    'Status badge ping effect must have motion-reduce:hidden'
+  );
 });
 
 // ============================================================================
@@ -588,7 +736,11 @@ test('TC-4.1: HeroScene simulation verifies animation loop halts when offscreen 
   const framesBefore = scene.scheduledFrames;
   scene.render();
   assert.strictEqual(scene.renderedFrames, 1, 'Render must abort when !isVisible');
-  assert.strictEqual(scene.scheduledFrames, framesBefore, 'Must NOT schedule any new requestAnimationFrame');
+  assert.strictEqual(
+    scene.scheduledFrames,
+    framesBefore,
+    'Must NOT schedule any new requestAnimationFrame'
+  );
 
   // User scrolls back up
   scene.onIntersection(true);
@@ -603,7 +755,11 @@ test('TC-4.1: HeroScene simulation verifies animation loop halts when offscreen 
   // Reduced motion test: loop must NEVER start
   const reducedScene = new HeroSceneSimulator({ prefersReducedMotion: true });
   reducedScene.startLoop();
-  assert.strictEqual(reducedScene.isRunning, false, 'HeroScene loop must not run when prefersReducedMotion = true');
+  assert.strictEqual(
+    reducedScene.isRunning,
+    false,
+    'HeroScene loop must not run when prefersReducedMotion = true'
+  );
 });
 
 // 4.2 SkillOrbit Animation Loop Suspension State Machine Simulation
@@ -693,18 +849,39 @@ test('TC-4.2: SkillOrbit simulation verifies animation loop halts when offscreen
 // 4.3 Clean Event Listener & Observer Teardown on Unmount
 test('TC-4.3: HeroScene and SkillOrbit clean up all listeners, timeouts, and observers on unmount', () => {
   const heroSource = fs.readFileSync('src/components/hero/HeroScene.tsx', 'utf8');
-  assert.ok(heroSource.includes('clearTimeout(initTimer)'), 'initTimer must be cleared on unmount in HeroScene');
+  assert.ok(
+    heroSource.includes('clearTimeout(initTimer)'),
+    'initTimer must be cleared on unmount in HeroScene'
+  );
   assert.ok(heroSource.includes('stopLoop()'), 'stopLoop must be called on unmount in HeroScene');
-  assert.ok(heroSource.includes('cancelAnimationFrame(animationFrameId)'), 'cancelAnimationFrame on unmount');
-  assert.ok(heroSource.includes("window.removeEventListener('resize', resize)"), 'resize listener removed');
-  assert.ok(heroSource.includes("window.removeEventListener('scroll', updateRect)"), 'scroll listener removed');
-  assert.ok(heroSource.includes("window.removeEventListener('mousemove', handleMouseMove)"), 'mousemove listener removed');
+  assert.ok(
+    heroSource.includes('cancelAnimationFrame(animationFrameId)'),
+    'cancelAnimationFrame on unmount'
+  );
+  assert.ok(
+    heroSource.includes("window.removeEventListener('resize', resize)"),
+    'resize listener removed'
+  );
+  assert.ok(
+    heroSource.includes("window.removeEventListener('scroll', updateRect)"),
+    'scroll listener removed'
+  );
+  assert.ok(
+    heroSource.includes("window.removeEventListener('mousemove', handleMouseMove)"),
+    'mousemove listener removed'
+  );
   assert.ok(heroSource.includes('observer.disconnect()'), 'observer disconnected in HeroScene');
 
   const orbitSource = fs.readFileSync('src/components/skills/SkillOrbit.tsx', 'utf8');
   assert.ok(orbitSource.includes('stopLoop()'), 'stopLoop must be called on unmount in SkillOrbit');
-  assert.ok(orbitSource.includes('cancelAnimationFrame(animId)'), 'cancelAnimationFrame on unmount in SkillOrbit');
-  assert.ok(orbitSource.includes("window.removeEventListener('resize', resize)"), 'resize listener removed in SkillOrbit');
+  assert.ok(
+    orbitSource.includes('cancelAnimationFrame(animId)'),
+    'cancelAnimationFrame on unmount in SkillOrbit'
+  );
+  assert.ok(
+    orbitSource.includes("window.removeEventListener('resize', resize)"),
+    'resize listener removed in SkillOrbit'
+  );
   assert.ok(orbitSource.includes('observer.disconnect()'), 'observer disconnected in SkillOrbit');
 });
 
@@ -724,8 +901,13 @@ test('TC-4.4: content-visibility: auto is applied to all 9 below-the-fold sectio
   ];
 
   for (const id of belowTheFoldIds) {
-    const sectionMatch = globals.match(new RegExp(`#${id}\\s*\\{[\\s\\S]*?content-visibility:\\s*auto;[\\s\\S]*?\\}`));
-    assert.ok(sectionMatch, `Section #${id} must have content-visibility: auto declared in globals.css`);
+    const sectionMatch = globals.match(
+      new RegExp(`#${id}\\s*\\{[\\s\\S]*?content-visibility:\\s*auto;[\\s\\S]*?\\}`)
+    );
+    assert.ok(
+      sectionMatch,
+      `Section #${id} must have content-visibility: auto declared in globals.css`
+    );
     assert.ok(
       sectionMatch[0].includes('contain-intrinsic-size:'),
       `Section #${id} must specify contain-intrinsic-size to prevent scrollbar jumps`
@@ -741,13 +923,17 @@ test('TC-4.4: content-visibility: auto is applied to all 9 below-the-fold sectio
 // SUMMARY & VERDICT
 // ============================================================================
 console.log('\n================================================================');
-console.log(`STRESS TEST SUMMARY: ${passedTests} PASSED, ${failedTests} FAILED out of ${totalTests} tests`);
+console.log(
+  `STRESS TEST SUMMARY: ${passedTests} PASSED, ${failedTests} FAILED out of ${totalTests} tests`
+);
 console.log('================================================================\n');
 
 if (failedTests > 0) {
   console.error('VERDICT: REQUEST_CHANGES (Defects detected during empirical stress testing)');
   process.exit(1);
 } else {
-  console.log('VERDICT: APPROVE (All adversarial empirical stress tests passed with 100% conformance)');
+  console.log(
+    'VERDICT: APPROVE (All adversarial empirical stress tests passed with 100% conformance)'
+  );
   process.exit(0);
 }

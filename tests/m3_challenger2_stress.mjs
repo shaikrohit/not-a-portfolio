@@ -50,18 +50,38 @@ const projectsSource = fs.readFileSync(projectsSectionPath, 'utf8');
 test('WAI-ARIA: Tablist, Tab, and Tabpanel roles and binding attributes', () => {
   // Tablist container role and accessible label
   assert.match(projectsSource, /role=["']tablist["']/, 'Tablist must declare role="tablist"');
-  assert.match(projectsSource, /aria-label=["']Project categories["']/, 'Tablist must declare aria-label="Project categories"');
+  assert.match(
+    projectsSource,
+    /aria-label=["']Project categories["']/,
+    'Tablist must declare aria-label="Project categories"'
+  );
 
   // Tab roles and binding attributes
   assert.match(projectsSource, /role=["']tab["']/, 'Tabs must declare role="tab"');
-  assert.match(projectsSource, /id=\{`project-tab-\$\{tab\.id\}`\}/, 'Tabs must have dynamic ID matching pattern project-tab-${tab.id}');
-  assert.match(projectsSource, /aria-controls=["']projects-grid["']/, 'Tabs must have aria-controls="projects-grid"');
-  assert.match(projectsSource, /aria-selected=\{isSelected\}/, 'Tabs must dynamically bind aria-selected={isSelected}');
+  assert.match(
+    projectsSource,
+    /id=\{`project-tab-\$\{tab\.id\}`\}/,
+    'Tabs must have dynamic ID matching pattern project-tab-${tab.id}'
+  );
+  assert.match(
+    projectsSource,
+    /aria-controls=["']projects-grid["']/,
+    'Tabs must have aria-controls="projects-grid"'
+  );
+  assert.match(
+    projectsSource,
+    /aria-selected=\{isSelected\}/,
+    'Tabs must dynamically bind aria-selected={isSelected}'
+  );
 
   // Tabpanel container role and binding
   assert.match(projectsSource, /id=["']projects-grid["']/, 'Grid must have id="projects-grid"');
   assert.match(projectsSource, /role=["']tabpanel["']/, 'Grid must have role="tabpanel"');
-  assert.match(projectsSource, /aria-labelledby=\{`project-tab-\$\{activeFilter\}`\}/, 'Tabpanel must have dynamic aria-labelledby matching active tab ID');
+  assert.match(
+    projectsSource,
+    /aria-labelledby=\{`project-tab-\$\{activeFilter\}`\}/,
+    'Tabpanel must have dynamic aria-labelledby matching active tab ID'
+  );
 });
 
 // 1.2 Roving Tabindex Implementation
@@ -86,9 +106,21 @@ test('WAI-ARIA: Roving tabindex implementation (tabIndex={isSelected ? 0 : -1})'
     const zeros = tabIndices.filter((t) => t.tabIndex === 0);
     const negOnes = tabIndices.filter((t) => t.tabIndex === -1);
 
-    assert.strictEqual(zeros.length, 1, `Exactly one tab must have tabIndex=0 when active is ${activeId}`);
-    assert.strictEqual(negOnes.length, tabs.length - 1, `Remaining tabs must have tabIndex=-1 when active is ${activeId}`);
-    assert.strictEqual(zeros[0].id, activeId, `The active tab ${activeId} must be the one with tabIndex=0`);
+    assert.strictEqual(
+      zeros.length,
+      1,
+      `Exactly one tab must have tabIndex=0 when active is ${activeId}`
+    );
+    assert.strictEqual(
+      negOnes.length,
+      tabs.length - 1,
+      `Remaining tabs must have tabIndex=-1 when active is ${activeId}`
+    );
+    assert.strictEqual(
+      zeros[0].id,
+      activeId,
+      `The active tab ${activeId} must be the one with tabIndex=0`
+    );
   }
 });
 
@@ -146,7 +178,11 @@ test('Keyboard: ArrowLeft, ArrowRight, ArrowUp, ArrowDown, Home, End cycles & wr
   let res = simulateKeyDown('all', 'ArrowRight');
   assert.strictEqual(res.prevented, true, 'ArrowRight must call preventDefault');
   assert.strictEqual(res.nextActiveId, 'featured', 'all + ArrowRight -> featured');
-  assert.strictEqual(res.focusedId, 'project-tab-featured', 'Focused element must be project-tab-featured');
+  assert.strictEqual(
+    res.focusedId,
+    'project-tab-featured',
+    'Focused element must be project-tab-featured'
+  );
 
   res = simulateKeyDown('featured', 'ArrowDown');
   assert.strictEqual(res.prevented, true, 'ArrowDown must call preventDefault');
@@ -258,15 +294,43 @@ console.log('\n--- MODULE 2: Semantic HTML Landmarks & Structure ---');
 
 // 2.1 Project Cards Semantic Structure
 test('Semantic HTML: ProjectsSection cards use <article>, <header>, <footer tags', () => {
-  assert.match(projectsSource, /<motion\.article/, 'Project cards must be wrapped in <motion.article>');
-  assert.match(projectsSource, /<\/motion\.article>/, 'Project cards must have closing </motion.article>');
+  assert.match(
+    projectsSource,
+    /<motion\.article/,
+    'Project cards must be wrapped in <motion.article>'
+  );
+  assert.match(
+    projectsSource,
+    /<\/motion\.article>/,
+    'Project cards must have closing </motion.article>'
+  );
 
   // Card sub-landmarks
-  assert.match(projectsSource, /<header\s+className=["']mb-5/, 'Project card must contain <header>');
-  assert.match(projectsSource, /<h3[^>]*>[\s\S]*?\{project\.title\}[\s\S]*?<\/h3>/, 'Project card must use <h3> for title');
-  assert.match(projectsSource, /<p\s+className=["'][^"']*text-\[var\(--text-secondary\)\]/, 'Project card must use <p> for description');
-  assert.match(projectsSource, /<footer\s+className=["']mt-8/, 'Project card must contain <footer>');
-  assert.match(projectsSource, /<ul[\s\S]*?aria-label=\{`Technologies used in \$\{project\.title\}`\}/, 'Tech stack must be accessible <ul>');
+  assert.match(
+    projectsSource,
+    /<header\s+className=["']mb-5/,
+    'Project card must contain <header>'
+  );
+  assert.match(
+    projectsSource,
+    /<h3[^>]*>[\s\S]*?\{project\.title\}[\s\S]*?<\/h3>/,
+    'Project card must use <h3> for title'
+  );
+  assert.match(
+    projectsSource,
+    /<p\s+className=["'][^"']*text-\[var\(--text-secondary\)\]/,
+    'Project card must use <p> for description'
+  );
+  assert.match(
+    projectsSource,
+    /<footer\s+className=["']mt-8/,
+    'Project card must contain <footer>'
+  );
+  assert.match(
+    projectsSource,
+    /<ul[\s\S]*?aria-label=\{`Technologies used in \$\{project\.title\}`\}/,
+    'Tech stack must be accessible <ul>'
+  );
   assert.match(projectsSource, /<li\s+key=\{tech\}/, 'Tech badges must be <li>');
 });
 
@@ -280,13 +344,37 @@ test('Semantic HTML: ExperienceSection uses <article>, hierarchical headings, an
   assert.match(expSource, /<\/article>/, 'Experience cards must have closing </article>');
 
   assert.match(expSource, /<header\s+className=["']mb-4/, 'Experience card must contain <header>');
-  assert.match(expSource, /<h3[^>]*>[\s\S]*?\{exp\.role\}[\s\S]*?<\/h3>/, 'Experience role must be <h3>');
-  assert.match(expSource, /<h4[^>]*>[\s\S]*?\{exp\.company\}[\s\S]*?<\/h4>/, 'Experience company must be <h4>');
+  assert.match(
+    expSource,
+    /<h3[^>]*>[\s\S]*?\{exp\.role\}[\s\S]*?<\/h3>/,
+    'Experience role must be <h3>'
+  );
+  assert.match(
+    expSource,
+    /<h4[^>]*>[\s\S]*?\{exp\.company\}[\s\S]*?<\/h4>/,
+    'Experience company must be <h4>'
+  );
 
-  assert.match(expSource, /<p\s+className=["'][^"']*text-\[var\(--text-secondary\)\]/, 'Experience description must be <p>');
-  assert.match(expSource, /<ul[\s\S]*?aria-label=\{`Key milestones and achievements at \$\{exp\.company\}`\}/, 'Milestones must be accessible <ul>');
-  assert.match(expSource, /<footer\s+className=["']mt-6["']>/, 'Experience card must contain <footer>');
-  assert.match(expSource, /<ul[\s\S]*?aria-label=\{`Technologies leveraged at \$\{exp\.company\}`\}/, 'Tech used must be accessible <ul>');
+  assert.match(
+    expSource,
+    /<p\s+className=["'][^"']*text-\[var\(--text-secondary\)\]/,
+    'Experience description must be <p>'
+  );
+  assert.match(
+    expSource,
+    /<ul[\s\S]*?aria-label=\{`Key milestones and achievements at \$\{exp\.company\}`\}/,
+    'Milestones must be accessible <ul>'
+  );
+  assert.match(
+    expSource,
+    /<footer\s+className=["']mt-6["']>/,
+    'Experience card must contain <footer>'
+  );
+  assert.match(
+    expSource,
+    /<ul[\s\S]*?aria-label=\{`Technologies leveraged at \$\{exp\.company\}`\}/,
+    'Tech used must be accessible <ul>'
+  );
 });
 
 test('Semantic HTML: Valid <time dateTime="..."> format in career history', () => {
@@ -296,17 +384,27 @@ test('Semantic HTML: Valid <time dateTime="..."> format in career history', () =
 
   const dateTimeExpr = timeMatch[1].trim();
   // Evaluates both branches of the conditional: isCurrent ? '2024-01-01' : '2023-08-01'
-  const dateStrings = dateTimeExpr.match(/['"](\d{4}-\d{2}-\d{2})['"]/g).map((s) => s.replace(/['"]/g, ''));
+  const dateStrings = dateTimeExpr
+    .match(/['"](\d{4}-\d{2}-\d{2})['"]/g)
+    .map((s) => s.replace(/['"]/g, ''));
 
   assert.ok(dateStrings.length >= 2, 'Should specify ISO date strings for current and past roles');
 
   for (const dateStr of dateStrings) {
     // 1. ISO 8601 YYYY-MM-DD Regex Check
-    assert.match(dateStr, /^\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])$/, `${dateStr} must be valid YYYY-MM-DD`);
+    assert.match(
+      dateStr,
+      /^\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])$/,
+      `${dateStr} must be valid YYYY-MM-DD`
+    );
 
     // 2. JavaScript Date Parsing & NaN Check
     const parsedDate = new Date(dateStr);
-    assert.strictEqual(isNaN(parsedDate.getTime()), false, `${dateStr} must parse to valid Date object`);
+    assert.strictEqual(
+      isNaN(parsedDate.getTime()),
+      false,
+      `${dateStr} must parse to valid Date object`
+    );
 
     // 3. Re-serialization Check (prevent overflow dates like 2024-02-31)
     const isoString = parsedDate.toISOString();
@@ -314,7 +412,10 @@ test('Semantic HTML: Valid <time dateTime="..."> format in career history', () =
 
     // 4. Year sanity check
     const year = parsedDate.getUTCFullYear();
-    assert.ok(year >= 2020 && year <= 2030, `Year ${year} should be within realistic career timeline`);
+    assert.ok(
+      year >= 2020 && year <= 2030,
+      `Year ${year} should be within realistic career timeline`
+    );
   }
 });
 
@@ -324,14 +425,42 @@ assert.ok(fs.existsSync(achievePath), 'AchievementsSection.tsx must exist');
 const achieveSource = fs.readFileSync(achievePath, 'utf8');
 
 test('Semantic HTML: AchievementsSection uses <motion.article>, <header>, and <footer>', () => {
-  assert.match(achieveSource, /<motion\.article/, 'Achievement cards must be wrapped in <motion.article>');
-  assert.match(achieveSource, /<\/motion\.article>/, 'Achievement cards must have closing </motion.article>');
+  assert.match(
+    achieveSource,
+    /<motion\.article/,
+    'Achievement cards must be wrapped in <motion.article>'
+  );
+  assert.match(
+    achieveSource,
+    /<\/motion\.article>/,
+    'Achievement cards must have closing </motion.article>'
+  );
 
-  assert.match(achieveSource, /<header\s+className=["']mb-5/, 'Achievement card must contain <header>');
-  assert.match(achieveSource, /<h3[^>]*>[\s\S]*?\{item\.title\}[\s\S]*?<\/h3>/, 'Achievement title must be <h3>');
-  assert.match(achieveSource, /<p\s+className=["'][^"']*text-\[var\(--text-secondary\)\]/, 'Achievement description must be <p>');
-  assert.match(achieveSource, /<footer\s+className=["']mt-6/, 'Achievement card must contain <footer>');
-  assert.match(achieveSource, /Verified Credential/, 'Achievement card footer must show Verified Credential');
+  assert.match(
+    achieveSource,
+    /<header\s+className=["']mb-5/,
+    'Achievement card must contain <header>'
+  );
+  assert.match(
+    achieveSource,
+    /<h3[^>]*>[\s\S]*?\{item\.title\}[\s\S]*?<\/h3>/,
+    'Achievement title must be <h3>'
+  );
+  assert.match(
+    achieveSource,
+    /<p\s+className=["'][^"']*text-\[var\(--text-secondary\)\]/,
+    'Achievement description must be <p>'
+  );
+  assert.match(
+    achieveSource,
+    /<footer\s+className=["']mt-6/,
+    'Achievement card must contain <footer>'
+  );
+  assert.match(
+    achieveSource,
+    /Verified Credential/,
+    'Achievement card footer must show Verified Credential'
+  );
 });
 
 // =============================================================================
@@ -370,7 +499,11 @@ test('SEO: Extract and parse schema.org/Person JSON-LD with JSON.parse', () => {
   assert.ok(jsonString.length > 200, 'JSON-LD string must not be truncated');
 
   // Verify no illegal characters or unescaped sequences
-  assert.doesNotMatch(jsonString, /[\u0000-\u001F]/, 'JSON string must not contain unescaped ASCII control characters');
+  assert.doesNotMatch(
+    jsonString,
+    /[\u0000-\u001F]/,
+    'JSON string must not contain unescaped ASCII control characters'
+  );
 
   parsedPersonSchema = JSON.parse(jsonString);
   assert.strictEqual(typeof parsedPersonSchema, 'object', 'JSON.parse must yield an object');
@@ -382,21 +515,40 @@ test('SEO: Validate schema.org/Person required top-level fields', () => {
   assert.ok(parsedPersonSchema, 'parsedPersonSchema must be initialized');
 
   // @context and @type
-  assert.strictEqual(parsedPersonSchema['@context'], 'https://schema.org', '@context must be "https://schema.org"');
+  assert.strictEqual(
+    parsedPersonSchema['@context'],
+    'https://schema.org',
+    '@context must be "https://schema.org"'
+  );
   assert.strictEqual(parsedPersonSchema['@type'], 'Person', '@type must be "Person"');
-  assert.strictEqual(parsedPersonSchema['@id'], 'https://shaikrohit.tech/#person', '@id must be "https://shaikrohit.tech/#person"');
+  assert.strictEqual(
+    parsedPersonSchema['@id'],
+    'https://shaikrohit.tech/#person',
+    '@id must be "https://shaikrohit.tech/#person"'
+  );
 
   // Identity and Names
   assert.strictEqual(parsedPersonSchema.name, 'Shaik Rohit', 'name must be "Shaik Rohit"');
   assert.strictEqual(parsedPersonSchema.givenName, 'Shaik', 'givenName must be "Shaik"');
   assert.strictEqual(parsedPersonSchema.familyName, 'Rohit', 'familyName must be "Rohit"');
   assert.ok(Array.isArray(parsedPersonSchema.alternateName), 'alternateName must be an array');
-  assert.ok(parsedPersonSchema.alternateName.includes('Rohit Shaik'), 'alternateName must include "Rohit Shaik"');
+  assert.ok(
+    parsedPersonSchema.alternateName.includes('Rohit Shaik'),
+    'alternateName must include "Rohit Shaik"'
+  );
 
   // Professional Role
-  assert.strictEqual(parsedPersonSchema.jobTitle, 'Full Stack & AI Developer', 'jobTitle must be "Full Stack & AI Developer"');
+  assert.strictEqual(
+    parsedPersonSchema.jobTitle,
+    'Full Stack & AI Developer',
+    'jobTitle must be "Full Stack & AI Developer"'
+  );
   assert.ok(parsedPersonSchema.description.length > 30, 'description must be descriptive');
-  assert.strictEqual(parsedPersonSchema.email, 'mailto:shaik.rohit.official@gmail.com', 'email must use mailto: format');
+  assert.strictEqual(
+    parsedPersonSchema.email,
+    'mailto:shaik.rohit.official@gmail.com',
+    'email must use mailto: format'
+  );
 });
 
 // 3.3 URL and SameAs Validation
@@ -409,11 +561,17 @@ test('SEO: Validate URLs and sameAs profiles in schema.org/Person', () => {
   // Image URL
   const imageUrl = new URL(parsedPersonSchema.image);
   assert.strictEqual(imageUrl.protocol, 'https:', 'image protocol must be https');
-  assert.ok(imageUrl.pathname.endsWith('og-image.png'), 'image pathname must end with og-image.png');
+  assert.ok(
+    imageUrl.pathname.endsWith('og-image.png'),
+    'image pathname must end with og-image.png'
+  );
 
   // sameAs social profiles array
   assert.ok(Array.isArray(parsedPersonSchema.sameAs), 'sameAs must be an array');
-  assert.ok(parsedPersonSchema.sameAs.length >= 3, 'sameAs must contain at least 3 social profiles');
+  assert.ok(
+    parsedPersonSchema.sameAs.length >= 3,
+    'sameAs must contain at least 3 social profiles'
+  );
 
   const requiredProfiles = [
     'https://github.com/shaikrohit',
@@ -432,20 +590,32 @@ test('SEO: Validate URLs and sameAs profiles in schema.org/Person', () => {
 // 3.4 Nested Entities: PostalAddress, EducationalOrganization, Organization
 test('SEO: Validate nested entities (address, alumniOf, worksFor)', () => {
   // Home Address
-  assert.strictEqual(parsedPersonSchema.address?.['@type'], 'PostalAddress', 'address must be PostalAddress');
+  assert.strictEqual(
+    parsedPersonSchema.address?.['@type'],
+    'PostalAddress',
+    'address must be PostalAddress'
+  );
   assert.strictEqual(parsedPersonSchema.address?.addressLocality, 'Kuppam');
   assert.strictEqual(parsedPersonSchema.address?.addressRegion, 'Andhra Pradesh');
   assert.strictEqual(parsedPersonSchema.address?.postalCode, '517425');
   assert.strictEqual(parsedPersonSchema.address?.addressCountry, 'IN');
 
   // Alumni Of (Education)
-  assert.strictEqual(parsedPersonSchema.alumniOf?.['@type'], 'EducationalOrganization', 'alumniOf must be EducationalOrganization');
+  assert.strictEqual(
+    parsedPersonSchema.alumniOf?.['@type'],
+    'EducationalOrganization',
+    'alumniOf must be EducationalOrganization'
+  );
   assert.strictEqual(parsedPersonSchema.alumniOf?.name, 'Dr. Y.C. James Yen Govt Polytechnic');
   assert.strictEqual(parsedPersonSchema.alumniOf?.address?.['@type'], 'PostalAddress');
   assert.strictEqual(parsedPersonSchema.alumniOf?.address?.addressLocality, 'Kuppam');
 
   // Works For (Employment)
-  assert.strictEqual(parsedPersonSchema.worksFor?.['@type'], 'Organization', 'worksFor must be Organization');
+  assert.strictEqual(
+    parsedPersonSchema.worksFor?.['@type'],
+    'Organization',
+    'worksFor must be Organization'
+  );
   assert.strictEqual(parsedPersonSchema.worksFor?.name, 'Sithafal Technologies');
   assert.strictEqual(parsedPersonSchema.worksFor?.address?.['@type'], 'PostalAddress');
   assert.strictEqual(parsedPersonSchema.worksFor?.address?.addressLocality, 'Tirupati');

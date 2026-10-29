@@ -1,7 +1,7 @@
 /**
  * Challenger 1 Deep Empirical Stress Harness
  * Target: /api/contact route running on http://localhost:3001
- * 
+ *
  * Tests:
  * 1. RFC 5321 Email Length Boundary & Conformance (>254 chars, exactly 254 chars, trimmed 254 vs 255)
  * 2. CRLF Injection Neutralization in Name, Email, and Message
@@ -93,7 +93,11 @@ function buildEmailOfLength(targetLength) {
   if (res.status === 200 && res.json?.success === true) {
     recordPass('RFC5321-1.1: Exactly 254 characters email is accepted (HTTP 200)');
   } else {
-    recordFail('RFC5321-1.1: Exactly 254 characters email', `Expected 200, got ${res.status}`, res.rawText);
+    recordFail(
+      'RFC5321-1.1: Exactly 254 characters email',
+      `Expected 200, got ${res.status}`,
+      res.rawText
+    );
   }
 }
 
@@ -107,10 +111,18 @@ function buildEmailOfLength(targetLength) {
     message: 'Testing email at 255 characters boundary limit.',
   });
 
-  if (res.status === 400 && res.json?.success === false && res.json?.error?.includes('254 characters')) {
+  if (
+    res.status === 400 &&
+    res.json?.success === false &&
+    res.json?.error?.includes('254 characters')
+  ) {
     recordPass('RFC5321-1.2: 255 characters email is rejected with 400 and RFC length message');
   } else {
-    recordFail('RFC5321-1.2: 255 characters email', `Expected 400 with 254 chars msg, got ${res.status}`, res.rawText);
+    recordFail(
+      'RFC5321-1.2: 255 characters email',
+      `Expected 400 with 254 chars msg, got ${res.status}`,
+      res.rawText
+    );
   }
 }
 
@@ -124,7 +136,11 @@ function buildEmailOfLength(targetLength) {
     message: 'Testing email at 500 characters length.',
   });
 
-  if (res.status === 400 && res.json?.success === false && res.json?.error?.includes('254 characters')) {
+  if (
+    res.status === 400 &&
+    res.json?.success === false &&
+    res.json?.error?.includes('254 characters')
+  ) {
     recordPass('RFC5321-1.3: 500 characters email rejected with 400');
   } else {
     recordFail('RFC5321-1.3: 500 characters email', `Expected 400, got ${res.status}`, res.rawText);
@@ -144,7 +160,11 @@ function buildEmailOfLength(targetLength) {
   if (res.status === 400 && res.json?.success === false) {
     recordPass('RFC5321-1.4: 10,000 characters email rejected with 400 without crashing');
   } else {
-    recordFail('RFC5321-1.4: 10,000 characters email', `Expected 400, got ${res.status}`, res.rawText);
+    recordFail(
+      'RFC5321-1.4: 10,000 characters email',
+      `Expected 400, got ${res.status}`,
+      res.rawText
+    );
   }
 }
 
@@ -159,7 +179,9 @@ function buildEmailOfLength(targetLength) {
   });
 
   if (res.status === 200 && res.json?.success === true) {
-    recordPass('RFC5321-1.5: Whitespace-padded 254-character email accepted after trimming (HTTP 200)');
+    recordPass(
+      'RFC5321-1.5: Whitespace-padded 254-character email accepted after trimming (HTTP 200)'
+    );
   } else {
     recordFail('RFC5321-1.5: Padded 254 email', `Expected 200, got ${res.status}`, res.rawText);
   }
@@ -226,7 +248,11 @@ console.log('\n--- SUITE 2: CRLF Injection Stress & Neutralization ---');
     message: 'Testing CRLF-only name rejection.',
   });
 
-  if (res.status === 400 && res.json?.success === false && res.json?.error?.includes('Name must be at least')) {
+  if (
+    res.status === 400 &&
+    res.json?.success === false &&
+    res.json?.error?.includes('Name must be at least')
+  ) {
     recordPass('CRLF-2.3: CRLF-only name rejected with 400 (not 500)');
   } else {
     recordFail('CRLF-2.3: CRLF-only name', `Expected 400, got ${res.status}`, res.rawText);
@@ -241,7 +267,11 @@ console.log('\n--- SUITE 2: CRLF Injection Stress & Neutralization ---');
     message: 'Testing 1-char + CRLF name rejection.',
   });
 
-  if (res.status === 400 && res.json?.success === false && res.json?.error?.includes('Name must be at least 2 characters')) {
+  if (
+    res.status === 400 &&
+    res.json?.success === false &&
+    res.json?.error?.includes('Name must be at least 2 characters')
+  ) {
     recordPass('CRLF-2.4: 1-char + CRLF name rejected with 400 (not 500)');
   } else {
     recordFail('CRLF-2.4: 1-char + CRLF name', `Expected 400, got ${res.status}`, res.rawText);
@@ -257,7 +287,11 @@ console.log('\n--- SUITE 2: CRLF Injection Stress & Neutralization ---');
   });
 
   // Since EMAIL_REGEX checks ^[^\s@]+@[^\s@]+\.[^\s@]+$, whitespace / CRLF in email must be rejected with 400
-  if (res.status === 400 && res.json?.success === false && res.json?.error?.includes('valid email')) {
+  if (
+    res.status === 400 &&
+    res.json?.success === false &&
+    res.json?.error?.includes('valid email')
+  ) {
     recordPass('CRLF-2.5: CRLF in email rejected as invalid format (HTTP 400)');
   } else {
     recordFail('CRLF-2.5: CRLF in email', `Expected 400, got ${res.status}`, res.rawText);
@@ -290,25 +324,89 @@ const validationFailureCases = [
   { name: 'Malformed JSON syntax', rawBody: '{ broken json: }', expectedStatus: 400 },
   { name: 'JSON primitive number', rawBody: '42', expectedStatus: 400 },
   { name: 'JSON array', rawBody: '["name", "email"]', expectedStatus: 400 },
-  { name: 'Missing name', payload: { email: 'a@b.com', message: 'Hello 1234567890' }, expectedStatus: 400 },
-  { name: 'Missing email', payload: { name: 'Alice', message: 'Hello 1234567890' }, expectedStatus: 400 },
+  {
+    name: 'Missing name',
+    payload: { email: 'a@b.com', message: 'Hello 1234567890' },
+    expectedStatus: 400,
+  },
+  {
+    name: 'Missing email',
+    payload: { name: 'Alice', message: 'Hello 1234567890' },
+    expectedStatus: 400,
+  },
   { name: 'Missing message', payload: { name: 'Alice', email: 'a@b.com' }, expectedStatus: 400 },
   // Name type / bounds
-  { name: 'Name is number', payload: { name: 12345, email: 'a@b.com', message: 'Hello 1234567890' }, expectedStatus: 400 },
-  { name: 'Name is boolean', payload: { name: true, email: 'a@b.com', message: 'Hello 1234567890' }, expectedStatus: 400 },
-  { name: 'Name is array', payload: { name: ['Alice'], email: 'a@b.com', message: 'Hello 1234567890' }, expectedStatus: 400 },
-  { name: 'Name is empty string', payload: { name: '', email: 'a@b.com', message: 'Hello 1234567890' }, expectedStatus: 400 },
-  { name: 'Name is 1 character', payload: { name: 'X', email: 'a@b.com', message: 'Hello 1234567890' }, expectedStatus: 400 },
-  { name: 'Name is 101 characters', payload: { name: 'A'.repeat(101), email: 'a@b.com', message: 'Hello 1234567890' }, expectedStatus: 400 },
+  {
+    name: 'Name is number',
+    payload: { name: 12345, email: 'a@b.com', message: 'Hello 1234567890' },
+    expectedStatus: 400,
+  },
+  {
+    name: 'Name is boolean',
+    payload: { name: true, email: 'a@b.com', message: 'Hello 1234567890' },
+    expectedStatus: 400,
+  },
+  {
+    name: 'Name is array',
+    payload: { name: ['Alice'], email: 'a@b.com', message: 'Hello 1234567890' },
+    expectedStatus: 400,
+  },
+  {
+    name: 'Name is empty string',
+    payload: { name: '', email: 'a@b.com', message: 'Hello 1234567890' },
+    expectedStatus: 400,
+  },
+  {
+    name: 'Name is 1 character',
+    payload: { name: 'X', email: 'a@b.com', message: 'Hello 1234567890' },
+    expectedStatus: 400,
+  },
+  {
+    name: 'Name is 101 characters',
+    payload: { name: 'A'.repeat(101), email: 'a@b.com', message: 'Hello 1234567890' },
+    expectedStatus: 400,
+  },
   // Email type / bounds
-  { name: 'Email is number', payload: { name: 'Alice', email: 9999, message: 'Hello 1234567890' }, expectedStatus: 400 },
-  { name: 'Email is object', payload: { name: 'Alice', email: { email: 'a@b.com' }, message: 'Hello 1234567890' }, expectedStatus: 400 },
-  { name: 'Email invalid format', payload: { name: 'Alice', email: 'notanemail', message: 'Hello 1234567890' }, expectedStatus: 400 },
-  { name: 'Email exceeds 254 chars', payload: { name: 'Alice', email: 'a'.repeat(245) + '@example.com', message: 'Hello 1234567890' }, expectedStatus: 400 },
+  {
+    name: 'Email is number',
+    payload: { name: 'Alice', email: 9999, message: 'Hello 1234567890' },
+    expectedStatus: 400,
+  },
+  {
+    name: 'Email is object',
+    payload: { name: 'Alice', email: { email: 'a@b.com' }, message: 'Hello 1234567890' },
+    expectedStatus: 400,
+  },
+  {
+    name: 'Email invalid format',
+    payload: { name: 'Alice', email: 'notanemail', message: 'Hello 1234567890' },
+    expectedStatus: 400,
+  },
+  {
+    name: 'Email exceeds 254 chars',
+    payload: {
+      name: 'Alice',
+      email: 'a'.repeat(245) + '@example.com',
+      message: 'Hello 1234567890',
+    },
+    expectedStatus: 400,
+  },
   // Message type / bounds
-  { name: 'Message is number', payload: { name: 'Alice', email: 'a@b.com', message: 1234567890 }, expectedStatus: 400 },
-  { name: 'Message is 9 chars', payload: { name: 'Alice', email: 'a@b.com', message: '123456789' }, expectedStatus: 400 },
-  { name: 'Message is 5001 chars', payload: { name: 'Alice', email: 'a@b.com', message: 'M'.repeat(5001) }, expectedStatus: 400 },
+  {
+    name: 'Message is number',
+    payload: { name: 'Alice', email: 'a@b.com', message: 1234567890 },
+    expectedStatus: 400,
+  },
+  {
+    name: 'Message is 9 chars',
+    payload: { name: 'Alice', email: 'a@b.com', message: '123456789' },
+    expectedStatus: 400,
+  },
+  {
+    name: 'Message is 5001 chars',
+    payload: { name: 'Alice', email: 'a@b.com', message: 'M'.repeat(5001) },
+    expectedStatus: 400,
+  },
   // Method guards
   { name: 'Method GET (wrong method)', method: 'GET', expectedStatus: 405 },
 ];
@@ -322,11 +420,19 @@ for (let i = 0; i < validationFailureCases.length; i++) {
 
   // The critical invariant: status MUST NOT be 500
   if (res.status === 500) {
-    recordFail(`INV-3.${i + 1}: ${tc.name}`, `CRITICAL REGRESSION: Returned HTTP 500 Internal Server Error`, res.rawText);
+    recordFail(
+      `INV-3.${i + 1}: ${tc.name}`,
+      `CRITICAL REGRESSION: Returned HTTP 500 Internal Server Error`,
+      res.rawText
+    );
   } else if (res.status === tc.expectedStatus) {
     recordPass(`INV-3.${i + 1}: ${tc.name} properly returned HTTP ${res.status} (Zero 500)`);
   } else {
-    recordFail(`INV-3.${i + 1}: ${tc.name}`, `Expected HTTP ${tc.expectedStatus}, got ${res.status}`, res.rawText);
+    recordFail(
+      `INV-3.${i + 1}: ${tc.name}`,
+      `Expected HTTP ${tc.expectedStatus}, got ${res.status}`,
+      res.rawText
+    );
   }
 }
 
@@ -347,9 +453,15 @@ console.log('\n--- SUITE 4: Concurrency Burst & ReDoS Stress ---');
   const elapsed = performance.now() - start;
 
   if (res.status === 400 && elapsed < 500) {
-    recordPass(`STRESS-4.1: ReDoS regex rejection executed in ${elapsed.toFixed(1)}ms (< 500ms threshold)`);
+    recordPass(
+      `STRESS-4.1: ReDoS regex rejection executed in ${elapsed.toFixed(1)}ms (< 500ms threshold)`
+    );
   } else {
-    recordFail('STRESS-4.1: ReDoS regex', `Execution took ${elapsed.toFixed(1)}ms or status != 400 (${res.status})`, res.rawText);
+    recordFail(
+      'STRESS-4.1: ReDoS regex',
+      `Execution took ${elapsed.toFixed(1)}ms or status != 400 (${res.status})`,
+      res.rawText
+    );
   }
 }
 
@@ -371,17 +483,22 @@ console.log('\n--- SUITE 4: Concurrency Burst & ReDoS Stress ---');
           email: `invalid-email-${i}`,
           message: `Should fail with 400`,
         });
-    burstPromises.push(p.then(r => ({ i, isValid, status: r.status, json: r.json })));
+    burstPromises.push(p.then((r) => ({ i, isValid, status: r.status, json: r.json })));
   }
 
   const results = await Promise.all(burstPromises);
-  const any500 = results.some(r => r.status === 500);
-  const allCorrect = results.every(r => (r.isValid ? r.status === 200 : r.status === 400));
+  const any500 = results.some((r) => r.status === 500);
+  const allCorrect = results.every((r) => (r.isValid ? r.status === 200 : r.status === 400));
 
   if (!any500 && allCorrect) {
-    recordPass(`STRESS-4.2: Concurrency burst of ${burstCount} parallel requests handled cleanly with 0 server errors`);
+    recordPass(
+      `STRESS-4.2: Concurrency burst of ${burstCount} parallel requests handled cleanly with 0 server errors`
+    );
   } else {
-    recordFail('STRESS-4.2: Concurrency burst', `Found errors: any500=${any500}, allCorrect=${allCorrect}`);
+    recordFail(
+      'STRESS-4.2: Concurrency burst',
+      `Found errors: any500=${any500}, allCorrect=${allCorrect}`
+    );
   }
 }
 
@@ -394,7 +511,9 @@ console.log('\n--- SUITE 4: Concurrency Burst & ReDoS Stress ---');
   });
 
   if (res.status === 200 && res.json?.success === true) {
-    recordPass('STRESS-4.3: Control chars, null byte, and ANSI escapes handled cleanly without crash (HTTP 200)');
+    recordPass(
+      'STRESS-4.3: Control chars, null byte, and ANSI escapes handled cleanly without crash (HTTP 200)'
+    );
   } else {
     recordFail('STRESS-4.3: Control characters', `Expected 200, got ${res.status}`, res.rawText);
   }
