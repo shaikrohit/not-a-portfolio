@@ -25,6 +25,7 @@ export const DEFAULT_PROFILE: CMSProfile = {
   email: defaultProfile.email,
   github_url: defaultProfile.github,
   linkedin_url: defaultProfile.linkedin,
+  credly_url: defaultProfile.credly,
   resume_url: defaultProfile.resumeUrl,
   is_published: true,
   updated_at: '2026-10-29T00:00:00Z',

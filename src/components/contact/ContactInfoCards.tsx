@@ -123,7 +123,7 @@ export function ContactInfoCards() {
                 <ArrowUpRight className="h-2.5 w-2.5 text-[var(--text-muted)]" />
               </a>
               <a
-                href={(profile as any).credly || 'https://www.credly.com/users/shaikrohit'}
+                href={profile.credly || 'https://www.credly.com/users/shaikrohit'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 rounded-md border border-[var(--border-subtle)] bg-[var(--surface-elevated)] px-2 py-0.5 text-[11px] font-medium text-[var(--text-primary)] transition-colors hover:border-amber-500/40 hover:text-amber-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amber-500"

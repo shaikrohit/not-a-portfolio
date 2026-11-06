@@ -16,27 +16,28 @@ import type { VisitorType, Project, Skill, Experience, LearningMilestone } from 
  */
 export const profile = {
   name: 'Shaik Rohit',
-  title: 'Computer Science & Engineering (Cyber Security)',
-  tagline: 'CSE (Cyber Security) • Software Developer • Ethical Hacking & Pentesting',
+  title: 'Undergraduate Student & Security Explorer | CSE (Cyber Security)',
+  tagline:
+    'CSE (Cyber Security) Student @ MITS • Software Developer • Exploring Cybersecurity & Secure Systems',
   location: 'Palamaner, Andhra Pradesh, India',
 
   // Adaptive introductions based on visitor persona
   introduction: {
-    developer: `I am a second-year B.Tech student in Computer Science & Engineering (Cyber Security) at Madanapalle Institute of Technology & Science, passionate about software development and cybersecurity. 
+    developer: `I am a second-year B.Tech undergraduate studying Computer Science & Engineering (Cyber Security) at Madanapalle Institute of Technology & Science, actively exploring both modern software engineering and cybersecurity domains.
     I completed a Junior Software Engineer internship at Sithafal Technologies, engineered the Bhumi Darpan land acquisition platform, and actively participate in CTF challenges and OWASP open-source activities.
     
     My engineering focus spans full-stack React and Python systems, secure software architecture, network defense, and low-level binary analysis.`,
 
-    recruiter: `I am a second-year B.Tech CSE (Cyber Security) student at Madanapalle Institute of Technology & Science (Deemed University) with a completed Diploma in Computer Engineering (88.5% distinction from Dr. Y.C. James Yen Govt Polytechnic).
-    I previously interned as a Junior Software Engineer at Sithafal Technologies Pvt. Ltd., developed the Bhumi Darpan digital land management platform, and hold certifications in Python, Generative AI (IBM), and Cybersecurity (Cisco).
+    recruiter: `I am an undergraduate student pursuing B.Tech in CSE (Cyber Security) at Madanapalle Institute of Technology & Science with a completed Diploma in Computer Engineering (88.5% distinction from Dr. Y.C. James Yen Govt Polytechnic).
+    I previously interned as a Junior Software Engineer at Sithafal Technologies Pvt. Ltd., developed the Bhumi Darpan digital land management platform, and hold certifications in Python (APSSDC), Generative AI (IBM), and Cybersecurity (Cisco).
     
-    I am seeking software engineering and cybersecurity roles where I can build reliable applications, secure network pipelines, and conduct ethical vulnerability research.`,
+    I am actively exploring hands-on opportunities across software engineering, security analysis, and network defense.`,
 
-    student: `I am pursuing my B.Tech in CSE (Cyber Security) at Madanapalle Institute of Technology & Science (2026–2029) after completing my Diploma in Computer Engineering with 88.5% distinction.
+    student: `I am an undergraduate student pursuing B.Tech in CSE (Cyber Security) at Madanapalle Institute of Technology & Science (2026–2029) after completing my Diploma in Computer Engineering with 88.5% distinction.
     
-    Beyond academics, I actively participate in CTF competitions (cryptography, forensics, web security, binary exploitation), contribute to OWASP open-source initiatives, and build production web prototypes.`,
+    Beyond academics, I am exploring cybersecurity through CTF competitions (cryptography, forensics, web security, binary exploitation), contributing to OWASP open-source initiatives, and building production web prototypes.`,
 
-    explorer: `Welcome! I'm Shaik Rohit. I study Cyber Security and Computer Science at Madanapalle Institute of Technology & Science, develop software with React and Python, and explore ethical hacking, CTF challenges, and open-source tools.
+    explorer: `Welcome! I'm Shaik Rohit — an undergraduate student exploring the intersection of software engineering, network defense, and cybersecurity at Madanapalle Institute of Technology & Science.
     
     Explore my verified projects (including Bhumi Darpan), security tools, and technical milestones.`,
   },
@@ -206,15 +207,24 @@ export const projects: Project[] = [
   {
     id: 'bhumi-darpan',
     title: 'Bhumi Darpan',
-    description: 'Digital Land Acquisition Management Platform',
-    longDescription: `A comprehensive web-based platform engineered to organize land acquisition projects, parcel records, and administrative workflows. 
-    Features interactive dashboards, project and parcel interfaces with search, filtering, and GIS map views alongside document verification, compensation calculations, Rehabilitation & Resettlement (R&R), possession tracking, and spatial analytics workflows.`,
+    description: 'Digital Land Acquisition & Secure GIS Management Platform',
+    longDescription: `A comprehensive enterprise-grade platform engineered to digitize land acquisition, parcel documentation, and compensation disbursement workflows. 
+    Features interactive dashboards, GIS parcel boundary mapping, cryptographic document verification pipelines, automated compensation valuation, Rehabilitation & Resettlement (R&R), possession tracking, and spatial analytics workflows.`,
     problemSolved:
-      'Eliminates bureaucratic delays and manual paperwork by digitizing end-to-end land acquisition workflows with GIS parcel inspection.',
-    techStack: ['React', 'JavaScript', 'GIS Mapping', 'Tailwind CSS', 'Vite', 'Vercel'],
+      'Eliminates bureaucratic delays and tampering risks by replacing manual land paperwork with tamper-evident document verification and interactive GIS parcel boundary mapping.',
+    techStack: [
+      'React',
+      'JavaScript',
+      'GIS Mapping',
+      'Document Security',
+      'Tailwind CSS',
+      'Vite',
+      'Vercel',
+    ],
     architectureNotes:
-      'Modular React frontend with geospatial mapping integration, stateful document verification pipelines, and analytical data views.',
+      'Modular React frontend with geospatial GIS integration, cryptographic integrity checks for deed documents, and role-based clearance pipelines.',
     githubUrl: 'https://github.com/shaikrohit/bhumi-darpan',
+    liveUrl: 'https://github.com/shaikrohit/bhumi-darpan',
     featured: true,
     visibleTo: ['developer', 'recruiter', 'student', 'explorer'],
     metrics: {

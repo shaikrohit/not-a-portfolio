@@ -73,9 +73,9 @@ export function AboutSection({ profile }: AboutSectionProps = {}) {
             About Me
           </span>
           <h2 className="font-serif text-4xl font-bold tracking-tight text-[var(--text-primary)] md:text-5xl">
-            Passionate Developer.{' '}
+            Undergraduate Student.{' '}
             <span className="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 bg-clip-text text-transparent">
-              Disciplined Builder.
+              Security &amp; Software Explorer.
             </span>
           </h2>
         </motion.div>

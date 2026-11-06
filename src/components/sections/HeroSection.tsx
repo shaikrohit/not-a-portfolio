@@ -109,7 +109,7 @@ export function HeroSection({ profile }: HeroSectionProps = {}) {
             activeProfile.bio.split('\n\n')[0]
           ) : (
             <>
-              Second-year B.Tech student in{' '}
+              Undergraduate student in{' '}
               <strong className="font-semibold text-[var(--text-primary)]">
                 CSE (Cyber Security) at Madanapalle Institute of Technology & Science
               </strong>{' '}
@@ -117,7 +117,7 @@ export function HeroSection({ profile }: HeroSectionProps = {}) {
               <strong className="font-semibold text-[var(--text-primary)]">
                 Sithafal Technologies Pvt. Ltd.
               </strong>{' '}
-              Building secure software systems, web platforms, and network defense tools.
+              Exploring cybersecurity, network defense, and secure full-stack software development.
             </>
           )}
         </motion.p>
