@@ -109,15 +109,15 @@ export function HeroSection({ profile }: HeroSectionProps = {}) {
             activeProfile.bio.split('\n\n')[0]
           ) : (
             <>
-              Computer Engineering student at{' '}
+              Second-year B.Tech student in{' '}
               <strong className="font-semibold text-[var(--text-primary)]">
-                Dr. Y.C. James Yen Govt Polytechnic (96% Distinction)
+                CSE (Cyber Security) at Madanapalle Institute of Technology & Science
               </strong>{' '}
-              and AI Developer / Intern at{' '}
+              and former Junior Software Engineer Intern at{' '}
               <strong className="font-semibold text-[var(--text-primary)]">
-                Sithafal Technologies, Tirupati
-              </strong>
-              . Building scalable, containerized web applications and intelligent interfaces.
+                Sithafal Technologies Pvt. Ltd.
+              </strong>{' '}
+              Building secure software systems, web platforms, and network defense tools.
             </>
           )}
         </motion.p>

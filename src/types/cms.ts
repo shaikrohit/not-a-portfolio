@@ -15,6 +15,7 @@ export interface CMSProfile {
   email: string;
   github_url: string;
   linkedin_url: string;
+  credly_url?: string;
   resume_url: string;
   is_published: boolean;
   updated_at: string;
@@ -61,9 +62,11 @@ export interface CMSEducation {
   id: string;
   institution: string;
   degree: string;
+  field_of_study?: string;
   period: string;
   location: string;
   grade: string;
+  status?: 'pursuing' | 'completed' | 'enrolled';
   coursework: string[];
   honors: string[];
   sort_order: number;

@@ -203,10 +203,17 @@ export async function publishDraftAction(section: string) {
         await supabase.from('cms_education').delete().gte('sort_order', 0);
       }
       for (const item of draftData) {
-        await supabase.from('cms_education').upsert({
+        const payload = {
           ...item,
           updated_at: new Date().toISOString(),
-        });
+        };
+        const { error } = await supabase.from('cms_education').upsert(payload);
+        if (error && (error.message?.includes('column') || error.code === 'PGRST204')) {
+          const fallbackPayload: Record<string, any> = { ...payload };
+          delete fallbackPayload.status;
+          delete fallbackPayload.field_of_study;
+          await supabase.from('cms_education').upsert(fallbackPayload);
+        }
       }
     } else if (section === 'skills' && Array.isArray(draftData)) {
       const draftIds = draftData.map((d: any) => d.id).filter(Boolean);
@@ -441,10 +448,20 @@ export async function saveEducationAction(edu: CMSEducation) {
   if (!supabase) return { success: false, error: 'Database not configured' };
 
   try {
-    const { error } = await supabase.from('cms_education').upsert({
+    const payload = {
       ...edu,
       updated_at: new Date().toISOString(),
-    });
+    };
+
+    let { error } = await supabase.from('cms_education').upsert(payload);
+
+    if (error && (error.message?.includes('column') || (error as any).code === 'PGRST204')) {
+      const fallbackPayload: Record<string, any> = { ...payload };
+      delete fallbackPayload.status;
+      delete fallbackPayload.field_of_study;
+      const retry = await supabase.from('cms_education').upsert(fallbackPayload);
+      error = retry.error;
+    }
 
     if (error) throw error;
     revalidatePath('/');

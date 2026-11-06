@@ -3,7 +3,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { GraduationCap, Award, BookOpen, Calendar, MapPin, CheckCircle2 } from 'lucide-react';
-import { AnimatedCounter } from '@/components/ui/AnimatedCounter';
 import type { CMSEducation } from '@/types/cms';
 
 interface EducationSectionProps {
@@ -16,20 +15,66 @@ export function EducationSection({ education }: EducationSectionProps = {}) {
       ? education
       : [
           {
+            id: 'edu-mits',
+            institution: 'Madanapalle Institute of Technology & Science',
+            degree: 'B.Tech - CSE (Cyber Security)',
+            field_of_study: 'Computer Science & Engineering (Cyber Security)',
+            period: '2026 - 2029',
+            location: 'Madanapalle, Andhra Pradesh, India',
+            grade: 'Pursuing',
+            status: 'pursuing' as const,
+            coursework: [
+              'Cybersecurity & Network Defense',
+              'Ethical Hacking & Penetration Testing',
+              'Digital Forensics & Incident Response',
+              'Data Structures & Algorithms',
+              'Operating Systems & Linux Shell',
+              'Object-Oriented Programming (Java / Python)',
+            ],
+            honors: [
+              'Second-Year B.Tech Student in Cyber Security',
+              'OWASP Open-Source Security Contributor',
+              'Active CTF Challenge Competitor',
+            ],
+          },
+          {
             id: 'edu-polytechnic',
-            institution: 'Dr. Y.C. James Yen Govt Polytechnic',
-            degree: 'Diploma in Computer Engineering',
+            institution: 'Dr. Y.C. James Yen Govt Polytechnic, Kuppam',
+            degree: 'Diploma in Computer Engineering (DCME)',
+            field_of_study: 'Computer Engineering',
             period: '2023 - 2026',
             location: 'Kuppam, Andhra Pradesh, India',
-            grade: '96%',
+            grade: '88.5%',
+            status: 'completed' as const,
             coursework: [
               'Data Structures & Algorithms',
               'Object-Oriented Programming (Java / C++)',
               'Computer Networks & Protocols',
               'Operating Systems & Linux Shell',
               'Database Management & SQL',
-              'Cybersecurity & Network Defense',
+              'Web Technologies & Development',
             ],
+            honors: [
+              '88.5% Distinction in State Technical Board Examinations',
+              '1st Prize in Regional Technical Innovation Hackathon',
+            ],
+          },
+          {
+            id: 'edu-ssc',
+            institution: 'Elena Bettini English Medium High School',
+            degree: 'Secondary School Certificate (SSC)',
+            field_of_study: 'General High School Curriculum',
+            period: '2022 - 2023',
+            location: 'Palamaner, Andhra Pradesh, India',
+            grade: '78.8%',
+            status: 'completed' as const,
+            coursework: [
+              'Mathematics & Analytics',
+              'Physical & Biological Sciences',
+              'Information & Computer Basics',
+              'English & Languages',
+            ],
+            honors: ['First Class Academic Completion'],
           },
         ];
 
@@ -54,7 +99,10 @@ export function EducationSection({ education }: EducationSectionProps = {}) {
         <div className="space-y-8">
           {activeEduList.map((activeEdu, eduIdx) => {
             const coursework = activeEdu.coursework || [];
-            const gradeNumber = parseInt(activeEdu.grade?.replace(/[^0-9]/g, '') || '96', 10);
+            const isPursuing =
+              activeEdu.status === 'pursuing' ||
+              (activeEdu.grade && activeEdu.grade.toLowerCase().includes('pursuing')) ||
+              (activeEdu.period && activeEdu.period.toLowerCase().includes('pursuing'));
 
             return (
               <motion.div
@@ -71,22 +119,37 @@ export function EducationSection({ education }: EducationSectionProps = {}) {
                 <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-3">
                   {/* Institution info (2 cols on lg) */}
                   <div className="lg:col-span-2">
-                    <div className="mb-6 flex flex-wrap items-center gap-3">
-                      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-purple-500/10 text-purple-600 dark:text-purple-400">
-                        <GraduationCap className="h-7 w-7" />
+                    <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-purple-500/10 text-purple-600 dark:text-purple-400">
+                          <GraduationCap className="h-7 w-7" />
+                        </div>
+                        <div>
+                          <h3 className="text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
+                            {activeEdu.institution}
+                          </h3>
+                          <p className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
+                            <MapPin className="h-3.5 w-3.5 text-blue-500" />{' '}
+                            {activeEdu.location || 'Andhra Pradesh, India'}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
-                          {activeEdu.institution}
-                        </h3>
-                        <p className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
-                          <MapPin className="h-3.5 w-3.5 text-blue-500" />{' '}
-                          {activeEdu.location || 'Kuppam, Andhra Pradesh, India'}
-                        </p>
-                      </div>
+
+                      {/* LinkedIn-style Status Badge */}
+                      {isPursuing ? (
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-bold text-emerald-600 dark:text-emerald-400">
+                          <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
+                          Currently Pursuing
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-600 dark:text-blue-400">
+                          <CheckCircle2 className="h-3.5 w-3.5 text-blue-500" />
+                          Completed
+                        </span>
+                      )}
                     </div>
 
-                    <div className="mb-6 inline-flex items-center gap-2 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-base)] px-4 py-2 text-sm font-semibold text-[var(--text-primary)]">
+                    <div className="mb-6 inline-flex flex-wrap items-center gap-2 rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-base)] px-4 py-2 text-sm font-semibold text-[var(--text-primary)]">
                       <Calendar className="h-4 w-4 text-blue-500" />
                       <span>
                         {activeEdu.degree} ({activeEdu.period})
@@ -94,10 +157,11 @@ export function EducationSection({ education }: EducationSectionProps = {}) {
                     </div>
 
                     <p className="text-base leading-relaxed text-[var(--text-secondary)]">
-                      Intensive computer engineering program combining core hardware logic,
-                      algorithmic problem-solving, operating systems, and modern software
-                      development. Maintained academic distinction through dedication and practical
-                      application.
+                      {isPursuing
+                        ? 'Enrolled in an intensive engineering curriculum specializing in Cybersecurity, ethical hacking, digital forensics, and network defenses, complemented by open-source contributions and hands-on CTF security challenges.'
+                        : activeEdu.degree.includes('Diploma')
+                          ? 'Comprehensive three-year computer engineering diploma program combining core software logic, algorithms, operating systems, networking, and practical web applications. Graduated with 88.5% academic distinction.'
+                          : 'Secondary school curriculum establishing strong mathematical, analytical, and physical science foundations, completed with first-class academic excellence.'}
                     </p>
 
                     {/* Coursework chips */}
@@ -123,22 +187,45 @@ export function EducationSection({ education }: EducationSectionProps = {}) {
                   </div>
 
                   {/* Scorecard Banner (1 col on lg) */}
-                  <div className="flex flex-col items-center justify-center rounded-2xl border border-emerald-500/20 bg-gradient-to-b from-emerald-500/10 via-emerald-500/5 to-transparent p-8 text-center lg:h-full">
-                    <Award className="h-10 w-10 text-emerald-500" />
-                    <div className="mt-4 text-5xl font-extrabold tracking-tight text-[var(--text-primary)] md:text-6xl">
-                      <AnimatedCounter value={gradeNumber} suffix="%" />
-                    </div>
-                    <p className="mt-1 text-sm font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                      Aggregate Score
-                    </p>
-                    <p className="mt-3 text-xs leading-relaxed text-[var(--text-secondary)]">
-                      Top percentile academic distinction awarded by State Board of Technical
-                      Education.
-                    </p>
-
-                    <div className="mt-6 w-full border-t border-[var(--border-subtle)] pt-4 text-xs font-medium text-[var(--text-muted)]">
-                      Ranked 1st Prize in Regional Innovation Hackathons
-                    </div>
+                  <div className="flex flex-col items-center justify-center rounded-2xl border border-emerald-500/20 bg-gradient-to-b from-emerald-500/10 via-emerald-500/5 to-transparent p-6 text-center sm:p-8 lg:h-full">
+                    {isPursuing ? (
+                      <>
+                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-500">
+                          <GraduationCap className="h-6 w-6" />
+                        </div>
+                        <div className="mt-4 text-3xl font-extrabold tracking-tight text-[var(--text-primary)] sm:text-4xl">
+                          In Progress
+                        </div>
+                        <p className="mt-1 text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                          Currently Enrolled
+                        </p>
+                        <p className="mt-3 text-xs leading-relaxed text-[var(--text-secondary)]">
+                          Second-year undergraduate studying CSE (Cyber Security) at Madanapalle
+                          Institute of Technology & Science.
+                        </p>
+                        <div className="mt-6 w-full border-t border-[var(--border-subtle)] pt-4 text-xs font-medium text-[var(--text-muted)]">
+                          Expected Graduation: 2029
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <Award className="h-10 w-10 text-emerald-500" />
+                        <div className="mt-4 text-4xl font-extrabold tracking-tight text-[var(--text-primary)] md:text-5xl">
+                          {activeEdu.grade || '88.5%'}
+                        </div>
+                        <p className="mt-1 text-sm font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                          Aggregate Score
+                        </p>
+                        <p className="mt-3 text-xs leading-relaxed text-[var(--text-secondary)]">
+                          {activeEdu.honors?.[0] || 'State Technical Board Examination Honors.'}
+                        </p>
+                        {activeEdu.honors?.[1] && (
+                          <div className="mt-6 w-full border-t border-[var(--border-subtle)] pt-4 text-xs font-medium text-[var(--text-muted)]">
+                            {activeEdu.honors[1]}
+                          </div>
+                        )}
+                      </>
+                    )}
                   </div>
                 </div>
               </motion.div>

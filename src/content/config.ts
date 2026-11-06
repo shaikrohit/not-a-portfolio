@@ -16,35 +16,35 @@ import type { VisitorType, Project, Skill, Experience, LearningMilestone } from 
  */
 export const profile = {
   name: 'Shaik Rohit',
-  title: 'Full Stack & AI Developer',
-  tagline: 'Frontend Developer • React • Docker • Modern Web Applications',
-  location: 'Kuppam, Andhra Pradesh, India',
+  title: 'Computer Science & Engineering (Cyber Security)',
+  tagline: 'CSE (Cyber Security) • Software Developer • Ethical Hacking & Pentesting',
+  location: 'Palamaner, Andhra Pradesh, India',
 
   // Adaptive introductions based on visitor persona
   introduction: {
-    developer: `I am a Computer Engineering student and developer focused on building modern, high-performance web applications. 
-    I specialize in React, TypeScript, and Docker containerization with an engineering philosophy centered on clarity, security, and reproducible builds.
+    developer: `I am a second-year B.Tech student in Computer Science & Engineering (Cyber Security) at Madanapalle Institute of Technology & Science, passionate about software development and cybersecurity. 
+    I completed a Junior Software Engineer internship at Sithafal Technologies, engineered the Bhumi Darpan land acquisition platform, and actively participate in CTF challenges and OWASP open-source activities.
     
-    This site is not a generic static showcase—it is an interactive system designed to demonstrate clean architecture and thoughtful UX.`,
+    My engineering focus spans full-stack React and Python systems, secure software architecture, network defense, and low-level binary analysis.`,
 
-    recruiter: `I am a high-achieving Computer Engineering student (96% aggregate) at Dr. Y.C. James Yen Govt Polytechnic and an AI Developer / Intern at Sithafal Technologies, Tirupati.
-    I have won 1st Prize in Regional Technical Innovation, containerized production web apps with Docker, and delivered real AI-driven tools.
+    recruiter: `I am a second-year B.Tech CSE (Cyber Security) student at Madanapalle Institute of Technology & Science (Deemed University) with a completed Diploma in Computer Engineering (88.5% distinction from Dr. Y.C. James Yen Govt Polytechnic).
+    I previously interned as a Junior Software Engineer at Sithafal Technologies Pvt. Ltd., developed the Bhumi Darpan digital land management platform, and hold certifications in Python, Generative AI (IBM), and Cybersecurity (Cisco).
     
-    I am seeking software engineering roles where I can contribute to modern web frontends, AI integrations, and scalable systems.`,
+    I am seeking software engineering and cybersecurity roles where I can build reliable applications, secure network pipelines, and conduct ethical vulnerability research.`,
 
-    student: `I am currently pursuing my Diploma in Computer Engineering (2023–2026) at Dr. Y.C. James Yen Govt Polytechnic. 
-    I have maintained a 96% academic score while actively developing real open-source, hackathon, and containerized projects.
+    student: `I am pursuing my B.Tech in CSE (Cyber Security) at Madanapalle Institute of Technology & Science (2026–2029) after completing my Diploma in Computer Engineering with 88.5% distinction.
     
-    I believe the best way to master tech is by building real projects, embracing constraints, and escaping tutorial hell early.`,
+    Beyond academics, I actively participate in CTF competitions (cryptography, forensics, web security, binary exploitation), contribute to OWASP open-source initiatives, and build production web prototypes.`,
 
-    explorer: `Welcome! I'm Shaik Rohit. I build modern web applications, explore generative AI and Docker workflows, and enjoy turning complex problems into elegant software.
+    explorer: `Welcome! I'm Shaik Rohit. I study Cyber Security and Computer Science at Madanapalle Institute of Technology & Science, develop software with React and Python, and explore ethical hacking, CTF challenges, and open-source tools.
     
-    Feel free to explore my verified projects, technical skills, and journey. This experience adapts to your curiosity.`,
+    Explore my verified projects (including Bhumi Darpan), security tools, and technical milestones.`,
   },
 
   email: 'shaik.rohit.official@gmail.com',
   github: 'https://github.com/shaikrohit',
   linkedin: 'https://www.linkedin.com/in/rohitshaik',
+  credly: 'https://www.credly.com/users/shaikrohit',
   resumeUrl: process.env.NEXT_PUBLIC_SUPABASE_URL
     ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/portfolio/resume.pdf`
     : '/resume.pdf',
@@ -92,13 +92,57 @@ export const philosophy = {
  */
 export const techStack: Skill[] = [
   {
-    name: 'React',
+    name: 'Python',
+    category: 'language',
+    proficiency: 'expert',
+    yearsUsed: 2,
+    reasoning: `Core language for security scripting, network packet manipulation, backend services, and algorithmic problem-solving.`,
+    businessOutcome:
+      'Engineered automated security testing scripts and low-emission routing algorithms.',
+  },
+  {
+    name: 'React & Next.js',
     category: 'framework',
     proficiency: 'expert',
     yearsUsed: 2,
-    reasoning: `Component-driven architecture with React 19 concurrent features enables fluid, declarative UI development.`,
+    reasoning: `Component-driven architecture with React 19 concurrent features and Next.js hybrid rendering for fluid, accessible UIs.`,
     businessOutcome:
-      'Built modern SPAs, interactive dashboards, and mobile web views with sub-second time-to-interactive.',
+      'Developed Bhumi Darpan land acquisition platform and modern responsive frontends.',
+  },
+  {
+    name: 'Network Security & Ethical Hacking',
+    category: 'concept',
+    proficiency: 'expert',
+    yearsUsed: 2,
+    reasoning: `Network vulnerability assessment, penetration testing, protocol inspection, cryptography, and defensive auditing.`,
+    businessOutcome:
+      'Applied in CTF competitions across network analysis, web exploitation, and OWASP open-source security.',
+  },
+  {
+    name: 'Java',
+    category: 'language',
+    proficiency: 'proficient',
+    yearsUsed: 2,
+    reasoning: `Object-oriented programming, strict typing, file I/O handling, and robust exception-handled systems.`,
+    businessOutcome:
+      'Built foundational software projects and concurrent object-oriented architectures.',
+  },
+  {
+    name: 'Bash & Kali Linux',
+    category: 'tool',
+    proficiency: 'expert',
+    yearsUsed: 2,
+    reasoning: `Security-focused operating system and Unix shell scripting for system administration, pipeline automation, and exploitation.`,
+    businessOutcome: 'Automated reconnaissance, payload execution, and command-line forensics.',
+  },
+  {
+    name: 'Security Tooling (TShark, Scapy, Pwntools, GDB)',
+    category: 'tool',
+    proficiency: 'proficient',
+    yearsUsed: 1,
+    reasoning: `Packet dissection with TShark/Scapy, binary debugging with GDB, readelf/objdump inspection, and CTF exploit development with Pwntools.`,
+    businessOutcome:
+      'Solves binary exploitation, reverse engineering, and traffic analysis challenges.',
   },
   {
     name: 'JavaScript / TypeScript',
@@ -107,7 +151,7 @@ export const techStack: Skill[] = [
     yearsUsed: 2,
     reasoning: `Strict static typing eliminates runtime bugs and guarantees self-documenting codebases for confident refactoring.`,
     businessOutcome:
-      'Drastically reduced type-related defects and improved maintainability across projects.',
+      'Maintained type safety and clean architecture across web platforms and enterprise CMS.',
   },
   {
     name: 'Docker',
@@ -119,15 +163,6 @@ export const techStack: Skill[] = [
       'Containerized CarbonSphere with multi-stage builds, minimizing production footprint and simplifying deployments.',
   },
   {
-    name: 'Next.js',
-    category: 'framework',
-    proficiency: 'proficient',
-    yearsUsed: 1,
-    reasoning: `Hybrid static and server rendering, file-based routing, and built-in image/font optimization for top Core Web Vitals.`,
-    businessOutcome:
-      'Engineered not-a-portfolio achieving 95+ Lighthouse scores with dynamic route segregation.',
-  },
-  {
     name: 'Tailwind CSS',
     category: 'tool',
     proficiency: 'expert',
@@ -135,15 +170,6 @@ export const techStack: Skill[] = [
     reasoning: `Token-based utility framework facilitating consistent design systems, dark/light themes, and minimal CSS bundle sizes.`,
     businessOutcome:
       'Created polished glassmorphism and bento grid systems while keeping stylesheet overhead under 15KB.',
-  },
-  {
-    name: 'Python & Flask',
-    category: 'language',
-    proficiency: 'proficient',
-    yearsUsed: 2,
-    reasoning: `Versatile language with clean syntax for backend services, algorithmic calculations, and data processing.`,
-    businessOutcome:
-      'Developed GreenRoute backend engine computing low-emission transit routes with SQLite persistence.',
   },
   {
     name: 'GenAI & LLMs',
@@ -155,15 +181,6 @@ export const techStack: Skill[] = [
       'Shipped AI assistants in Smart FIFA 2026 and Election Guide AI providing context-aware recommendations.',
   },
   {
-    name: 'Capacitor',
-    category: 'tool',
-    proficiency: 'proficient',
-    yearsUsed: 1,
-    reasoning: `Cross-platform runtime bridging modern React web applications into native Android/iOS mobile experiences.`,
-    businessOutcome:
-      'Successfully packaged responsive web applications into cross-platform mobile distributions.',
-  },
-  {
     name: 'Supabase & PostgreSQL',
     category: 'tool',
     proficiency: 'proficient',
@@ -172,13 +189,13 @@ export const techStack: Skill[] = [
     businessOutcome: 'Implemented real-time trivia leaderboard with live ranking synchronizations.',
   },
   {
-    name: 'Git & Linux',
+    name: 'Git & GitHub',
     category: 'tool',
-    proficiency: 'proficient',
+    proficiency: 'expert',
     yearsUsed: 2,
-    reasoning: `Command-line proficiency, branch management, shell scripting, and automated CI/CD workflows.`,
+    reasoning: `Command-line proficiency, branch management, automated CI/CD workflows, and open-source collaboration.`,
     businessOutcome:
-      'Maintained 17+ repositories with clean commit history, automated linting, and deploy actions.',
+      'Active open-source contributions to OWASP-related repositories with clean git workflows.',
   },
 ];
 
@@ -186,6 +203,26 @@ export const techStack: Skill[] = [
  * REAL PROJECTS (VERIFIED FROM GITHUB)
  */
 export const projects: Project[] = [
+  {
+    id: 'bhumi-darpan',
+    title: 'Bhumi Darpan',
+    description: 'Digital Land Acquisition Management Platform',
+    longDescription: `A comprehensive web-based platform engineered to organize land acquisition projects, parcel records, and administrative workflows. 
+    Features interactive dashboards, project and parcel interfaces with search, filtering, and GIS map views alongside document verification, compensation calculations, Rehabilitation & Resettlement (R&R), possession tracking, and spatial analytics workflows.`,
+    problemSolved:
+      'Eliminates bureaucratic delays and manual paperwork by digitizing end-to-end land acquisition workflows with GIS parcel inspection.',
+    techStack: ['React', 'JavaScript', 'GIS Mapping', 'Tailwind CSS', 'Vite', 'Vercel'],
+    architectureNotes:
+      'Modular React frontend with geospatial mapping integration, stateful document verification pipelines, and analytical data views.',
+    githubUrl: 'https://github.com/shaikrohit/bhumi-darpan',
+    featured: true,
+    visibleTo: ['developer', 'recruiter', 'student', 'explorer'],
+    metrics: {
+      stars: 5,
+      forks: 1,
+      commits: 24,
+    },
+  },
   {
     id: 'carbon-sphere',
     title: 'CarbonSphere',
@@ -264,25 +301,6 @@ export const projects: Project[] = [
     },
   },
   {
-    id: 'bhumi-darpan',
-    title: 'Bhumi Darpan',
-    description: 'Land information and spatial records accessibility web application',
-    longDescription: `A modern React application deployed on Vercel with automated CI/CD and oxlint integration, delivering an intuitive interface for inspecting spatial land records and status details.`,
-    problemSolved:
-      'Improves civic transparency and public access to land documentation through a responsive web interface.',
-    techStack: ['React', 'Vite', 'Vercel', 'oxlint', 'JavaScript'],
-    architectureNotes:
-      'Vite-based build pipeline with high-speed automated linting and zero-configuration Vercel deployment.',
-    githubUrl: 'https://github.com/shaikrohit/bhumi-darpan',
-    featured: false,
-    visibleTo: ['developer', 'recruiter'],
-    metrics: {
-      stars: 3,
-      forks: 0,
-      commits: 18,
-    },
-  },
-  {
     id: 'not-a-portfolio',
     title: 'Not A Portfolio',
     description: 'Interactive conversation-driven digital identity experience',
@@ -317,29 +335,42 @@ export const projects: Project[] = [
 export const experience: Experience[] = [
   {
     id: 'exp-sithafal',
-    role: 'AI Developer / Intern',
-    company: 'Sithafal Technologies, Tirupati',
-    period: '2024 - Present',
-    description: `Developing cutting-edge generative AI applications, intelligent assistants, and modern full-stack web solutions. Bridging technical AI capabilities with responsive, accessible user interfaces.`,
+    role: 'Junior Software Engineer Intern',
+    company: 'Sithafal Technologies Pvt. Ltd.',
+    period: 'Nov 2025 - May 2026',
+    description: `Worked on functionality-focused software applications, contributed to production feature development, and gained hands-on experience in software development practices.`,
     achievements: [
-      'Engineered enterprise conversational AI assistant workflows with reliable context management',
-      'Developed responsive React frontends with high-performance animations and sub-second interactions',
-      'Implemented robust client-side validation and security-first API communications',
+      'Contributed to core feature engineering on production-facing applications in Tirupati',
+      'Implemented responsive React frontends and integrated client-server data flows',
+      'Awarded Junior Software Engineer Internship Completion Certificate',
     ],
-    techUsed: ['React', 'TypeScript', 'GenAI', 'LLMs', 'Node.js', 'Tailwind CSS'],
+    techUsed: ['React', 'JavaScript', 'Python', 'Node.js', 'REST APIs', 'Git'],
+  },
+  {
+    id: 'exp-mits',
+    role: 'B.Tech CSE (Cyber Security) Student',
+    company: 'Madanapalle Institute of Technology & Science',
+    period: '2026 - 2029 (Pursuing)',
+    description: `Second-year undergraduate in Computer Science & Engineering (Cyber Security). Actively engaged in network security research, CTF competitions, and open-source contributions.`,
+    achievements: [
+      'Active contributor to OWASP open-source security initiatives on GitHub',
+      'Participant in CTF challenges spanning network analysis, forensics, crypto, and binary exploitation',
+      'Completed industry certifications in Cybersecurity (Cisco) and Python Programming (APSSDC)',
+    ],
+    techUsed: ['Python', 'Java', 'Bash', 'Kali Linux', 'TShark', 'Scapy', 'Pwntools', 'GDB'],
   },
   {
     id: 'exp-polytechnic',
-    role: 'Computer Engineering Student',
-    company: 'Dr. Y.C. James Yen Govt Polytechnic',
+    role: 'Computer Engineering Diploma Graduate',
+    company: 'Dr. Y.C. James Yen Govt Polytechnic, Kuppam',
     period: '2023 - 2026',
-    description: `Pursuing Diploma in Computer Engineering with academic distinction. Focusing on data structures, operating systems, network security, and practical full-stack software development.`,
+    description: `Completed 3-year Diploma in Computer Engineering (DCME) with 88.5% academic distinction. Built foundations in operating systems, networks, and software engineering.`,
     achievements: [
+      'Graduated with 88.5% aggregate distinction in State Technical Board Examinations',
       '1st Prize in Regional Technical Innovation Hackathon',
-      'Maintained a stellar 96% aggregate score across all academic semesters',
-      'Led student technical workshops on web development and open source practices',
+      'Conducted student workshops on web development and Linux command line',
     ],
-    techUsed: ['C', 'Java', 'Python', 'Web Technologies', 'Linux', 'Computer Networks'],
+    techUsed: ['C', 'Java', 'Python', 'Web Technologies', 'Linux', 'Networks'],
   },
 ];
 
@@ -349,38 +380,38 @@ export const experience: Experience[] = [
 export const learningMilestones: LearningMilestone[] = [
   {
     year: 2023,
-    title: 'Computer Engineering & Foundations',
+    title: 'Computer Engineering Diploma (DCME)',
     description:
-      'Enrolled at Dr. Y.C. James Yen Govt Polytechnic. Mastered C programming, data structures, and computer fundamentals.',
+      'Enrolled at Dr. Y.C. James Yen Govt Polytechnic, Kuppam. Mastered C programming, data structures, and computer fundamentals.',
     lesson:
-      'Strong fundamentals are the true superpower. Mastering how memory and logic work makes any new framework trivial to learn.',
+      'Strong fundamentals are the true superpower. Mastering how memory, networks, and logic work makes any new framework intuitive to learn.',
     visibleTo: ['student', 'explorer'],
   },
   {
     year: 2024,
-    title: 'Modern Web & AI Developer Intern',
+    title: 'Python Essentials & Security Foundations',
     description:
-      'Deepened mastery in JavaScript, React, and Python. Joined Sithafal Technologies, Tirupati as AI Developer intern.',
+      'Completed edX Python Essentials. Deepened practical knowledge in networking, Linux shell scripting, and ethical defense.',
     lesson:
-      'Real-world production feedback accelerates learning tenfold compared to passive video tutorials.',
+      'Building foundational scripts and mastering command-line forensics beats passive theory every single time.',
     visibleTo: ['student', 'explorer'],
   },
   {
     year: 2025,
-    title: 'Docker, GenAI Innovation & Hackathon Win',
+    title: 'Cisco Cybersecurity & Sithafal Internship',
     description:
-      'Containerized CarbonSphere with Docker + Nginx. Won 1st Prize in Regional Technical Innovation with AI stadium solutions.',
+      'Earned Cisco Introduction to Cybersecurity certification. Joined Sithafal Technologies Pvt. Ltd. as Junior Software Engineer Intern in Tirupati.',
     lesson:
-      'Packaging and deploying software cleanly with Docker is just as vital as writing good feature code.',
+      'Real-world production feedback on functionality-focused software accelerates professional growth tenfold.',
     visibleTo: ['student', 'explorer'],
   },
   {
     year: 2026,
-    title: 'Next.js 16 & Interactive Portfolio Launch',
+    title: 'B.Tech CSE (Cyber Security) & Bhumi Darpan Platform',
     description:
-      'Engineered not-a-portfolio with React 19, persona routing, and 3D Canvas visualizers while graduating with 96% distinction.',
+      'Graduated DCME with 88.5% distinction. Joined Madanapalle Institute of Technology & Science for B.Tech CSE (Cyber Security). Built Bhumi Darpan land acquisition platform.',
     lesson:
-      'Great software is a dialogue with the user. Polish, accessibility, and thoughtful details differentiate the top 1%.',
+      'Security and user experience must be designed together. Great software is dependable, accessible, and robust under adversarial scrutiny.',
     visibleTo: ['student', 'explorer'],
   },
 ];
@@ -390,20 +421,20 @@ export const learningMilestones: LearningMilestone[] = [
  */
 export const qaContent = [
   {
-    question: 'How did you balance a 96% academic record with building production apps?',
-    answer: `By applying classroom computer engineering concepts directly into project work. Operating systems and networks translate directly to Docker and WebSockets. Building real tools solidifies theoretical knowledge.`,
+    question: 'How did you balance academic excellence with building production software?',
+    answer: `By applying theoretical computer science concepts directly into practical software engineering and CTF security challenges. Operating systems, network protocols, and algorithms translate directly into secure code and efficient system design.`,
   },
   {
-    question: 'What is your advice for developers starting with Docker?',
-    answer: `Start with a single project like a Vite or React app. Learn to build a multi-stage Dockerfile that builds assets in Node and serves them through lightweight Alpine Nginx. The clarity of containerization will click immediately.`,
+    question: 'What is your primary focus in Cybersecurity?',
+    answer: `Network security, ethical hacking, penetration testing, and secure application architecture. I actively participate in CTF challenges (forensics, crypto, web security, binary exploitation) and contribute to OWASP open-source initiatives.`,
   },
   {
     question: 'What is your primary tech stack preference?',
-    answer: `React or Next.js with TypeScript and Tailwind CSS for the frontend, combined with Docker, Node.js or Python Flask for backend services, and PostgreSQL/Supabase for persistent storage.`,
+    answer: `React, TypeScript, and Tailwind CSS for the frontend, combined with Python, Java, Bash, and Linux tools (Kali, TShark, Scapy, Pwntools, GDB) for backend engineering and security workflows.`,
   },
   {
-    question: 'What excites you most about software engineering?',
-    answer: `The ability to turn an idea into an interactive tool accessible to anyone worldwide in seconds, with verified security and delightful micro-interactions.`,
+    question: 'What excites you most about software engineering and security?',
+    answer: `The interplay between defensive engineering and offensive discovery—building resilient platforms like Bhumi Darpan while rigorously securing systems against real-world vulnerabilities.`,
   },
 ];
 

@@ -166,7 +166,7 @@ export function ProfileEditor({ initialProfile, onRefresh }: ProfileEditorProps)
           />
         </div>
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-zinc-400">
               Primary Email
@@ -203,6 +203,20 @@ export function ProfileEditor({ initialProfile, onRefresh }: ProfileEditorProps)
               name="linkedin_url"
               value={profile.linkedin_url}
               onChange={handleChange}
+              className="w-full rounded-xl border border-white/10 bg-black/50 px-4 py-2.5 text-sm text-white placeholder-zinc-500 focus:border-blue-500/50 focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-zinc-400">
+              Credly Badges URL
+            </label>
+            <input
+              type="url"
+              name="credly_url"
+              value={profile.credly_url || ''}
+              onChange={handleChange}
+              placeholder="https://www.credly.com/users/shaikrohit"
               className="w-full rounded-xl border border-white/10 bg-black/50 px-4 py-2.5 text-sm text-white placeholder-zinc-500 focus:border-blue-500/50 focus:outline-none"
             />
           </div>

@@ -143,7 +143,7 @@ export function AboutSection({ profile }: AboutSectionProps = {}) {
                 Location & Origin
               </h3>
               <p className="text-xl font-bold text-[var(--text-primary)]">
-                {activeProfile.location || 'Kuppam, India'}
+                {activeProfile.location || 'Palamaner, India'}
               </p>
               <p className="mt-2 text-sm text-[var(--text-secondary)]">
                 Andhra Pradesh, India (UTC+5:30)
@@ -171,21 +171,21 @@ export function AboutSection({ profile }: AboutSectionProps = {}) {
                 <GraduationCap className="h-6 w-6" />
               </div>
               <h3 className="mb-1 text-sm font-semibold uppercase tracking-wider text-[var(--text-muted)]">
-                Education
+                Current Education
               </h3>
-              <p className="text-xl font-bold text-[var(--text-primary)]">Dr. Y.C. James Yen</p>
+              <p className="text-xl font-bold text-[var(--text-primary)]">MITS University</p>
               <p className="mt-1 text-sm text-[var(--text-secondary)]">
-                Govt Polytechnic (2023 - 2026)
+                B.Tech - CSE (Cyber Security)
               </p>
               <p className="mt-2 text-xs font-semibold text-blue-600 dark:text-blue-400">
-                Diploma in Computer Engineering
+                2nd Year Student (2026 - 2029)
               </p>
             </div>
 
             <div className="mt-6 border-t border-[var(--border-subtle)] pt-4">
               <div className="flex items-center gap-2 text-sm font-semibold text-emerald-600 dark:text-emerald-400">
-                <Award className="h-4 w-4" />
-                <span>96% Aggregate Distinction</span>
+                <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
+                <span>Currently Pursuing</span>
               </div>
             </div>
           </motion.div>
@@ -199,13 +199,13 @@ export function AboutSection({ profile }: AboutSectionProps = {}) {
             className="rounded-3xl border border-[var(--border-subtle)] bg-[var(--surface-card)] p-6 backdrop-blur-xl transition-all duration-300 hover:border-blue-500/30 md:col-span-1 lg:col-span-1"
           >
             <div className="mb-2 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">
-              Academic Record
+              Diploma Aggregate
             </div>
             <div className="text-4xl font-extrabold tracking-tight text-[var(--text-primary)] md:text-5xl">
-              <AnimatedCounter value={96} suffix="%" />
+              <AnimatedCounter value={89} suffix="%" />
             </div>
             <p className="mt-2 text-xs text-[var(--text-secondary)]">
-              State Board Examination Aggregate
+              88.5% DCME Distinction (State Board)
             </p>
           </motion.div>
 
